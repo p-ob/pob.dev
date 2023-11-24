@@ -1,11 +1,10 @@
-module.exports = {
-	title: "Patrick O'Brien",
-	url: "https://www.pob.dev/",
-	language: "en",
-	description: "I am writing about my experiences as a naval navel-gazer.",
-	author: {
-		name: "Patrick O'Brien",
-		email: "patrickobrien@pob.dev",
-		url: "https://pob.dev/about-me/"
-	}
-}
+export const title = "Patrick O'Brien";
+export const url = "https://www.pob.dev/";
+export const language = "en";
+export const description =
+	"I am a software engineer passionate about modern and sustainable web development. #UseThePlatform";
+export const author = {
+	name: "Patrick O'Brien",
+	email: "patrickobrien@pob.dev",
+	url: "https://pob.dev/about-me/",
+};
