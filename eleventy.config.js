@@ -1,8 +1,9 @@
 import markdownItAnchor from "markdown-it-anchor";
 import { EleventyHtmlBasePlugin } from "@11ty/eleventy";
 import pluginRss from "@11ty/eleventy-plugin-rss";
-import pluginImages from "./eleventy.config.images.js";
-import pluginDrafts from "./eleventy.config.drafts.js";
+import pluginImages from "./11ty/eleventy.config.images.js";
+import pluginDrafts from "./11ty/eleventy.config.drafts.js";
+import pluginCsp from "./11ty/eleventy.config.csp.js";
 import pluginSyntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import pluginNavigation from "@11ty/eleventy-navigation";
 import pluginBundle from "@11ty/eleventy-plugin-bundle";
@@ -27,6 +28,7 @@ export default function (eleventyConfig) {
 	// App plugins
 	eleventyConfig.addPlugin(pluginImages);
 	eleventyConfig.addPlugin(pluginDrafts);
+	eleventyConfig.addPlugin(pluginCsp);
 
 	// Official plugins
 	eleventyConfig.addPlugin(pluginRss);

@@ -7,4 +7,6 @@ export const author = {
 	name: "Patrick O'Brien",
 	email: "patrickobrien@pob.dev",
 	url: "https://pob.dev/about-me/",
+	github: "https://github.com/p-ob"
 };
+export const year = new Date().getFullYear();
