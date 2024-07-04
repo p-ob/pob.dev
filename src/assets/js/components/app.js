@@ -82,13 +82,9 @@ export class AppElement extends LitElement {
     }
 
     :host([page-type="article"]) {
-			main {
-				display: flex;
-				justify-content: center;
-			}
-
-      ::slotted(*) {
+      ::slotted(*:not([slot])) {
         max-width: 800px;
+				margin: 0 10vw;
       }
     }
 
