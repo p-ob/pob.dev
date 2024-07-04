@@ -1,41 +1,22 @@
 {
-	"name": "@p-ob/blog",
-	"version": "0.0.1",
-	"description": "Patrick O'Brien's personal blog",
-	"type": "module",
-	"scripts": {
-		"build": "npx @11ty/eleventy",
-		"start": "npx @11ty/eleventy --serve --quiet",
-		"debug": "DEBUG=Eleventy* npx @11ty/eleventy",
-		"debugstart": "DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
-		"benchmark": "DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/p-ob/blog.git"
-	},
-	"author": {
-		"name": "Patrick O'Brien",
-		"email": "patrickobrien@pob.dev",
-		"url": "https://www.pob.dev/"
-	},
-	"license": "MIT",
-	"engines": {
-		"node": ">=18"
-	},
-	"bugs": {
-		"url": "https://github.com/p-ob/blog/issues"
-	},
-	"homepage": "https://github.com/p-ob/blog#readme",
-	"devDependencies": {
-		"@11ty/eleventy": "git://github.com/11ty/eleventy.git#main",
-		"@11ty/eleventy-img": "^3.1.8",
-		"@11ty/eleventy-navigation": "^0.3.5",
-		"@11ty/eleventy-plugin-bundle": "^1.0.4",
-		"@11ty/eleventy-plugin-rss": "^1.2.0",
-		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-		"markdown-it-anchor": "^8.6.7",
-		"prettier": "^3.1.0",
-		"ssri": "^10.0.5"
-	}
+  "name": "@p-ob/site",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0-alpha.14",
+    "@11ty/eleventy-img": "^4.0.2",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@lit-labs/eleventy-plugin-lit": "^1.0.3",
+    "linkedom": "^0.18.4",
+    "pagefind": "^1.1.0",
+    "prettier": "^3.3.2"
+  },
+  "scripts": {
+    "build": "npm run build:11ty && npm run build:index",
+    "build:11ty": "eleventy",
+    "build:index": "pagefind --site public",
+    "start": "eleventy --watch --serve --incremental"
+  }
 }

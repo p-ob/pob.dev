@@ -1,0 +1,101 @@
+@layer reset, base, page;
+
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: unset;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  img,
+  picture,
+  svg,
+  canvas {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer base {
+  :root {
+    --font-color: #333333;
+    --page-background-color: #f5f5f5;
+    font-family: system-ui;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--font-color);
+    background-color: var(--page-background-color);
+  }
+
+  /* Dark mode */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --font-color: #e8e8e8;
+      --page-background-color: rgb(32, 33, 36);
+    }
+  }
+
+  ol {
+		padding: 0;
+    counter-reset: item;
+  }
+
+	ol ol {
+		padding-left: 1rem;
+	}
+
+  li {
+    display: block;
+  }
+
+  ol > li:before {
+    content: counters(item, ".") " ";
+    counter-increment: item;
+  }
+}
+
+@layer page {
+	#toc {
+		position: sticky;
+		top: 5rem;
+	}
+}
+
+@property --font-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: black;
+}
+
+@property --page-background-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: white;
+}

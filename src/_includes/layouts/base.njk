@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% include "./partials/_head.njk" %}
+  <body>
+    <pob-app
+			current-year="{{ currentYear }}"
+			author="{{ author | json_html }}"
+			{% if pageType %} page-type="{{ pageType }}" {% endif %}
+			{% if noSidebar %} no-sidebar="" {% endif %}>
+			{% if pageType == 'article' %}
+			<article {% if not excludeFromSearch %} data-pagefind-body="" {% endif %}>{{ content | safe }}</article>
+			{% else %}
+      <section {% if not excludeFromSearch %} data-pagefind-body="" {% endif %}>{{ content | safe }}</section>
+			{% endif %}
+			{% if not noSidebar %}
+			<nav id="toc" slot="sidebar">
+				<strong>On this page</strong>
+			</nav>
+			{% endif %}
+
+    </pob-app>
+    <script type="module">
+      await import('/node_modules/@lit-labs/ssr-client/lit-element-hydrate-support.js');
+      import('/assets/js/components/app.js');
+    </script>
+  </body>
+</html>
