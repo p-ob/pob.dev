@@ -9,6 +9,7 @@
     "@11ty/eleventy-img": "^4.0.2",
     "@11ty/eleventy-navigation": "^0.3.5",
     "@lit-labs/eleventy-plugin-lit": "^1.0.3",
+    "clean-css": "^5.3.3",
     "linkedom": "^0.18.4",
     "pagefind": "^1.1.0",
     "prettier": "^3.3.2"
@@ -18,6 +19,6 @@
     "build:11ty": "eleventy",
     "build:index": "pagefind --site public",
     "start": "eleventy --watch --serve --incremental",
-		"clean": "git clean -dfX -e \"!.env\""
+    "clean": "git clean -dfX -e \"!.env\""
   }
 }

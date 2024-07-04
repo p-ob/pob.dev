@@ -29,5 +29,8 @@
     <meta name="description" content="{{ description }}">
     <meta name="generator" content="{{ eleventy.generator }}">
     <meta name="fediverse:creator" content="{{ author.social.fediverse }}">
-    <link rel="stylesheet" href="/assets/css/base.css">
+		{% set baseCss %} {% include "../../../assets/css/base.css" %} {% endset %}
+		<style>
+			{{ baseCss | cssmin | safe }}
+		</style>
   </head>

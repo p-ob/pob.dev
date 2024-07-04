@@ -2,6 +2,7 @@ import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
+import CleanCSS from "clean-css";
 
 function getLitComponents(...components) {
   const root = "src/assets/js/components/";
@@ -56,6 +57,10 @@ export default async function (eleventyConfig) {
   eleventyConfig.addFilter("machineDate", (date) => {
     return date.toISOString();
   });
+
+	eleventyConfig.addFilter("cssmin", function (code) {
+		return new CleanCSS({}).minify(code).styles;
+	});
 
   eleventyConfig.addWatchTarget("./src/assets/js/components/");
 }
