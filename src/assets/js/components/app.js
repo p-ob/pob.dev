@@ -17,6 +17,10 @@ export class AppElement extends LitElement {
     };
   }
 
+  get #contactMeContainer() {
+    return this.shadowRoot.querySelector(".contact-me-container");
+  }
+
   constructor() {
     super();
     this.currentYear = new Date().getFullYear();
@@ -31,8 +35,8 @@ export class AppElement extends LitElement {
           <a href="/blog">Blog</a>
           <a href="/about">About</a>
           <div class="contact-me-container">
-            <button class="contact-me" popovertarget="contact-details">My links</button>
-            <ul id="contact-details" popover="">
+            <button type="button" class="contact-me" popovertarget="contact-details">My links</button>
+            <ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
               <li>${this.#renderEmail()}</li>
               <li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
               <li>${this.#renderExternalLink("Mastodon", this.author.social.mastodon)}</li>
@@ -65,6 +69,20 @@ export class AppElement extends LitElement {
     }
 
     return html`<a href="mailto:${email}">${email}</a>`;
+  }
+
+  /**
+   * TODO: Remove this when CSS Anchor positioning is supported
+   * @param {ToggleEvent} event
+   */
+  #onContactToggle(event) {
+    if (event.newState === "open") {
+      const popover = event.target;
+      const boundingRect = this.#contactMeContainer.getBoundingClientRect();
+
+      popover.style.top = `${boundingRect.top + boundingRect.height}px`;
+      popover.style.left = `${boundingRect.left}px`;
+    }
   }
 
   static styles = css`
