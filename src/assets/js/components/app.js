@@ -1,4 +1,5 @@
 import { LitElement, html, css, svg, nothing } from "lit";
+import { classMap } from "lit/directives/class-map.js";
 
 const externalLinkIcon = svg`
   <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
@@ -62,10 +63,13 @@ export class AppElement extends LitElement {
     </div>`;
   }
 
-  #renderExternalLink(text, url) {
-    return html`
-      <a class="external" target="_blank" rel="noreferrer" href="${url}">${text}${externalLinkIcon}</a>
-    `;
+  #renderExternalLink(text, url, classlist) {
+		classlist ??= "";
+		const classes = {};
+		for (const className of classlist.split(" ")) {
+			classes[className] = true;
+		}
+    return html` <a class="external ${classMap(classes)}" target="_blank" rel="noreferrer" href="${url}">${text}${externalLinkIcon}</a> `;
   }
 
   #renderEmail() {
@@ -79,7 +83,7 @@ export class AppElement extends LitElement {
 
   #renderEditLink() {
     const editUrl = new URL(this.source, `${this.repository}/edit/${this.branch}/`);
-    return this.#renderExternalLink("Edit this page", editUrl);
+    return this.#renderExternalLink("Edit this page", editUrl, "edit-link");
   }
 
   /**
@@ -108,6 +112,23 @@ export class AppElement extends LitElement {
       aside {
         display: none;
       }
+    }
+
+    @media (max-width: 768px) {
+      .site-root {
+        grid-template-areas:
+          "header header header"
+          "content content content"
+          "footer footer footer";
+      }
+
+      aside {
+        display: none;
+      }
+
+			.edit-link {
+				display: none;
+			}
     }
 
     :host([page-type="article"]) {
