@@ -1,0 +1,33 @@
+  <head>
+    <script type="importmap">
+		{
+			"imports": {
+				"lit": "/node_modules/lit/index.js",
+				"lit/": "/node_modules/lit/",
+				"@lit/reactive-element": "/node_modules/@lit/reactive-element/reactive-element.js",
+				"@lit/reactive-element/": "/node_modules/@lit/reactive-element/",
+				"@lit-labs/ssr-dom-shim": "/node_modules/@lit-labs/ssr-dom-shim/index.js",
+				"@lit-labs/ssr-client": "/node_modules/@lit-labs/ssr-client/index.js",
+				"@lit-labs/ssr-client/": "/node_modules/@lit-labs/ssr-client/",
+				"lit-element/": "/node_modules/lit-element/",
+				"lit-html": "/node_modules/lit-html/lit-html.js",
+				"lit-html/": "/node_modules/lit-html/"
+			}
+		}
+    </script>
+    <link rel="modulepreload" href="/node_modules/@lit-labs/ssr-client/lit-element-hydrate-support.js"/>
+    <link rel="modulepreload" href="/assets/js/components/app.js"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% if title %}
+        {{ title }} | {{ author.name }}
+      {% else %}
+        {{ author.name }}
+      {% endif %}
+    </title>
+    <meta name="description" content="{{ description }}">
+    <meta name="generator" content="{{ eleventy.generator }}">
+    <meta name="fediverse:creator" content="{{ author.social.fediverse }}">
+    <link rel="stylesheet" href="/assets/css/base.css">
+  </head>
