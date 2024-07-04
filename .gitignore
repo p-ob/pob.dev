@@ -1,2 +1,4 @@
 node_modules/
 public/
+src/meta/*
+!src/meta/meta.11tydata.js

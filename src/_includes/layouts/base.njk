@@ -5,6 +5,9 @@
     <pob-app
 			current-year="{{ currentYear }}"
 			author="{{ author | json_html }}"
+			repository="{{ pkg.repository.url }}"
+			source="{{ page.inputPath }}"
+			branch="main"
 			{% if pageType %} page-type="{{ pageType }}" {% endif %}
 			{% if noSidebar %} no-sidebar="" {% endif %}>
 			{% if pageType == 'article' %}
@@ -17,7 +20,6 @@
 				<strong>On this page</strong>
 			</nav>
 			{% endif %}
-
     </pob-app>
     <script type="module">
       await import('/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js');

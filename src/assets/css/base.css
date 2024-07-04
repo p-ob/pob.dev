@@ -63,29 +63,29 @@
   }
 
   ol {
-		padding: 0;
+    padding: 0;
     counter-reset: item;
+
+		li {
+			display: block;
+
+			&::before {
+				content: counter(item) ". ";
+				counter-increment: item;
+			}
+		}
   }
 
-	ol ol {
-		padding-left: 1rem;
-	}
-
-  li {
-    display: block;
-  }
-
-  ol > li:before {
-    content: counters(item, ".") " ";
-    counter-increment: item;
+  ol ol {
+    padding-left: 1rem;
   }
 }
 
 @layer page {
-	#toc {
-		position: sticky;
-		top: 5rem;
-	}
+  #toc {
+    position: sticky;
+    top: 5rem;
+  }
 }
 
 @property --font-color {

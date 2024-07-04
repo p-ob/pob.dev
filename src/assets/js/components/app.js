@@ -14,6 +14,9 @@ export class AppElement extends LitElement {
       currentYear: { type: Number, attribute: "current-year" },
       author: { type: Object },
       pageType: { type: String, attribute: "page-type" },
+      repository: { type: String },
+      source: { type: String },
+      branch: { type: String },
     };
   }
 
@@ -53,13 +56,16 @@ export class AppElement extends LitElement {
       <aside><slot name="sidebar"></slot></aside>
       <footer>
         <span class="footer-contact-me">Contact: ${this.#renderEmail()}</span>
+        ${this.#renderEditLink()}
         <small class="copyright">&copy; Copyright ${this.currentYear}, ${this.author.name}</small>
       </footer>
     </div>`;
   }
 
-  #renderExternalLink(name, url) {
-    return html` <a class="external" target="_blank" rel="noreferrer" href="${url}">${name}${externalLinkIcon}</a> `;
+  #renderExternalLink(text, url) {
+    return html`
+      <a class="external" target="_blank" rel="noreferrer" href="${url}">${text}${externalLinkIcon}</a>
+    `;
   }
 
   #renderEmail() {
@@ -69,6 +75,11 @@ export class AppElement extends LitElement {
     }
 
     return html`<a href="mailto:${email}">${email}</a>`;
+  }
+
+  #renderEditLink() {
+    const editUrl = new URL(this.source, `${this.repository}/edit/${this.branch}/`);
+    return this.#renderExternalLink("Edit this page", editUrl);
   }
 
   /**
@@ -102,7 +113,6 @@ export class AppElement extends LitElement {
     :host([page-type="article"]) {
       ::slotted(*:not([slot])) {
         max-width: 800px;
-				margin: 0 10vw;
       }
     }
 
@@ -122,16 +132,17 @@ export class AppElement extends LitElement {
 
     header {
       grid-area: header;
-			padding: 1rem 2rem;
-			position: sticky;
-			top: 0;
-			z-index: 999;
-			background: var(--page-background-color);
-			border-bottom: 1px solid var(--font-color);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      background: var(--page-background-color);
+      border-bottom: 1px solid var(--font-color);
     }
 
     main {
       grid-area: content;
+      margin: 0 10vw;
     }
 
     aside {
@@ -153,7 +164,11 @@ export class AppElement extends LitElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
+        gap: 0.5rem;
+      }
+
+      * {
+        padding-right: 1rem;
       }
     }
 
@@ -189,7 +204,7 @@ export class AppElement extends LitElement {
     }
 
     [popover] {
-      background-color: var(--page-background-color);;
+      background-color: var(--page-background-color);
       color: inherit;
     }
 

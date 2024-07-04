@@ -1,6 +1,10 @@
 {
   "name": "@p-ob/site",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/p-ob/pob.dev/"
+  },
   "engines": {
     "node": ">=22"
   },

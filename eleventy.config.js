@@ -2,6 +2,7 @@ import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
+import { copyFile } from "node:fs/promises";
 import CleanCSS from "clean-css";
 
 function getLitComponents(...components) {
@@ -15,15 +16,23 @@ function passthroughCopyLitDependencies(eleventyConfig) {
   for (const module of modules) {
     const modulePath = `node_modules/${module}`;
     const outputPath = `assets/external/${module}`;
-		const copyConfig = {};
-		copyConfig[modulePath] = outputPath;
+    const copyConfig = {};
+    copyConfig[modulePath] = outputPath;
     eleventyConfig.addPassthroughCopy(copyConfig);
   }
+}
+
+async function includeMetafiles(...filePaths) {
+	for (const filePath of filePaths) {
+		await copyFile(filePath, `src/meta/${filePath}`);
+	}
 }
 
 const LIT_COMPONENTS = getLitComponents("app");
 
 export default async function (eleventyConfig) {
+	await includeMetafiles("README.md");
+
   /* passthrough copies */
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -58,9 +67,9 @@ export default async function (eleventyConfig) {
     return date.toISOString();
   });
 
-	eleventyConfig.addFilter("cssmin", function (code) {
-		return new CleanCSS({}).minify(code).styles;
-	});
+  eleventyConfig.addFilter("cssmin", function (code) {
+    return new CleanCSS({}).minify(code).styles;
+  });
 
   eleventyConfig.addWatchTarget("./src/assets/js/components/");
 }
