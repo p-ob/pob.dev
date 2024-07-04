@@ -1,6 +1,6 @@
 export default {
   name: "Patrick O'Brien",
-  email: "patrickobrien@pob.dev",
+  email: "public@pob.dev",
   social: {
     github: "https://github.com/p-ob",
     linkedIn: "https://www.linkedin.com/in/p-ob/",
