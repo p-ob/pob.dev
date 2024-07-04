@@ -9,12 +9,15 @@ function getLitComponents(...components) {
 }
 
 function passthroughCopyLitDependencies(eleventyConfig) {
-  eleventyConfig.addPassthroughCopy("node_modules/@webcomponents");
-  eleventyConfig.addPassthroughCopy("node_modules/@lit");
-  eleventyConfig.addPassthroughCopy("node_modules/@lit-labs");
-  eleventyConfig.addPassthroughCopy("node_modules/lit");
-  eleventyConfig.addPassthroughCopy("node_modules/lit-element");
-  eleventyConfig.addPassthroughCopy("node_modules/lit-html");
+  const modules = ["@webcomponents", "@lit", "@lit-labs", "lit", "lit-element", "lit-html"];
+
+  for (const module of modules) {
+    const modulePath = `node_modules/${module}`;
+    const outputPath = `assets/external/${module}`;
+		const copyConfig = {};
+		copyConfig[modulePath] = outputPath;
+    eleventyConfig.addPassthroughCopy(copyConfig);
+  }
 }
 
 const LIT_COMPONENTS = getLitComponents("app");

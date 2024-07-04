@@ -17,6 +17,7 @@
     "build": "npm run build:11ty && npm run build:index",
     "build:11ty": "eleventy",
     "build:index": "pagefind --site public",
-    "start": "eleventy --watch --serve --incremental"
+    "start": "eleventy --watch --serve --incremental",
+		"clean": "git clean -dfX -e \"!.env\""
   }
 }
