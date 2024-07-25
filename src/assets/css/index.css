@@ -1,0 +1,12 @@
+@layer reset, config, base, layout;
+
+@import url("/assets/css/partials/_reset.css") layer(rest);
+@import url("/assets/css/partials/_vars.css") layer(config);
+@import url("/assets/css/partials/_base.css") layer(base);
+
+@layer page {
+  #toc {
+    position: sticky;
+    top: 5rem;
+  }
+}

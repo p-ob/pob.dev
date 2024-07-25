@@ -1,5 +1,6 @@
 import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
+import pluginWebc from "@11ty/eleventy-plugin-webc";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import { copyFile } from "node:fs/promises";
@@ -45,6 +46,7 @@ export default async function (eleventyConfig) {
   /* plugins */
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
   eleventyConfig.addPlugin(JsonHtmlPlugin);
+	eleventyConfig.addPlugin(pluginWebc);
   eleventyConfig.addPlugin(TableOfContentsPlugin, { parent: "#toc" });
 
   // this must come last

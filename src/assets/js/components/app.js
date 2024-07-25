@@ -39,7 +39,7 @@ export class AppElement extends LitElement {
           <a href="/blog">Blog</a>
           <a href="/about">About</a>
           <div class="contact-me-container">
-            <button type="button" class="contact-me" popovertarget="contact-details">My links</button>
+            <button type="button" class="contact-me" popovertarget="contact-details">Contact</button>
             <ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
               <li>${this.#renderEmail()}</li>
               <li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>

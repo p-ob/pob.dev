@@ -1,0 +1,25 @@
+:root {
+  font-family: system-ui;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--font-color);
+  background-color: var(--page-background-color);
+}
+
+ol {
+  padding: 0;
+  counter-reset: item;
+
+  li {
+    display: block;
+
+    &::before {
+      content: counter(item) ". ";
+      counter-increment: item;
+    }
+  }
+}
+
+ol ol {
+  padding-left: 1rem;
+}

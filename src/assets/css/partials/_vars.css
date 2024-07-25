@@ -1,0 +1,23 @@
+@property --font-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: black;
+}
+
+@property --page-background-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: white;
+}
+
+:root {
+	--font-color: #333333;
+  --page-background-color: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --font-color: #e8e8e8;
+    --page-background-color: rgb(32, 33, 36);
+  }
+}

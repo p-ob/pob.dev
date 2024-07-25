@@ -1,4 +1,5 @@
 import { parseHTML } from "linkedom";
+import slugify from "slugify";
 
 function generateId(element, slugify, ids = []) {
 	let id;
@@ -19,7 +20,7 @@ function computeHeadingLevelFromElement(element) {
   return -1;
 }
 
-function buildHeadingTree(elements, currentHeadingLevel, slugify, ids = []) {
+function buildHeadingTree(elements, currentHeadingLevel, ids = []) {
   const tree = [];
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
@@ -34,7 +35,7 @@ function buildHeadingTree(elements, currentHeadingLevel, slugify, ids = []) {
         id,
         title: element.textContent,
         href: `#${id}`,
-        items: buildHeadingTree(elements.slice(i + 1), headingLevel + 1, slugify, ids),
+        items: buildHeadingTree(elements.slice(i + 1), headingLevel + 1, ids),
       });
     } else if (headingLevel < currentHeadingLevel) {
       break;
@@ -76,7 +77,7 @@ export function TableOfContentsPlugin(eleventyConfig, options) {
 		}
 
 		const headingElements = document.querySelectorAll("h2, h3, h4, h5, h6");
-		const headingTree = buildHeadingTree(headingElements, 2, eleventyConfig.javascriptFunctions.slug);
+		const headingTree = buildHeadingTree(headingElements, 2);
 
 		if (headingTree.length === 0) {
 			parentEl.remove();

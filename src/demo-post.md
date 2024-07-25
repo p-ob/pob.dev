@@ -1,6 +1,6 @@
 ---
 title: "Lorem Ipsum"
-layout: post
+layout: post.webc
 excludeFromSearch: true
 date: 1916-04-24 10:00:00 +05:00
 ---

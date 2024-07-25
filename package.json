@@ -9,14 +9,16 @@
     "node": ">=22"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0-alpha.14",
+    "@11ty/eleventy": "^3.0.0-alpha.17",
     "@11ty/eleventy-img": "^4.0.2",
     "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-webc": "^0.11.2",
     "@lit-labs/eleventy-plugin-lit": "^1.0.3",
     "clean-css": "^5.3.3",
     "linkedom": "^0.18.4",
     "pagefind": "^1.1.0",
-    "prettier": "^3.3.2"
+    "prettier": "^3.3.2",
+    "slugify": "^1.6.6"
   },
   "scripts": {
     "build": "npm run build:11ty && npm run build:index",

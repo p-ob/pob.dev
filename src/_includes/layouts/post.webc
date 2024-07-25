@@ -1,0 +1,11 @@
+---
+layout: base.njk
+pageType: article
+---
+
+<h1 @html="title"></h1>
+<time :datetime="machineDate(page.date)" @html="readableDate(page.date)"></time>
+
+<hr />
+
+<template @html="content" webc:nokeep></template>
