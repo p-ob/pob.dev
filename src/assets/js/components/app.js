@@ -147,8 +147,6 @@ export class AppElement extends LitElement {
       grid-template-columns: 20vw 1fr 20vw;
       grid-template-rows: auto 1fr auto;
       grid-gap: 10px;
-
-      height: 100vh;
     }
 
     header {

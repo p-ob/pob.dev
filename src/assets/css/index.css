@@ -1,12 +1,21 @@
 @layer reset, config, base, layout;
 
-@import url("/assets/css/partials/_reset.css") layer(rest);
+@import url("/assets/css/partials/_reset.css") layer(reset);
 @import url("/assets/css/partials/_vars.css") layer(config);
 @import url("/assets/css/partials/_base.css") layer(base);
 
-@layer page {
+@layer layout {
   #toc {
     position: sticky;
     top: 5rem;
   }
+
+	.breadcrumb {
+		display: inline-flex;
+		align-items: center;
+		margin: 1rem;
+		margin-left: 0;
+		font-size: 1.1rem;
+		font-weight: 600;
+	}
 }
