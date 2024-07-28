@@ -1,13 +1,5 @@
-import { LitElement, html, css, svg, nothing } from "lit";
+import { LitElement, html, css, nothing } from "lit";
 import { classMap } from "lit/directives/class-map.js";
-
-const externalLinkIcon = svg`
-  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
-    <path
-      d="M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 12 L 19 12 L 19 19 L 5 19 L 5 5 L 12 5 L 12 3 L 5 3 z M 14 3 L 14 5 L 17.585938 5 L 8.2929688 14.292969 L 9.7070312 15.707031 L 19 6.4140625 L 19 10 L 21 10 L 21 3 L 14 3 z"
-    ></path>
-  </svg>
-`;
 
 export class AppElement extends LitElement {
   static get properties() {
@@ -69,7 +61,7 @@ export class AppElement extends LitElement {
 		for (const className of classlist.split(" ")) {
 			classes[className] = true;
 		}
-    return html` <a class="external ${classMap(classes)}" target="_blank" rel="noreferrer" href="${url}">${text}${externalLinkIcon}</a> `;
+    return html` <a class="external ${classMap(classes)}" target="_blank" rel="noreferrer" href="${url}">${text}</a> `;
   }
 
   #renderEmail() {
@@ -147,8 +139,7 @@ export class AppElement extends LitElement {
       grid-template-columns: 20vw 1fr 20vw;
       grid-template-rows: auto 1fr auto;
       grid-gap: 10px;
-
-      height: 100vh;
+			min-height: 100vh;
     }
 
     header {
@@ -202,12 +193,6 @@ export class AppElement extends LitElement {
       color: inherit;
     }
 
-    a.external svg {
-      fill: currentColor;
-      width: 1rem;
-      height: 1rem;
-    }
-
     .contact-me {
       user-select: none;
       background: none;
@@ -236,6 +221,7 @@ export class AppElement extends LitElement {
     #contact-details:popover-open {
       position: absolute;
       inset: unset;
+			margin-top: 1rem;
     }
   `;
 }
