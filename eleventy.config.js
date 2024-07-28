@@ -5,6 +5,7 @@ import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
 import markdownItFootnote from "markdown-it-footnote";
+import { FeedsPlugin } from "./11ty/feeds.js";
 
 function getLitComponents(...components) {
   const root = "src/assets/js/components/";
@@ -26,7 +27,6 @@ function passthroughCopyLitDependencies(eleventyConfig) {
 const LIT_COMPONENTS = getLitComponents("app");
 
 export default async function (eleventyConfig) {
-
   /* passthrough copies */
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -41,6 +41,23 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPlugin(JsonHtmlPlugin);
   eleventyConfig.addPlugin(pluginWebc);
   eleventyConfig.addPlugin(TableOfContentsPlugin, { parent: "#toc" });
+  eleventyConfig.addPlugin(FeedsPlugin, {
+    outputPath: "feed",
+    author: {
+      name: "Patrick O'Brien",
+      email: "public@pob.dev",
+    },
+    base: "https://pob.dev/",
+    collection: {
+      name: "post",
+      limit: 10,
+    },
+    metadata: {
+      language: "en",
+      title: "Patrick O'Brien",
+      subtitle: "Posts from Patrick O'Brien. Opinions my own.",
+    },
+  });
 
   // this must come last
   eleventyConfig.addPlugin(litPlugin, {
@@ -63,7 +80,8 @@ export default async function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("cssmin", function (code) {
-    return new CleanCSS({}).minify(code).styles;
+    const output = new CleanCSS({}).minify(code);
+    return output.styles;
   });
 
   eleventyConfig.addWatchTarget("./src/assets/js/components/");
@@ -72,20 +90,22 @@ export default async function (eleventyConfig) {
   eleventyConfig.amendLibrary("md", (mdLib) => {
     mdLib.use(markdownItFootnote);
 
-		const defaultRender = mdLib.renderer.rules.link_open || function (tokens, idx, options, _env, self) {
-			return self.renderToken(tokens, idx, options);
-		};
+    const defaultRender =
+      mdLib.renderer.rules.link_open ||
+      function (tokens, idx, options, _env, self) {
+        return self.renderToken(tokens, idx, options);
+      };
 
-		mdLib.renderer.rules.link_open = function (tokens, idx, options, env, self) {
-			const href = tokens[idx].attrGet('href');
-			if (href?.startsWith('http://') || href?.startsWith('https://')) {
-				tokens[idx].attrSet('target', '_blank');
-				tokens[idx].attrSet('rel', 'noopener noreferrer');
-			}
+    mdLib.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+      const href = tokens[idx].attrGet("href");
+      if (href?.startsWith("http://") || href?.startsWith("https://")) {
+        tokens[idx].attrSet("target", "_blank");
+        tokens[idx].attrSet("rel", "noopener noreferrer");
+      }
 
-			// Pass the token to the default renderer.
-			return defaultRender(tokens, idx, options, env, self);
-		};
+      // Pass the token to the default renderer.
+      return defaultRender(tokens, idx, options, env, self);
+    };
 
     return mdLib;
   });

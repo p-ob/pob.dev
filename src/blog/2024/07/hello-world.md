@@ -3,7 +3,7 @@ date: 2024-07-26 17:00:00 +05:00
 title: Hello, World!
 ---
 
-Back in 2020 (just prior to the lockdown), I had sat down and started hacking together my own personal website. At the time, I was hoping to use [Eleventy](https://11ty.dev), Google's [material web components](https://github.com/material-components/material-web), and [Netlify](https://www.netlify.com), among a few other fun tools. My attempt then didn't succeed, and I let my site sit.
+Back in 2020 (just prior to the lockdown), I had sat down and started hacking together my own personal website. At the time, I was hoping to use [Eleventy](https://11ty.dev), Google's [material web components](https://github.com/material-components/material-web), and [Netlify](https://www.netlify.com), among a few other fun tools. My attempts then fizzled during the pandemic, and I let my site sit.
 
 Well, finally this year, I've started the whole process over again.
 
@@ -42,4 +42,4 @@ I've never used Cloudflare before, for anything. But, their blog posts have been
 
 ### The repo
 
-This site is entirely open source, and always will be. If you'd rather just look at code yourself (or steal anything you find useful), you can find the repo at [https://github.com/pob/pob.dev](https://github.com/pob/pob.dev).
+This site is entirely open source, and always will be. If you'd rather just look at code yourself (or steal anything you find useful), you can find the repo at [https://github.com/pob/pob.dev](https://github.com/p-ob/pob.dev).

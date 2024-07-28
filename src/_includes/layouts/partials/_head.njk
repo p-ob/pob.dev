@@ -15,8 +15,8 @@
 			}
 		}
     </script>
-    <link rel="modulepreload" href="/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js"/>
-    <link rel="modulepreload" href="/assets/js/components/app.js"/>
+    <link rel="modulepreload" href="/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js">
+    <link rel="modulepreload" href="/assets/js/components/app.js">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -29,5 +29,12 @@
     <meta name="description" content="{{ description }}">
     <meta name="generator" content="{{ eleventy.generator }}">
     <meta name="fediverse:creator" content="{{ author.social.fediverse }}">
+
+		<style>
+			@view-transition {
+				navigation: auto;
+			}
+		</style>
+		<link rel="expect" href="#app" blocking="render">
 		<link rel="stylesheet" href="/assets/css/index.css">
   </head>

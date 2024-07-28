@@ -1,5 +1,19 @@
-import { LitElement, html, css, nothing } from "lit";
+import { LitElement, html, css, svg, nothing } from "lit";
 import { classMap } from "lit/directives/class-map.js";
+
+const feedIcon = svg`<svg
+  viewBox="0 0 25 25"
+  aria-label="RSS feed"
+  style="width: 1rem; aspect-ratio: 1/1; fill: var(--color-text);"
+>
+  <path d="M3.7 17.5a3.7 3.7 0 1 0 0 7.4 3.7 3.7 0 0 0 0-7.4z"></path>
+  <path
+    d="M.4 8.1c-.2 0-.4.2-.4.4v4.7c0 .2.2.4.4.4 6 0 10.9 4.9 10.9 11 0 .1.2.3.4.3h4.7c.2 0 .4-.2.4-.4v-.1C16.7 15.4 9.4 8.1.4 8.1z"
+  ></path>
+  <path
+    d="M24.9 24.4C24.9 10.9 13.9 0 .4 0 .2 0 0 .2 0 .4v4.8c0 .2.2.4.4.4a19 19 0 0 1 18.9 19c0 .1.2.3.4.3h4.8c.2 0 .4-.2.4-.4v-.1z"
+  ></path>
+</svg>`;
 
 export class AppElement extends LitElement {
   static get properties() {
@@ -40,6 +54,7 @@ export class AppElement extends LitElement {
               <li>${this.#renderExternalLink("Twitter", this.author.social.twitter)}</li>
             </ul>
           </div>
+          <a class="feed" href="/feed">${feedIcon}</a>
           <a class="search" href="/search">Search</a>
         </nav>
       </header>
@@ -56,11 +71,11 @@ export class AppElement extends LitElement {
   }
 
   #renderExternalLink(text, url, classlist) {
-		classlist ??= "";
-		const classes = {};
-		for (const className of classlist.split(" ")) {
-			classes[className] = true;
-		}
+    classlist ??= "";
+    const classes = {};
+    for (const className of classlist.split(" ")) {
+      classes[className] = true;
+    }
     return html` <a class="external ${classMap(classes)}" target="_blank" rel="noreferrer" href="${url}">${text}</a> `;
   }
 
@@ -118,9 +133,9 @@ export class AppElement extends LitElement {
         display: none;
       }
 
-			.edit-link {
-				display: none;
-			}
+      .edit-link {
+        display: none;
+      }
     }
 
     :host([page-type="article"]) {
@@ -139,7 +154,7 @@ export class AppElement extends LitElement {
       grid-template-columns: 20vw 1fr 20vw;
       grid-template-rows: auto 1fr auto;
       grid-gap: 10px;
-			min-height: 100vh;
+      min-height: 100vh;
     }
 
     header {
@@ -205,8 +220,9 @@ export class AppElement extends LitElement {
       font-size: inherit;
     }
 
-    .search {
+    .feed {
       margin-left: auto;
+			fill: var(--font-color);
     }
 
     [popover] {
@@ -221,7 +237,7 @@ export class AppElement extends LitElement {
     #contact-details:popover-open {
       position: absolute;
       inset: unset;
-			margin-top: 1rem;
+      margin-top: 1rem;
     }
   `;
 }

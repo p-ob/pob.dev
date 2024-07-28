@@ -3,6 +3,7 @@
 	{% include "./partials/_head.njk" %}
   <body>
     <pob-app
+			id="app"
 			current-year="{{ currentYear }}"
 			author="{{ author | json_html }}"
 			repository="{{ pkg.repository.url }}"
