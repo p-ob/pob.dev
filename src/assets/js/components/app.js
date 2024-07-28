@@ -65,7 +65,9 @@ export class AppElement extends LitElement {
       <footer>
         <span class="footer-contact-me">${this.#renderEmail()}</span>
         ${this.#renderEditLink()}
-        <small class="copyright">&copy; <span class="hide-mobile">Copyright</span> ${this.currentYear}, ${this.author.name}</small>
+        <small class="copyright"
+          >&copy; <span class="hide-mobile">Copyright</span> ${this.currentYear}, ${this.author.name}</small
+        >
       </footer>
     </div>`;
   }
@@ -90,7 +92,7 @@ export class AppElement extends LitElement {
 
   #renderEditLink() {
     const editUrl = new URL(this.source, `${this.repository}/edit/${this.branch}/`);
-    return this.#renderExternalLink("Edit this page", editUrl, "edit-link");
+    return this.#renderExternalLink("Edit this page", editUrl, "hide-mobile");
   }
 
   /**
@@ -127,9 +129,9 @@ export class AppElement extends LitElement {
       }
     }
 
-		* {
-			font-family: inherit;
-		}
+    * {
+      font-family: inherit;
+    }
 
     .site-root {
       display: grid;
@@ -181,7 +183,7 @@ export class AppElement extends LitElement {
         gap: 0.5rem;
       }
 
-      * {
+      > * {
         padding-right: 1rem;
       }
     }
@@ -237,9 +239,9 @@ export class AppElement extends LitElement {
     }
 
     @media (max-width: 768px) {
-			.hide-mobile {
-				display: none;
-			}
+      .hide-mobile {
+        display: none;
+      }
 
       .site-root {
         grid-template-areas:
@@ -252,14 +254,10 @@ export class AppElement extends LitElement {
         display: none;
       }
 
-      .edit-link {
-        display: none;
+      .nav-item {
+        font-size: 1rem;
+        font-weight: normal;
       }
-
-			.nav-item {
-				font-size: 1rem;
-				font-weight: normal;
-			}
     }
   `;
 }
