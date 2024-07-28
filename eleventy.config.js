@@ -5,6 +5,7 @@ import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import { copyFile } from "node:fs/promises";
 import CleanCSS from "clean-css";
+import markdownItFootnote from "markdown-it-footnote";
 
 function getLitComponents(...components) {
   const root = "src/assets/js/components/";
@@ -24,15 +25,15 @@ function passthroughCopyLitDependencies(eleventyConfig) {
 }
 
 async function includeMetafiles(...filePaths) {
-	for (const filePath of filePaths) {
-		await copyFile(filePath, `src/meta/${filePath}`);
-	}
+  for (const filePath of filePaths) {
+    await copyFile(filePath, `src/meta/${filePath}`);
+  }
 }
 
 const LIT_COMPONENTS = getLitComponents("app");
 
 export default async function (eleventyConfig) {
-	await includeMetafiles("README.md");
+  await includeMetafiles("README.md", "LICENSE.md");
 
   /* passthrough copies */
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
@@ -46,7 +47,7 @@ export default async function (eleventyConfig) {
   /* plugins */
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
   eleventyConfig.addPlugin(JsonHtmlPlugin);
-	eleventyConfig.addPlugin(pluginWebc);
+  eleventyConfig.addPlugin(pluginWebc);
   eleventyConfig.addPlugin(TableOfContentsPlugin, { parent: "#toc" });
 
   // this must come last
@@ -74,6 +75,28 @@ export default async function (eleventyConfig) {
   });
 
   eleventyConfig.addWatchTarget("./src/assets/js/components/");
+
+  // additional config
+  eleventyConfig.amendLibrary("md", (mdLib) => {
+    mdLib.use(markdownItFootnote);
+
+		const defaultRender = mdLib.renderer.rules.link_open || function (tokens, idx, options, _env, self) {
+			return self.renderToken(tokens, idx, options);
+		};
+
+		mdLib.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+			const href = tokens[idx].attrGet('href');
+			if (href?.startsWith('http://') || href?.startsWith('https://')) {
+				tokens[idx].attrSet('target', '_blank');
+				tokens[idx].attrSet('rel', 'noopener noreferrer');
+			}
+
+			// Pass the token to the default renderer.
+			return defaultRender(tokens, idx, options, env, self);
+		};
+
+    return mdLib;
+  });
 }
 
 export const config = {

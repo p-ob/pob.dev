@@ -6,20 +6,36 @@
   background-color: var(--page-background-color);
 }
 
+
 ol {
   padding: 0;
-  counter-reset: item;
+  counter-reset: index;
+	list-style-type: none;
 
   li {
     display: block;
 
     &::before {
-      content: counter(item) ". ";
-      counter-increment: item;
+      counter-increment: index;
+      content: counters(index, '.', decimal) ' ';
     }
   }
 }
 
 ol ol {
   padding-left: 1rem;
+}
+
+article p:first-of-type::first-letter {
+	float: left;
+  text-align: left;
+  text-transform: uppercase;
+  line-height: .7;
+  font-size: 5rem;
+  margin-top: 0.2rem;
+  margin-right: 0.6rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+  font-weight: 100;
+  font-family: "playfair-caps";
 }
