@@ -63,9 +63,9 @@ export class AppElement extends LitElement {
       </main>
       <aside><slot name="sidebar"></slot></aside>
       <footer>
-        <span class="footer-contact-me">Contact: ${this.#renderEmail()}</span>
+        <span class="footer-contact-me">${this.#renderEmail()}</span>
         ${this.#renderEditLink()}
-        <small class="copyright">&copy; Copyright ${this.currentYear}, ${this.author.name}</small>
+        <small class="copyright">&copy; <span class="hide-mobile">Copyright</span> ${this.currentYear}, ${this.author.name}</small>
       </footer>
     </div>`;
   }
@@ -121,28 +121,15 @@ export class AppElement extends LitElement {
       }
     }
 
-    @media (max-width: 768px) {
-      .site-root {
-        grid-template-areas:
-          "header header header"
-          "content content content"
-          "footer footer footer";
-      }
-
-      aside {
-        display: none;
-      }
-
-      .edit-link {
-        display: none;
-      }
-    }
-
     :host([page-type="article"]) {
       ::slotted(*:not([slot])) {
         max-width: 800px;
       }
     }
+
+		* {
+			font-family: inherit;
+		}
 
     .site-root {
       display: grid;
@@ -247,6 +234,32 @@ export class AppElement extends LitElement {
       position: absolute;
       inset: unset;
       margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+			.hide-mobile {
+				display: none;
+			}
+
+      .site-root {
+        grid-template-areas:
+          "header header header"
+          "content content content"
+          "footer footer footer";
+      }
+
+      aside {
+        display: none;
+      }
+
+      .edit-link {
+        display: none;
+      }
+
+			.nav-item {
+				font-size: 1rem;
+				font-weight: normal;
+			}
     }
   `;
 }
