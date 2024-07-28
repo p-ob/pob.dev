@@ -1,19 +1,19 @@
   <head>
     <script type="importmap">
-		{
-			"imports": {
-				"lit": "/assets/external/lit/index.js",
-				"lit/": "/assets/external/lit/",
-				"@lit/reactive-element": "/assets/external/@lit/reactive-element/reactive-element.js",
-				"@lit/reactive-element/": "/assets/external/@lit/reactive-element/",
-				"@lit-labs/ssr-dom-shim": "/assets/external/@lit-labs/ssr-dom-shim/index.js",
-				"@lit-labs/ssr-client": "/assets/external/@lit-labs/ssr-client/index.js",
-				"@lit-labs/ssr-client/": "/assets/external/@lit-labs/ssr-client/",
-				"lit-element/": "/assets/external/lit-element/",
-				"lit-html": "/assets/external/lit-html/lit-html.js",
-				"lit-html/": "/assets/external/lit-html/"
-			}
+	{
+		"imports": {
+			"lit": "/assets/external/lit/index.js",
+			"lit/": "/assets/external/lit/",
+			"@lit/reactive-element": "/assets/external/@lit/reactive-element/reactive-element.js",
+			"@lit/reactive-element/": "/assets/external/@lit/reactive-element/",
+			"@lit-labs/ssr-dom-shim": "/assets/external/@lit-labs/ssr-dom-shim/index.js",
+			"@lit-labs/ssr-client": "/assets/external/@lit-labs/ssr-client/index.js",
+			"@lit-labs/ssr-client/": "/assets/external/@lit-labs/ssr-client/",
+			"lit-element/": "/assets/external/lit-element/",
+			"lit-html": "/assets/external/lit-html/lit-html.js",
+			"lit-html/": "/assets/external/lit-html/"
 		}
+	}
     </script>
     <link rel="modulepreload" href="/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js">
     <link rel="modulepreload" href="/assets/js/components/app.js">
@@ -29,12 +29,6 @@
     <meta name="description" content="{{ description }}">
     <meta name="generator" content="{{ eleventy.generator }}">
     <meta name="fediverse:creator" content="{{ author.social.fediverse }}">
-
-		<style>
-			@view-transition {
-				navigation: auto;
-			}
-		</style>
-		<link rel="expect" href="#app" blocking="render">
-		<link rel="stylesheet" href="/assets/css/index.css">
+	<link rel="expect" href="#app" blocking="render">
+	<link rel="stylesheet" href="/assets/css/index.css">
   </head>
