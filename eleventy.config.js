@@ -3,7 +3,6 @@ import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import pluginWebc from "@11ty/eleventy-plugin-webc";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
-import { copyFile } from "node:fs/promises";
 import CleanCSS from "clean-css";
 import markdownItFootnote from "markdown-it-footnote";
 
@@ -24,16 +23,9 @@ function passthroughCopyLitDependencies(eleventyConfig) {
   }
 }
 
-async function includeMetafiles(...filePaths) {
-  for (const filePath of filePaths) {
-    await copyFile(filePath, `src/meta/${filePath}`);
-  }
-}
-
 const LIT_COMPONENTS = getLitComponents("app");
 
 export default async function (eleventyConfig) {
-  await includeMetafiles("README.md", "LICENSE.md");
 
   /* passthrough copies */
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
