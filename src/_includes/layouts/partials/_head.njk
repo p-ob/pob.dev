@@ -1,5 +1,5 @@
-  <head>
-    <script type="importmap">
+<head>
+	<script type="importmap">
 	{
 		"imports": {
 			"lit": "/assets/external/lit/index.js",
@@ -14,21 +14,21 @@
 			"lit-html/": "/assets/external/lit-html/"
 		}
 	}
-    </script>
-    <link rel="modulepreload" href="/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js">
-    <link rel="modulepreload" href="/assets/js/components/app.js">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-      {% if title %}
-        {{ title }} | {{ author.name }}
-      {% else %}
-        {{ author.name }}
-      {% endif %}
-    </title>
-    <meta name="description" content="{{ description }}">
-    <meta name="generator" content="{{ eleventy.generator }}">
-    <meta name="fediverse:creator" content="{{ author.social.fediverse }}">
+	</script>
+	<link rel="modulepreload" href="/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js">
+	<link rel="modulepreload" href="/assets/js/components/app.js">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		{% if title %}
+			{{ title }} | {{ author.name }}
+		{% else %}
+			{{ author.name }}
+		{% endif %}
+	</title>
+	<meta name="description" content="{{ description }}">
+	<meta name="generator" content="{{ eleventy.generator }}">
+	<meta name="fediverse:creator" content="{{ author.social.fediverse }}">
 	<link rel="expect" href="#app" blocking="render">
 	<link rel="stylesheet" href="/assets/css/index.css">
-  </head>
+</head>

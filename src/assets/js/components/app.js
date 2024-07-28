@@ -41,6 +41,9 @@ export class AppElement extends LitElement {
     super.connectedCallback();
     window.addEventListener("resize", this.#setPopoverPosition.bind(this));
     window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
+
+		// init
+		this.#setPopoverPosition();
   }
 
   render() {
