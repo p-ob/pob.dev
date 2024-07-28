@@ -1,13 +1,16 @@
 ---
 title: "Lorem Ipsum"
-layout: post.webc
+layout: post
 excludeFromSearch: true
 date: 1916-04-24 10:00:00 +05:00
+tags: ["lorem", "ipsum"]
 ---
 
 ## Introduction to Lorem Ipsum
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat. Sed vitae velit ut arcu ultricies faucibus. Duis vitae dui ac arcu interdum pulvinar.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.^[Inlines notes are easier to write, since
+you don't have to pick an identifier and move down to type the
+note.] Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat. Sed vitae velit ut arcu ultricies faucibus. Duis vitae dui ac arcu interdum pulvinar.
 
 ### What is Lorem Ipsum?
 

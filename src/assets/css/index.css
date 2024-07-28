@@ -8,14 +8,63 @@
   #toc {
     position: sticky;
     top: 5rem;
+
+    ol {
+      padding: 0;
+      counter-reset: index;
+      list-style-type: none;
+
+      li {
+        display: block;
+
+        &::before {
+          counter-increment: index;
+          content: counters(index, ".", decimal) " ";
+        }
+      }
+    }
+
+    ol ol {
+      padding-left: 1rem;
+    }
   }
 
-	.breadcrumb {
-		display: inline-flex;
-		align-items: center;
-		margin: 1rem;
-		margin-left: 0;
-		font-size: 1.1rem;
-		font-weight: 600;
+  .tags {
+    display: flex;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    color: #333;
+    background-color: #f0f0f0;
+    display: inline-block;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  .tag + .tag {
+    margin-left: 1ch;
+  }
+
+  .tag:hover {
+    background-color: #e0e0e0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .tag {
+      color: #ccc;
+      background-color: #444;
+    }
+
+    .tag:hover {
+      background-color: #555;
+    }
+  }
+
+	.footnotes-list {
+		padding: 0;
+		margin-left: 1rem;
 	}
 }

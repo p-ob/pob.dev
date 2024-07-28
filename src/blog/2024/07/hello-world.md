@@ -1,6 +1,7 @@
 ---
 date: 2024-07-26 17:00:00 +05:00
 title: Hello, World!
+tags: [meta]
 ---
 
 Back in 2020 (just prior to the lockdown), I had sat down and started hacking together my own personal website. At the time, I was hoping to use [Eleventy](https://11ty.dev), Google's [material web components](https://github.com/material-components/material-web), and [Netlify](https://www.netlify.com), among a few other fun tools. My attempts then fizzled during the pandemic, and I let my site sit.
@@ -13,8 +14,7 @@ First and foremost, this site is for me. I find writing articles about my work a
 
 But I do hope that whoever finds this site finds value as well. My favorite part of working in technology isn't just building cool things -- it's teaching others how to build cool things in new and exciting ways.
 
-If you're curious what more to expect from me, check out either my [about page](/about) or my [why page](/why).
-
+If you're curious what more to expect from me, check out my [about page](/about).
 
 ## How it's built
 

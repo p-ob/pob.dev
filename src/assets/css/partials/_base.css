@@ -4,29 +4,10 @@
   line-height: 1.5;
   color: var(--font-color);
   background-color: var(--page-background-color);
-	scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
-ol {
-  padding: 0;
-  counter-reset: index;
-  list-style-type: none;
-
-  li {
-    display: block;
-
-    &::before {
-      counter-increment: index;
-      content: counters(index, ".", decimal) " ";
-    }
-  }
-}
-
-ol ol {
-  padding-left: 1rem;
-}
-
-article p:first-of-type::first-letter {
+article > p:first-of-type::first-letter {
   float: left;
   text-align: left;
   text-transform: uppercase;
@@ -38,6 +19,18 @@ article p:first-of-type::first-letter {
   text-rendering: geometricPrecision;
   font-weight: 100;
   font-family: "Libre Baskerville";
+}
+
+table {
+  border-collapse: collapse;
+	width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
 @font-face {

@@ -41,11 +41,11 @@ export class AppElement extends LitElement {
     return html` <div class="site-root">
       <header>
         <nav class="top-nav">
-          <a href="/">Home</a>
-          <a href="/blog">Blog</a>
-          <a href="/about">About</a>
+          <a class="nav-item" href="/">Home</a>
+          <a class="nav-item" href="/blog">Blog</a>
+          <a class="nav-item" href="/about">About</a>
           <div class="contact-me-container">
-            <button type="button" class="contact-me" popovertarget="contact-details">Contact</button>
+            <button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
             <ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
               <li>${this.#renderEmail()}</li>
               <li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
@@ -54,8 +54,8 @@ export class AppElement extends LitElement {
               <li>${this.#renderExternalLink("Twitter", this.author.social.twitter)}</li>
             </ul>
           </div>
-          <a class="feed" href="/feed">${feedIcon}</a>
-          <a class="search" href="/search">Search</a>
+          <a class="search nav-item" href="/search">Search</a>
+          <a class="feed nav-item" href="/feed">${feedIcon}</a>
         </nav>
       </header>
       <main part="main">
@@ -206,13 +206,13 @@ export class AppElement extends LitElement {
 
     a {
       color: inherit;
+      text-decoration: none;
     }
 
     .contact-me {
       user-select: none;
       background: none;
       border: none;
-      text-decoration: underline;
       cursor: pointer;
       color: inherit;
       padding: 0;
@@ -220,9 +220,12 @@ export class AppElement extends LitElement {
       font-size: inherit;
     }
 
-    .feed {
+    .search {
       margin-left: auto;
-			fill: var(--font-color);
+    }
+
+    .feed {
+      fill: var(--font-color);
     }
 
     [popover] {
@@ -232,6 +235,12 @@ export class AppElement extends LitElement {
 
     .contact-me-container {
       position: relative;
+      display: flex;
+    }
+
+    .nav-item {
+      font-weight: bold;
+      font-size: 1.25rem;
     }
 
     #contact-details:popover-open {

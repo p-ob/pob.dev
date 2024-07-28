@@ -30,11 +30,13 @@ export default async function (eleventyConfig) {
   /* passthrough copies */
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
   eleventyConfig.addPassthroughCopy("src/assets");
+  eleventyConfig.addPassthroughCopy("src/robots.txt");
   passthroughCopyLitDependencies(eleventyConfig);
 
   /* global data */
   eleventyConfig.addGlobalData("layout", "base.njk");
   eleventyConfig.addGlobalData("currentYear", new Date().getFullYear());
+  eleventyConfig.addGlobalData("host", "https://pob.dev");
 
   /* plugins */
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
@@ -79,9 +81,13 @@ export default async function (eleventyConfig) {
     return date.toISOString();
   });
 
-  eleventyConfig.addFilter("cssmin", function (code) {
+  eleventyConfig.addFilter("cssmin", (code) => {
     const output = new CleanCSS({}).minify(code);
     return output.styles;
+  });
+
+  eleventyConfig.addFilter("except", (arr, ...exclusions) => {
+    return arr.filter((x) => !exclusions.includes(x));
   });
 
   eleventyConfig.addWatchTarget("./src/assets/js/components/");
