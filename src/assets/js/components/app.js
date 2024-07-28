@@ -37,6 +37,12 @@ export class AppElement extends LitElement {
     this.author = {};
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener("resize", this.#setPopoverPosition.bind(this));
+    window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
+  }
+
   render() {
     return html` <div class="site-root">
       <header>
@@ -101,12 +107,18 @@ export class AppElement extends LitElement {
    */
   #onContactToggle(event) {
     if (event.newState === "open") {
-      const popover = event.target;
-      const boundingRect = this.#contactMeContainer.getBoundingClientRect();
-
-      popover.style.top = `${boundingRect.top + boundingRect.height}px`;
-      popover.style.left = `${boundingRect.left}px`;
+      this.#setPopoverPosition();
     }
+  }
+
+  #setPopoverPosition() {
+    const popover = this.shadowRoot.querySelector("#contact-details");
+    const boundingRect = this.#contactMeContainer.getBoundingClientRect();
+
+    const top = boundingRect.top + boundingRect.height + window.scrollY;
+
+    popover.style.top = `${top}px`;
+    popover.style.left = `${boundingRect.left}px`;
   }
 
   static styles = css`
