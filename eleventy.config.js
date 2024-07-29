@@ -68,12 +68,7 @@ export default async function (eleventyConfig) {
   });
 
   /* filters */
-  eleventyConfig.addFilter("readableDate", (date) => {
-    const opts = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
+  eleventyConfig.addFilter("readableDate", (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
     return new Intl.DateTimeFormat("en-US", opts).format(date);
   });
 

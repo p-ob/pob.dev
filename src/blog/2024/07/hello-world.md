@@ -2,6 +2,7 @@
 date: 2024-07-26 17:00:00 +05:00
 title: Hello, World!
 tags: [meta]
+description: A brief (re)introduction to my personal webiste, and what to expect from it.
 ---
 
 Back in 2020 (just prior to the lockdown), I had sat down and started hacking together my own personal website. At the time, I was hoping to use [Eleventy](https://11ty.dev), Google's [material web components](https://github.com/material-components/material-web), and [Netlify](https://www.netlify.com), among a few other fun tools. My attempts then fizzled during the pandemic, and I let my site sit.

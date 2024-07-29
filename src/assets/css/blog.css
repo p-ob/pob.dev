@@ -1,0 +1,17 @@
+@layer layout {
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+		padding: 0;
+  }
+
+	li.post {
+		list-style-type: none;
+		display: flex;
+		flex-direction: row;
+
+		a {
+			display: contents;
+		}
+	}
+}

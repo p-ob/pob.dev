@@ -6,12 +6,20 @@ eleventyImport:
   collections: ["post"]
 ---
 
+<link rel="stylesheet" href="/assets/css/blog.css">
+
 <h1>Posts</h1>
 
-<ul>
+<ol class="posts">
 {%- for post in collections.post | reverse -%}
-  <li{% if page.url == post.url %} aria-current="page"{% endif %}>
-		<a href="{{ post.url }}">{{ post.data.title }}</a>
+  <li class="post">
+		<a href="{{ post.url }}">
+			<time class="post-date" datetime="{{ post.date | machineDate }}">{{ post.date | readableDate }}</time>
+			<div class="details">
+				<strong>{{ post.data.title }}</strong>
+				<div>{{ post.data.description }}</div>
+			</div>
+		</a>
 	</li>
 {%- endfor -%}
-</ul>
+</ol>

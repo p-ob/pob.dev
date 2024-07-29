@@ -42,8 +42,8 @@ export class AppElement extends LitElement {
     window.addEventListener("resize", this.#setPopoverPosition.bind(this));
     window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
 
-		// init
-		this.#setPopoverPosition();
+    // init
+    this.#setPopoverPosition();
   }
 
   render() {
@@ -138,9 +138,13 @@ export class AppElement extends LitElement {
       }
     }
 
+    ::slotted(*:not([slot])) {
+      width: 100%;
+    }
+
     :host([page-type="article"]) {
       ::slotted(*:not([slot])) {
-        max-width: 800px;
+        max-width: 100ch;
       }
     }
 
@@ -174,8 +178,8 @@ export class AppElement extends LitElement {
     main {
       grid-area: content;
       margin: 0 10vw;
-			display: flex;
-			justify-content: center;
+      display: flex;
+      justify-content: center;
     }
 
     aside {
