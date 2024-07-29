@@ -2,3 +2,12 @@
 noSidebar: true
 ---
 
+<h2>Latest</h2>
+{% set latestPost = collections.post | first %}
+<a href="{{ latestPost.url }}">
+  <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
+  <div class="details">
+    <strong>{{ latestPost.data.title }}</strong>
+    <div>{{ latestPost.data.description }}</div>
+  </div>
+</a>
