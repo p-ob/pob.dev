@@ -174,6 +174,8 @@ export class AppElement extends LitElement {
     main {
       grid-area: content;
       margin: 0 10vw;
+			display: flex;
+			justify-content: center;
     }
 
     aside {
