@@ -1,5 +1,6 @@
-@layer reset, config, base, layout;
+@layer reset, config, base, utility, layout;
 
 @import url("/assets/css/partials/_reset.css") layer(reset);
 @import url("/assets/css/partials/_vars.css") layer(config);
 @import url("/assets/css/partials/_base.css") layer(base);
+@import url("/assets/css/partials/_utility.css") layer(utility);

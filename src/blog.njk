@@ -13,7 +13,7 @@ eleventyImport:
 <ol class="posts">
 {%- for post in collections.post | reverse -%}
   <li>
-		<article class="post">
+		<article class="post card">
 			<a href="{{ post.url }}">
 				<time class="post-date" datetime="{{ post.date | machineDate }}">{{ post.date | readableDate }}</time>
 				<div class="post-details">
