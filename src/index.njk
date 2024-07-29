@@ -2,9 +2,11 @@
 noSidebar: true
 ---
 
+<link rel="stylesheet" href="/assets/css/index.css">
+
 <h2>Latest</h2>
-{% set latestPost = collections.post | first %}
-<a href="{{ latestPost.url }}">
+{% set latestPost = collections.post | last %}
+<a class="post" href="{{ latestPost.url }}">
   <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
   <div class="details">
     <strong>{{ latestPost.data.title }}</strong>
