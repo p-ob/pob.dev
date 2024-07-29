@@ -1,5 +1,5 @@
 @view-transition {
-	navigation: auto;
+  navigation: auto;
 }
 
 :root {
@@ -27,7 +27,7 @@ article > p:first-of-type::first-letter {
 
 table {
   border-collapse: collapse;
-	width: 100%;
+  width: 100%;
 }
 
 th,
@@ -47,4 +47,8 @@ td {
     url("/assets/fonts/libre-baskerville/font.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
+}
+
+[id] {
+  scroll-margin-top: 5rem;
 }
