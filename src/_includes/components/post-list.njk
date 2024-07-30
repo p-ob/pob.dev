@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="/assets/css/components/post-list.css">
+
+<ol class="posts">
+{%- for post in posts -%}
+  <li>
+		<article class="post card">
+			<a href="{{ post.url }}">
+				<time class="post-date" datetime="{{ post.date | machineDate }}">{{ post.date | readableDate }}</time>
+				<div class="post-details">
+					<strong class="post-title">{{ post.data.title }}</strong>
+					<div class="post-description">{{ post.data.description }}</div>
+				</div>
+			</a>
+		</article>
+	</li>
+{%- endfor -%}
+</ol>

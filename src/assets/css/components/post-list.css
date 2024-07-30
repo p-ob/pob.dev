@@ -1,0 +1,31 @@
+@layer layout {
+  .posts {
+    display: grid;
+    padding: 0;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    gap: 1rem;
+
+    li {
+      list-style-type: none;
+      height: 100%;
+    }
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    height: 100%;
+
+    a {
+      padding: 1rem;
+      height: 100%;
+      text-decoration: none;
+    }
+
+    .post-title {
+      text-decoration: underline;
+    }
+  }
+}

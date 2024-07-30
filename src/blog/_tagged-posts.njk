@@ -1,0 +1,17 @@
+---
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+  filter:
+    - post
+permalink: /blog/tags/{{ tag }}/
+override:tags: []
+pageType: default
+layout: base
+---
+
+<h1>Tagged “{{ tag }}”</h1>
+
+{% set data = { posts: collections[ tag ] | reverse } %}
+{% renderFile "./src/_includes/components/post-list.njk", data %}
