@@ -4,6 +4,7 @@ layout: post
 excludeFromSearch: true
 date: 1916-04-24 10:00:00 +05:00
 tags: ["lorem", "ipsum"]
+eleventyExcludeFromCollections: true
 ---
 
 ## Introduction to Lorem Ipsum
