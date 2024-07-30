@@ -6,6 +6,7 @@ import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
 import markdownItFootnote from "markdown-it-footnote";
 import { FeedsPlugin } from "./11ty/feeds.js";
+import { DraftPlugin } from "./11ty/draft.js";
 
 function getLitComponents(...components) {
   const root = "src/assets/js/components/";
@@ -60,6 +61,7 @@ export default async function (eleventyConfig) {
       subtitle: "Posts from Patrick O'Brien. Opinions my own.",
     },
   });
+	eleventyConfig.addPlugin(DraftPlugin);
 
   // this must come last
   eleventyConfig.addPlugin(litPlugin, {

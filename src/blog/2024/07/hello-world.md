@@ -13,7 +13,7 @@ Well, finally this year, I've started the whole process over again.
 
 First and foremost, this site is for me. I find writing articles about my work and interests to be cathartic, as well as a great way for me to revisit my thoughts and document my learnings. Many of my posts today are written in an ecosystem owned by my employer, and I'd like to own my own work where I can.
 
-But I do hope that whoever finds this site finds value as well. My favorite part of working in technology isn't just building cool things -- it's teaching others how to build cool things in new and exciting ways.
+But I do hope that whoever finds this site finds value as well. My favorite part of working in technology isn't just building cool things &mdash; it's teaching others how to build cool things in new and exciting ways.
 
 If you're curious what more to expect from me, check out my [about page](/about).
 
