@@ -1,6 +1,7 @@
 import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import pluginWebc from "@11ty/eleventy-plugin-webc";
+import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
@@ -40,6 +41,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("host", "https://pob.dev");
 
   /* plugins */
+	eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
   eleventyConfig.addPlugin(JsonHtmlPlugin);
   eleventyConfig.addPlugin(pluginWebc);
@@ -70,9 +72,12 @@ export default async function (eleventyConfig) {
   });
 
   /* filters */
-  eleventyConfig.addFilter("readableDate", (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
-    return new Intl.DateTimeFormat("en-US", opts).format(date);
-  });
+  eleventyConfig.addFilter(
+    "readableDate",
+    (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
+      return new Intl.DateTimeFormat("en-US", opts).format(date);
+    },
+  );
 
   eleventyConfig.addFilter("machineDate", (date) => {
     return date.toISOString();
