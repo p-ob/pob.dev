@@ -22,9 +22,9 @@ To build off of "Use the Platform", I encourage developers looking to becoming s
 
 ## Why should you "Learn the Platform"?
 
-Before I dive into what I would recommend learning, I think it's worth explaining why.
+Before I dive into what I would recommend learning, I think it's worth explaining why I think learning these more primitive components is a boon.
 
-### Diversyfy your skillset
+### Diversify your skillset
 
 ### Improve your ability to troubleshoot
 
