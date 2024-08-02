@@ -14,11 +14,19 @@ There's no shortage of resources on the internet; articles, videos, social media
 
 Years ago, developers at Google (notably, on the Polymer team) coined the term, "Use the Platform".^[Google's Polymer Project unvails the hashtag <strong>#UseThePlatform</strong> at Google I/O 2016. <https://www.polymer-project.org/blog/2016-05-26-IO-2016-Recap>] The idea of "Use the Platform" at that time was that web development could be greatly simplified by taking solutions to problems discovered in user-land, and producing viable primitives in that web platform.
 
-Remember, in 2016, Internet Explorer 11 was still very much a thing. React was a relative newcomer to the world, only 3 years old in the mainstream. "Modern" JavaScript browser support (ES6) was abysmal, requiring complex and cumbersome build tools to write more readable code. It was chaos.
+Web development in 2016 was pretty brutal if you were trying to "be modern":
 
-While Polymer may not have ultimately won out in the framework/library-wars of the 2010s (its successor, [lit](https://lit.dev), is doing great by the way), the platform has significantly improved to make it possible to build quality web applications with minimal additional tooling. \#UseThePlatform.
+- Internet Explorer 11 was still very much a thing.
+- React was a relative newcomer to the world, only 3 years old in the mainstream. AngularJS was relatively popular (unfortunately).^[StackOverflow framework trends. <https://trends.stackoverflow.co/?tags=reactjs,vue.js,angular,svelte,angularjs,vuejs3>]
+- "Modern" JavaScript browser support (ES6) was abysmal, requiring complex and cumbersome build tools to write more readable code.
+- The modern web APIs we know and love today were either not usable, due to browser support, or difficult to use, requiring sometimes brittle polyfills.
+  - `fetch`? No, `XMLHttpRequest`.
+  - `Promise` and asynchronous code? No, `jQuery.Deferred`, or [Hadouken-level](https://www.reddit.com/r/ProgrammerHumor/comments/27yykv/indent_hadouken/) chained `.then` statements, or callbacks.
+  - JavaScript modules? Which type: [UMD](https://github.com/umdjs/umd), [AMD](https://github.com/amdjs/amdjs-api), [CommonJS](https://wiki.commonjs.org/wiki/CommonJS), or the less supported, but official, [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)? Needless to say, being a web developer in this era was extremely frustrating.
 
-To build off of "Use the Platform", I encourage developers looking to becoming stronger to _Learn_ the Platform. This means don't just choose a framework, or a language, and go all in; learn also about the medium in which your software runs.
+While Polymer may not have ultimately won out in the framework/library-wars of the 2010s (its successor, [lit](https://lit.dev), is doing great by the way), the platform has significantly improved to make it possible to build quality web applications with minimal additional tooling. \#UseThePlatform. It's now possible to build what some might call "modern web apps" with little more than the native platform features available today.
+
+To build on the new world we live in, to "Use the Platform", I encourage developers looking to becSoming stronger to _Learn_ the Platform. This means don't just choose a framework, or a language, and go all in; learn also about the medium in which your software runs.
 
 ## Why should you "Learn the Platform"?
 
@@ -34,9 +42,7 @@ Before I dive into what I would recommend learning, I think it's worth explainin
 
 ### HTTP
 
-No joke, learn how HTTP works.
-
-I know this seems
+Yes, HTTP.
 
 ### HTML
 
