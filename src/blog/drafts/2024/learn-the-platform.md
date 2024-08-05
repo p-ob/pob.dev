@@ -18,7 +18,7 @@ Web development in 2016 was pretty brutal if you were trying to "be modern":
 
 - Internet Explorer 11 was still very much a thing.
 - React was a relative newcomer to the world, only 3 years old in the mainstream. AngularJS was relatively popular (unfortunately).^[StackOverflow framework trends. <https://trends.stackoverflow.co/?tags=reactjs,vue.js,angular,svelte,angularjs,vuejs3>]
-- "Modern" JavaScript browser support (ES6) was abysmal, requiring complex and cumbersome build tools to write more readable code.
+- "Modern" JavaScript browser support (ES6) was abysmal, requiring cumbersome and oft-breaking build tools.
 - The modern web APIs we know and love today were either not usable, due to browser support, or difficult to use, requiring sometimes brittle polyfills.
   - `fetch`? No, `XMLHttpRequest`.
   - `Promise` and asynchronous code? No, `jQuery.Deferred`, or [Hadouken-level](https://www.reddit.com/r/ProgrammerHumor/comments/27yykv/indent_hadouken/) chained `.then` statements, or callbacks.
@@ -30,7 +30,7 @@ To build on the new world we live in, to "Use the Platform", I encourage develop
 
 ## Why should you "Learn the Platform"?
 
-Before I dive into what I would recommend learning, I think it's worth explaining why I think learning these more primitive components is a boon.
+Before I dive into what I would recommend learning, I think it's worth explaining why I think learning these more primitive components is worthwhile.
 
 ### Diversify your skillset
 
