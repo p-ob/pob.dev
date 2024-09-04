@@ -10,14 +10,21 @@
   initial-value: white;
 }
 
+@property --blockquote-accent-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(0, 0%, 20%);
+}
+
 :root {
-	--font-color: hsl(0, 0%, 20%);
+  --font-color: hsl(0, 0%, 20%);
   --page-background-color: hsl(0, 0%, 96%);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --font-color: hsl(0, 0%, 91%);
-    --page-background-color: hwb(225 13% 86%);
+    --page-background-color: hsl(220, 4%, 14%);
+    --blockquote-accent-color: hsl(0, 0%, 80%);
   }
 }

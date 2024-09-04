@@ -41,7 +41,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addGlobalData("host", "https://pob.dev");
 
   /* plugins */
-	eleventyConfig.addPlugin(EleventyRenderPlugin);
+  eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
   eleventyConfig.addPlugin(JsonHtmlPlugin);
   eleventyConfig.addPlugin(pluginWebc);
@@ -63,7 +63,7 @@ export default async function (eleventyConfig) {
       subtitle: "Posts from Patrick O'Brien. Opinions my own.",
     },
   });
-	eleventyConfig.addPlugin(DraftPlugin);
+  eleventyConfig.addPlugin(DraftPlugin);
 
   // this must come last
   eleventyConfig.addPlugin(litPlugin, {
@@ -72,12 +72,9 @@ export default async function (eleventyConfig) {
   });
 
   /* filters */
-  eleventyConfig.addFilter(
-    "readableDate",
-    (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
-      return new Intl.DateTimeFormat("en-US", opts).format(date);
-    },
-  );
+  eleventyConfig.addFilter("readableDate", (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
+    return new Intl.DateTimeFormat("en-US", opts).format(date);
+  });
 
   eleventyConfig.addFilter("machineDate", (date) => {
     return date.toISOString();
