@@ -1,5 +1,5 @@
 ---
-date: 2024-07-29 17:00:00 +05:00
+date: 2024-09-11 17:00:00 +05:00
 title: Learn the Platform
 tags:
   - web

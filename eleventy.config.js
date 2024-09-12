@@ -1,6 +1,5 @@
 import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
-import pluginWebc from "@11ty/eleventy-plugin-webc";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
@@ -44,7 +43,6 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyRenderPlugin);
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
   eleventyConfig.addPlugin(JsonHtmlPlugin);
-  eleventyConfig.addPlugin(pluginWebc);
   eleventyConfig.addPlugin(TableOfContentsPlugin, { parent: "#toc" });
   eleventyConfig.addPlugin(FeedsPlugin, {
     outputPath: "feed",
