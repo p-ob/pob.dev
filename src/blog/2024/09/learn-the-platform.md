@@ -1,5 +1,5 @@
 ---
-date: 2024-09-11 17:00:00 +05:00
+date: 2024-09-20 17:00:00 +05:00
 title: Learn the Platform
 tags:
   - web
@@ -9,7 +9,7 @@ draft: true
 
 Over the years, I've worked with a lot of engineers. And in that time, many have asked for recommendations on how to grow as a developer, on how to grow their knowledge. What should they learn to be perceived as an expert? What should they learn to improve their resume and job prospects? What should they learn that could scratch that itch of curiosity?
 
-There's no shortage of resources on the internet; articles, videos, social media influencers... so many sources that are pushing some new hotness of the month. And while there is some merit to learning that new hotness (it's gotta be hot for a reason, right?), I'd argue that there something else that developers of today should focus on: **Learn the Platform**.
+There's no shortage of resources on the internet; articles, videos, social media influencers... so many sources that are pushing some new hotness of the month. And while there is some merit to learning that new hotness (it's gotta be hot for a reason, right?), I'd argue that there is something else that developers of today should focus on: **Learn the Platform**.
 
 ## What do I mean by "Learn the Platform"?
 
@@ -33,36 +33,12 @@ Web development in 2016 was pretty brutal if you were trying to "be modern":
   - `Promise` and asynchronous code? No, `jQuery.Deferred`, or [Hadouken-level](https://www.reddit.com/r/ProgrammerHumor/comments/27yykv/indent_hadouken/) chained `.then` statements, or callbacks.
   - JavaScript modules? Which type: [UMD](https://github.com/umdjs/umd), [AMD](https://github.com/amdjs/amdjs-api), [CommonJS](https://wiki.commonjs.org/wiki/CommonJS), or the less supported, but official, [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)? Needless to say, being a web developer in this era was extremely frustrating.
 
-
-Polymer as a web framework ultimately wasn't successful &mdash; although 
+Polymer as a web framework ultimately wasn't successful &mdash; although
 
 While Polymer may not have ultimately won out in the framework/library-wars of the 2010s, the platform improvements it strived to see have become a reality. Is the platform perfect? No, but it's continually improving. It _is_ much more simple today to build "modern web apps" with the native platform features now available today. To name just a notable subset of the enhancements to the platform since 2016:
+
 - HTML has a native component composition model via [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components), [dialogs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog), [popovers](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
 - CSS supports [nesting](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_nesting/Using_CSS_nesting), [runtime-calculated variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties), [same-document (SPA) and same-origin (MPA) view transitions](https://developer.mozilla.org/en-US/docs/Web/API/ViewTransition)
 - JavaScript has an [out-of-the-box module ecosystem](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), [asynchronous functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function), [robust classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
 
-Also, to give credit to Polymer as a web framework: it's spiritual successor, [lit](https://lit.dev), is doing great.
-
-### A new rallying call: Learn the Platform
-
-To build on the new world we live in, to "Use the Platform", I encourage developers looking to become stronger to now _Learn_ the Platform. This means don't just choose a framework, or a language, and go all in; learn also about the medium in which your software runs.
-
-## Why should you "Learn the Platform"?
-
-Before I dive into what I would recommend learning, I think it's worth explaining why I think learning these more primitive components is worthwhile.
-
-### Diversify your skillset
-
-### Improve your ability to troubleshoot
-
-### Produce better software
-
-## What technologies, capabilities, and APIs should you learn?
-
-### HTTP
-
-Yes, HTTP.
-
-### HTML
-
-### Storage
+Also, to give credit to Polymer as a web framework: its spiritual successor, [lit](https://lit.dev), is doing great.

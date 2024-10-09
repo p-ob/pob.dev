@@ -42,10 +42,11 @@ td {
 }
 
 blockquote {
+  background-color: var(--blockquote-background-color);
   font-style: italic;
   border-left: 4px solid var(--blockquote-accent-color);
-  padding-left: 1rem;
-  margin: 1.5rem 1rem;
+  padding: 1rem;
+  margin: 0;
 
   p {
     margin: 0;
@@ -54,6 +55,13 @@ blockquote {
   p + p {
     margin-top: 1rem;
   }
+}
+
+code {
+  background-color: var(--code-background-color);
+  padding: 0.1rem 0.3rem;
+  border-radius: 3px;
+	font-family: "Consolas", "Menlo", "Monaco", "Courier New", "monospace";
 }
 
 @font-face {

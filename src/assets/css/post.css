@@ -42,9 +42,10 @@
     margin-left: 1ch;
   }
 
-  .tag:hover {
+	/* When tags become "clickable", can restore the hover effect */
+  /* .tag:hover {
     background-color: #e0e0e0;
-  }
+  } */
 
   @media (prefers-color-scheme: dark) {
     .tag {
@@ -52,9 +53,10 @@
       background-color: #444;
     }
 
-    .tag:hover {
+		/* When tags become "clickable", can restore the hover effect */
+    /* .tag:hover {
       background-color: #555;
-    }
+    } */
   }
 
   .footnotes-list {

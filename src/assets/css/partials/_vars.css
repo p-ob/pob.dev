@@ -1,13 +1,13 @@
 @property --font-color {
   syntax: "<color>";
   inherits: true;
-  initial-value: black;
+  initial-value: hsl(0, 0%, 20%);
 }
 
 @property --page-background-color {
   syntax: "<color>";
   inherits: true;
-  initial-value: white;
+  initial-value: hsl(0, 0%, 96%);
 }
 
 @property --blockquote-accent-color {
@@ -16,9 +16,21 @@
   initial-value: hsl(0, 0%, 20%);
 }
 
+@property --blockquote-background-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(0, 0%, 96%);
+}
+
+@property --code-background-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: hsl(0, 0%, 96%);
+}
+
 :root {
-  --font-color: hsl(0, 0%, 20%);
-  --page-background-color: hsl(0, 0%, 96%);
+  --blockquote-background-color: color-mix(in srgb, var(--page-background-color), gray 20%);
+  --code-background-color: color-mix(in srgb, var(--page-background-color), gray 30%);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,5 +38,7 @@
     --font-color: hsl(0, 0%, 91%);
     --page-background-color: hsl(220, 4%, 14%);
     --blockquote-accent-color: hsl(0, 0%, 80%);
+    --blockquote-background-color: color-mix(in srgb, var(--page-background-color), black 20%);
+    --code-background-color: color-mix(in srgb, var(--page-background-color), black 30%);
   }
 }
