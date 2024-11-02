@@ -36,8 +36,6 @@ export default async function (eleventyConfig) {
 
   /* global data */
   eleventyConfig.addGlobalData("layout", "base.njk");
-  eleventyConfig.addGlobalData("currentYear", new Date().getFullYear());
-  eleventyConfig.addGlobalData("host", "https://pob.dev");
 
   /* plugins */
   eleventyConfig.addPlugin(EleventyRenderPlugin);
