@@ -58,9 +58,7 @@ export class AppElement extends LitElement {
             <ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
               <li>${this.#renderEmail()}</li>
               <li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
-              <li>${this.#renderExternalLink("Mastodon", this.author.social.mastodon)}</li>
-              <li>${this.#renderExternalLink("LinkedIn", this.author.social.linkedIn)}</li>
-              <li>${this.#renderExternalLink("Twitter", this.author.social.twitter)}</li>
+							<li>${this.#renderExternalLink("Bluesky", this.author.social.bluesky)}</li>
             </ul>
           </div>
           <a class="search nav-item" href="/search">Search</a>

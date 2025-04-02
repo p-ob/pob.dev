@@ -20,9 +20,7 @@ If you, too, are in technology, follow along to read about my musings on many to
 
 As I mentioned earlier, I currently reside in the Milwaukee area. I'm a huge Tolkien nerd, collecting various editions of his works and trying to (re)read them when I can find the time. I'm also a father to a lovable oaf of a Bernese Mountain Dog (Pippin) -- I'm sure he'll make some cameos elsewhere in my site.
 
-When I'm not working, I'm usually playing some video game or another. My guilty pleasure is League of Legends, but I play all sorts, primarily sandbox/survival games. Check out [my games list](/lists/games) to see what I'm currently playing.
-
-I also regularly find myself binging/following closely on many TV shows. Check out [my TV list](/lists/tv) to see what I'm currently watching.
+When I'm not working, I'm usually playing some video game or another. My guilty pleasure is League of Legends, but I play all sorts, primarily sandbox/survival games.
 
 ## Contact
 
