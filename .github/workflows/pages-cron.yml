@@ -1,0 +1,16 @@
+name: Trigger Cloudflare Pages Deploy
+on:
+  schedule:
+    # Run at 0815 daily
+    - cron: '15 8 * * *'
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
