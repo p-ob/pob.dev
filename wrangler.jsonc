@@ -1,8 +1,0 @@
-{
-  "name": "pob.dev",
-  // Update to today's date
-  "compatibility_date": "2025-06-27",
-  "assets": {
-    "directory": "./public"
-  }
-}
