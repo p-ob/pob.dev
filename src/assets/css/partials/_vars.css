@@ -1,44 +1,44 @@
 @property --font-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: hsl(0, 0%, 20%);
+	syntax: "<color>";
+	inherits: true;
+	initial-value: hsl(0, 0%, 20%);
 }
 
 @property --page-background-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: hsl(0, 0%, 96%);
+	syntax: "<color>";
+	inherits: true;
+	initial-value: hsl(0, 0%, 96%);
 }
 
 @property --blockquote-accent-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: hsl(0, 0%, 20%);
+	syntax: "<color>";
+	inherits: true;
+	initial-value: hsl(0, 0%, 20%);
 }
 
 @property --blockquote-background-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: hsl(0, 0%, 96%);
+	syntax: "<color>";
+	inherits: true;
+	initial-value: hsl(0, 0%, 96%);
 }
 
 @property --code-background-color {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: hsl(0, 0%, 96%);
+	syntax: "<color>";
+	inherits: true;
+	initial-value: hsl(0, 0%, 96%);
 }
 
 :root {
-  --blockquote-background-color: color-mix(in srgb, var(--page-background-color), gray 20%);
-  --code-background-color: color-mix(in srgb, var(--page-background-color), gray 30%);
+	--blockquote-background-color: color-mix(in srgb, var(--page-background-color), gray 20%);
+	--code-background-color: color-mix(in srgb, var(--page-background-color), gray 30%);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --font-color: hsl(0, 0%, 91%);
-    --page-background-color: hsl(220, 4%, 14%);
-    --blockquote-accent-color: hsl(0, 0%, 80%);
-    --blockquote-background-color: color-mix(in srgb, var(--page-background-color), black 20%);
-    --code-background-color: color-mix(in srgb, var(--page-background-color), black 30%);
-  }
+	:root {
+		--font-color: hsl(0, 0%, 91%);
+		--page-background-color: hsl(220, 4%, 14%);
+		--blockquote-accent-color: hsl(0, 0%, 80%);
+		--blockquote-background-color: color-mix(in srgb, var(--page-background-color), black 20%);
+		--code-background-color: color-mix(in srgb, var(--page-background-color), black 30%);
+	}
 }

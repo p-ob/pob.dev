@@ -37,9 +37,9 @@ I'm using [PageFind](https://pagefind.app) to generate my site's search index. T
 
 Stumbled on this one in the wild and thought I'd give it a shot.
 
-### Cloudflare Pages
+### Cloudflare Workers
 
-I've never used Cloudflare before, for anything. But, their blog posts have been extremely informative and if a company can put that much value behind engineering excellence, how bad can they be? I'm using [Cloudflare Pages](https://pages.cloudflare.com) to host this site, and so far, it works as advertised.
+I've never used Cloudflare before, for anything. But, their blog posts have been extremely informative and if a company can put that much value behind engineering excellence, how bad can they be? I'm using [Cloudflare Workers](https://workers.cloudflare.com) to host this site, and so far, it works as advertised.
 
 ### The repo
 

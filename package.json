@@ -27,6 +27,8 @@
     "build:11ty": "eleventy",
     "build:index": "pagefind --site public",
     "start": "eleventy --watch --serve --incremental",
-    "clean": "git clean -dfX -e \"!.env\""
+    "clean": "git clean -dfX -e \"!.env\"",
+		"lint": "prettier --check \"src/**/*.{js,md,css,json,html}\"",
+		"format": "prettier --write \"src/**/*.{js,md,css,json,html}\""
   }
 }

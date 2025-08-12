@@ -16,269 +16,271 @@ const feedIcon = svg`<svg
 </svg>`;
 
 export class AppElement extends LitElement {
-  static get properties() {
-    return {
-      currentYear: { type: Number, attribute: "current-year" },
-      author: { type: Object },
-      pageType: { type: String, attribute: "page-type" },
-      repository: { type: String },
-      source: { type: String },
-      branch: { type: String },
-    };
-  }
+	static get properties() {
+		return {
+			currentYear: { type: Number, attribute: "current-year" },
+			author: { type: Object },
+			pageType: { type: String, attribute: "page-type" },
+			repository: { type: String },
+			source: { type: String },
+			branch: { type: String },
+			commitSha: { type: String, attribute: "commit-sha" },
+		};
+	}
 
-  get #contactMeContainer() {
-    return this.shadowRoot.querySelector(".contact-me-container");
-  }
+	get #contactMeContainer() {
+		return this.shadowRoot.querySelector(".contact-me-container");
+	}
 
-  constructor() {
-    super();
-    this.currentYear = new Date().getFullYear();
-    this.author = {};
-  }
+	constructor() {
+		super();
+		this.currentYear = new Date().getFullYear();
+		this.author = {};
+	}
 
-  connectedCallback() {
-    super.connectedCallback();
-    window.addEventListener("resize", this.#setPopoverPosition.bind(this));
-    window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
+	connectedCallback() {
+		super.connectedCallback();
+		window.addEventListener("resize", this.#setPopoverPosition.bind(this));
+		window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
 
-    // init
-    this.#setPopoverPosition();
-  }
+		// init
+		this.#setPopoverPosition();
+	}
 
-  render() {
-    return html` <div class="site-root">
-      <header>
-        <nav class="top-nav">
-          <a class="nav-item" href="/">Home</a>
-          <a class="nav-item" href="/blog">Blog</a>
-          <a class="nav-item" href="/about">About</a>
-          <div class="contact-me-container">
-            <button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
-            <ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
-              <li>${this.#renderEmail()}</li>
-              <li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
+	render() {
+		return html` <div class="site-root">
+			<header>
+				<nav class="top-nav">
+					<a class="nav-item" href="/">Home</a>
+					<a class="nav-item" href="/blog">Blog</a>
+					<a class="nav-item" href="/about">About</a>
+					<div class="contact-me-container">
+						<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
+						<ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
+							<li>${this.#renderEmail()}</li>
+							<li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
 							<li>${this.#renderExternalLink("Bluesky", this.author.social.bluesky)}</li>
-            </ul>
-          </div>
-          <a class="search nav-item" href="/search">Search</a>
-          <a class="feed nav-item" href="/feed">${feedIcon}</a>
-        </nav>
-      </header>
-      <main part="main">
-        <slot></slot>
-      </main>
-      <aside><slot name="sidebar"></slot></aside>
-      <footer>
-        <span class="footer-contact-me">${this.#renderEmail()}</span>
-        ${this.#renderEditLink()}
-        <small class="copyright"
-          >&copy; <span class="hide-mobile">Copyright</span> ${this.currentYear}, ${this.author.name}</small
-        >
-      </footer>
-    </div>`;
-  }
+						</ul>
+					</div>
+					<a class="search nav-item" href="/search">Search</a>
+					<a class="feed nav-item" href="/feed">${feedIcon}</a>
+				</nav>
+			</header>
+			<main part="main">
+				<slot></slot>
+			</main>
+			<aside><slot name="sidebar"></slot></aside>
+			<footer>
+				<span class="footer-contact-me">${this.#renderEmail()}</span>
+				${this.#renderEditLink()}
+				<small class="copyright">
+					&copy; <span class="hide-mobile">Copyright</span> ${this.currentYear}, ${this.author.name}
+					${this.commitSha ? html` | commit <code>${this.commitSha.slice(0, 7)}</code>` : ""}
+				</small>
+			</footer>
+		</div>`;
+	}
 
-  #renderExternalLink(text, url, classlist) {
-    classlist ??= "";
-    const classes = {};
-    for (const className of classlist.split(" ")) {
-      classes[className] = true;
-    }
-    return html` <a class="external ${classMap(classes)}" target="_blank" rel="noreferrer" href="${url}">${text}</a> `;
-  }
+	#renderExternalLink(text, url, classlist) {
+		classlist ??= "";
+		const classes = {};
+		for (const className of classlist.split(" ")) {
+			classes[className] = true;
+		}
+		return html` <a class="external ${classMap(classes)}" target="_blank" rel="noreferrer" href="${url}">${text}</a> `;
+	}
 
-  #renderEmail() {
-    const email = this.author.email;
-    if (!email) {
-      return nothing;
-    }
+	#renderEmail() {
+		const email = this.author.email;
+		if (!email) {
+			return nothing;
+		}
 
-    return html`<a href="mailto:${email}">${email}</a>`;
-  }
+		return html`<a href="mailto:${email}">${email}</a>`;
+	}
 
-  #renderEditLink() {
-    const editUrl = new URL(this.source, `${this.repository}/edit/${this.branch}/`);
-    return this.#renderExternalLink("Edit this page", editUrl, "hide-mobile");
-  }
+	#renderEditLink() {
+		const editUrl = new URL(this.source, `${this.repository}/edit/${this.branch}/`);
+		return this.#renderExternalLink("Edit this page", editUrl, "hide-mobile");
+	}
 
-  /**
-   * TODO: Remove this when CSS Anchor positioning is supported
-   * @param {ToggleEvent} event
-   */
-  #onContactToggle(event) {
-    if (event.newState === "open") {
-      this.#setPopoverPosition();
-    }
-  }
+	/**
+	 * TODO: Remove this when CSS Anchor positioning is supported
+	 * @param {ToggleEvent} event
+	 */
+	#onContactToggle(event) {
+		if (event.newState === "open") {
+			this.#setPopoverPosition();
+		}
+	}
 
-  #setPopoverPosition() {
-    const popover = this.shadowRoot.querySelector("#contact-details");
-    const boundingRect = this.#contactMeContainer.getBoundingClientRect();
+	#setPopoverPosition() {
+		const popover = this.shadowRoot.querySelector("#contact-details");
+		const boundingRect = this.#contactMeContainer.getBoundingClientRect();
 
-    const top = boundingRect.top + boundingRect.height + window.scrollY;
+		const top = boundingRect.top + boundingRect.height + window.scrollY;
 
-    popover.style.top = `${top}px`;
-    popover.style.left = `${boundingRect.left}px`;
-  }
+		popover.style.top = `${top}px`;
+		popover.style.left = `${boundingRect.left}px`;
+	}
 
-  static styles = css`
-    :host([no-sidebar]) {
-      .site-root {
-        grid-template-areas:
-          "header header header"
-          "content content content"
-          "footer footer footer";
-      }
+	static styles = css`
+		:host([no-sidebar]) {
+			.site-root {
+				grid-template-areas:
+					"header header header"
+					"content content content"
+					"footer footer footer";
+			}
 
-      aside {
-        display: none;
-      }
-    }
+			aside {
+				display: none;
+			}
+		}
 
-    ::slotted(*:not([slot])) {
-      width: 100%;
-    }
+		::slotted(*:not([slot])) {
+			width: 100%;
+		}
 
-    :host([page-type="article"]) {
-      ::slotted(*:not([slot])) {
-        max-width: 100ch;
-      }
-    }
+		:host([page-type="article"]) {
+			::slotted(*:not([slot])) {
+				max-width: 100ch;
+			}
+		}
 
-    * {
-      font-family: inherit;
-    }
+		* {
+			font-family: inherit;
+		}
 
-    .site-root {
-      display: grid;
-      grid-template-areas:
-        "header header header"
-        "content content side"
-        "footer footer footer";
+		.site-root {
+			display: grid;
+			grid-template-areas:
+				"header header header"
+				"content content side"
+				"footer footer footer";
 
-      grid-template-columns: 20vw 1fr 20vw;
-      grid-template-rows: auto 1fr auto;
-      grid-gap: 10px;
-      min-height: 100vh;
-    }
+			grid-template-columns: 20vw 1fr 20vw;
+			grid-template-rows: auto 1fr auto;
+			grid-gap: 10px;
+			min-height: 100vh;
+		}
 
-    header {
-      grid-area: header;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: var(--page-background-color);
-      border-bottom: 1px solid var(--font-color);
-    }
+		header {
+			grid-area: header;
+			padding: 1rem 2rem;
+			position: sticky;
+			top: 0;
+			z-index: 999;
+			background: var(--page-background-color);
+			border-bottom: 1px solid var(--font-color);
+		}
 
-    main {
-      grid-area: content;
-      margin: 0 10vw;
-      display: flex;
-      justify-content: center;
-    }
+		main {
+			grid-area: content;
+			margin: 0 10vw;
+			display: flex;
+			justify-content: center;
+		}
 
-    aside {
-      grid-area: side;
-    }
+		aside {
+			grid-area: side;
+		}
 
-    footer {
-      grid-area: footer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+		footer {
+			grid-area: footer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 
-      .footer-contact-me,
-      .copyright {
-        margin-left: auto;
-      }
+			.footer-contact-me,
+			.copyright {
+				margin-left: auto;
+			}
 
-      .footer-contact-me {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-      }
+			.footer-contact-me {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+			}
 
-      > * {
-        padding-right: 1rem;
-      }
-    }
+			> * {
+				padding-right: 1rem;
+			}
+		}
 
-    .top-nav {
-      display: flex;
-      gap: 1rem;
-    }
+		.top-nav {
+			display: flex;
+			gap: 1rem;
+		}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
 
-    .contact-me {
-      user-select: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: inherit;
-      padding: 0;
-      margin: 0;
-      font-size: inherit;
-    }
+		.contact-me {
+			user-select: none;
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: inherit;
+			padding: 0;
+			margin: 0;
+			font-size: inherit;
+		}
 
-    .search {
-      margin-left: auto;
-    }
+		.search {
+			margin-left: auto;
+		}
 
-    .feed {
-      fill: var(--font-color);
-    }
+		.feed {
+			fill: var(--font-color);
+		}
 
-    [popover] {
-      background-color: var(--page-background-color);
-      color: inherit;
-    }
+		[popover] {
+			background-color: var(--page-background-color);
+			color: inherit;
+		}
 
-    .contact-me-container {
-      position: relative;
-      display: flex;
-    }
+		.contact-me-container {
+			position: relative;
+			display: flex;
+		}
 
-    .nav-item {
-      font-weight: bold;
-      font-size: 1.25rem;
-    }
+		.nav-item {
+			font-weight: bold;
+			font-size: 1.25rem;
+		}
 
-    #contact-details:popover-open {
-      position: absolute;
-      inset: unset;
-      margin-top: 1rem;
-    }
+		#contact-details:popover-open {
+			position: absolute;
+			inset: unset;
+			margin-top: 1rem;
+		}
 
-    @media (max-width: 768px) {
-      .hide-mobile {
-        display: none;
-      }
+		@media (max-width: 768px) {
+			.hide-mobile {
+				display: none;
+			}
 
-      .site-root {
-        grid-template-areas:
-          "header header header"
-          "content content content"
-          "footer footer footer";
-      }
+			.site-root {
+				grid-template-areas:
+					"header header header"
+					"content content content"
+					"footer footer footer";
+			}
 
-      aside {
-        display: none;
-      }
+			aside {
+				display: none;
+			}
 
-      .nav-item {
-        font-size: 1rem;
-        font-weight: normal;
-      }
-    }
-  `;
+			.nav-item {
+				font-size: 1rem;
+				font-weight: normal;
+			}
+		}
+	`;
 }
 
 customElements.define("pob-app", AppElement);

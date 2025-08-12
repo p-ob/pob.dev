@@ -9,6 +9,7 @@
 			repository="{{ pkg.repository.url }}"
 			source="{{ page.inputPath }}"
 			branch="main"
+			commit-sha="{{ metadata.commitSha }}"
 			{% if pageType %} page-type="{{ pageType }}" {% endif %}
 			{% if noSidebar %} no-sidebar="" {% endif %}>
 			{% if pageType == 'article' %}
