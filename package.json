@@ -20,16 +20,13 @@
     "markdown-it-footnote": "^4.0.0",
     "pagefind": "^1.3.0",
     "prettier": "^3.6.2",
-    "slugify": "^1.6.6",
-    "wrangler": "^4.29.0"
+    "slugify": "^1.6.6"
   },
   "scripts": {
     "build": "npm run build:11ty && npm run build:index",
     "build:11ty": "eleventy",
     "build:index": "pagefind --site public",
     "start": "eleventy --watch --serve --incremental",
-    "clean": "git clean -dfX -e \"!.env\"",
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "clean": "git clean -dfX -e \"!.env\""
   }
 }
