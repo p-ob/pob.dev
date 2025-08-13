@@ -13,3 +13,5 @@ This is an 11ty website, using lit-html and lit-ssr and hosted in Cloudflare Wor
 - You MUST NOT pull in additional dependencies.
 - You MUST adhere to prettier style guide
 	- `npm run lint` may help
+- You MUST NOT modify any files ignored via `.gitignore`
+- You MUST NOT use inline styles on HTML elements. Always use classes.

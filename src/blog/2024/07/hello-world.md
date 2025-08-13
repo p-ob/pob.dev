@@ -5,6 +5,10 @@ tags: [meta]
 description: A brief (re)introduction to my personal website, and what to expect from it.
 ---
 
+<pob-note>
+2025-08-12: Updated to reflect that I use Cloudflare Workers instead of Cloudflare Pages.
+</pob-note>
+
 Back in 2020 (just prior to the lockdown), I had sat down and started hacking together my own personal website. At the time, I was hoping to use [Eleventy](https://11ty.dev), Google's [material web components](https://github.com/material-components/material-web), and [Netlify](https://www.netlify.com), among a few other fun tools. My attempts then fizzled during the pandemic, and I let my site sit.
 
 Well, finally this year, I've started the whole process over again.

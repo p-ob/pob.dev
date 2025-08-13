@@ -25,7 +25,7 @@ function passthroughCopyLitDependencies(eleventyConfig) {
   }
 }
 
-const LIT_COMPONENTS = getLitComponents("app");
+const LIT_COMPONENTS = getLitComponents("app", "note");
 
 export default async function (eleventyConfig) {
   /* passthrough copies */
