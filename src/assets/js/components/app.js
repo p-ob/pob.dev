@@ -53,6 +53,7 @@ export class AppElement extends LitElement {
 				<nav class="top-nav">
 					<a class="nav-item" href="/">Home</a>
 					<a class="nav-item" href="/blog">Blog</a>
+					<a class="nav-item" href="/reading">Reading</a>
 					<a class="nav-item" href="/about">About</a>
 					<div class="contact-me-container">
 						<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>

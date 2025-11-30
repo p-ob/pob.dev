@@ -7,6 +7,7 @@ import CleanCSS from "clean-css";
 import markdownItFootnote from "markdown-it-footnote";
 import { FeedsPlugin } from "./11ty/feeds.js";
 import { DraftPlugin } from "./11ty/draft.js";
+import { FeedAggregatorPlugin } from "./11ty/feed-aggregator.js";
 
 function getLitComponents(...components) {
   const root = "src/assets/js/components/";
@@ -60,6 +61,9 @@ export default async function (eleventyConfig) {
     },
   });
   eleventyConfig.addPlugin(DraftPlugin);
+  eleventyConfig.addPlugin(FeedAggregatorPlugin, {
+    configFile: "feeds.json",
+  });
 
   // this must come last
   eleventyConfig.addPlugin(litPlugin, {
@@ -68,6 +72,10 @@ export default async function (eleventyConfig) {
   });
 
   /* filters */
+  eleventyConfig.addFilter("toDate", (dateString) => {
+    return new Date(dateString);
+  });
+
   eleventyConfig.addFilter("readableDate", (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
     return new Intl.DateTimeFormat("en-US", opts).format(date);
   });

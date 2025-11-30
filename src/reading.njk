@@ -1,0 +1,32 @@
+---
+excludeFromSearch: true
+noSidebar: true
+title: Reading
+permalink: /reading/
+---
+
+<link rel="stylesheet" href="/assets/css/feed.css">
+
+<h1>Reading</h1>
+<p class="feed-description">Articles and posts from around the web.</p>
+
+{% if aggregatedFeeds.length > 0 %}
+<ol class="feed-items">
+{%- for item in aggregatedFeeds -%}
+  <li>
+    <article class="feed-item card">
+      <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
+        {% set itemDate = item.date | toDate %}
+        <time class="feed-date" datetime="{{ item.date }}">{{ itemDate | readableDate }}</time>
+        <div class="feed-details">
+          <strong class="feed-title">{{ item.title }}</strong>
+          <div class="feed-source">{{ item.source.name }}</div>
+        </div>
+      </a>
+    </article>
+  </li>
+{%- endfor -%}
+</ol>
+{% else %}
+<p>No feed items available. Check your feeds.json configuration.</p>
+{% endif %}
