@@ -12,45 +12,27 @@
 		}
 	}
 
-	.post {
+	/* Post content styling */
+	pob-tile {
 		display: flex;
 		flex-direction: column;
-		border-radius: 12px;
-		height: 100%;
-		transition: all 0.2s ease;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
-		&:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-		}
-
-		a {
-			padding: 1rem;
-			height: 100%;
-			text-decoration: none;
-		}
-
-		.post-title {
-			text-decoration: underline;
-		}
+		gap: 0.5rem;
 	}
 
-	@media (prefers-color-scheme: dark) {
-		.post {
-			background: color-mix(in srgb, var(--page-background-color), white 8%);
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-		}
-
-		.post:hover {
-			background: color-mix(in srgb, var(--page-background-color), white 10%);
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-		}
+	.post-date {
+		display: block;
+		font-size: 0.875rem;
+		opacity: 0.7;
+		font-weight: 500;
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.post {
-			transition: none !important;
-		}
+	.post-title {
+		text-decoration: underline;
+	}
+
+	.post-details {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 	}
 }

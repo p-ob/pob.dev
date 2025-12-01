@@ -19,16 +19,14 @@ permalink: /reading/
 <ol class="feed-items">
 {%- for item in aggregatedFeeds -%}
   <li>
-    <article class="feed-item card">
-      <a href="{{ item.link }}" target="_blank" rel="noopener noreferrer">
-        {% set itemDate = item.date | toDate %}
-        <time class="feed-date" datetime="{{ item.date }}">{{ itemDate | readableDate }}</time>
-        <div class="feed-details">
-          <strong class="feed-title">{{ item.title }}</strong>
-          <div class="feed-source">{{ item.source.name }}</div>
-        </div>
-      </a>
-    </article>
+    <pob-tile href="{{ item.link }}" target="_blank">
+      {% set itemDate = item.date | toDate %}
+      <time class="feed-date" datetime="{{ item.date }}">{{ itemDate | readableDate }}</time>
+      <div class="feed-details">
+        <strong class="feed-title">{{ item.title }}</strong>
+        <div class="feed-source">{{ item.source.name }}</div>
+      </div>
+    </pob-tile>
   </li>
 {%- endfor -%}
 </ol>
