@@ -125,7 +125,7 @@ export default async function (eleventyConfig) {
     }
   });
 
-  eleventyConfig.addWatchTarget("./src/assets/js/components/");
+  eleventyConfig.addWatchTarget("./src/assets/js/components/**/*.js");
 
   // additional config
   eleventyConfig.amendLibrary("md", (mdLib) => {

@@ -15,6 +15,22 @@ const feedIcon = svg`<svg
   ></path>
 </svg>`;
 
+const hamburgerIcon = svg`<svg
+  viewBox="0 0 24 24"
+  aria-label="Menu"
+  style="width: 1.5rem; height: 1.5rem; fill: var(--font-color);"
+>
+  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+</svg>`;
+
+// Navigation items configuration
+const NAV_ITEMS = [
+	{ text: "Home", href: "/" },
+	{ text: "Blog", href: "/blog" },
+	{ text: "Reading", href: "/reading" },
+	{ text: "About", href: "/about" },
+];
+
 export class AppElement extends LitElement {
 	static get properties() {
 		return {
@@ -38,35 +54,98 @@ export class AppElement extends LitElement {
 		this.author = {};
 	}
 
+	#openMobileNav() {
+		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
+		dialog?.showModal();
+	}
+
+	#closeMobileNav() {
+		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
+		dialog?.close();
+	}
+
+	#handleDialogClick(event) {
+		const dialog = event.target;
+		const rect = dialog.getBoundingClientRect();
+		const isInDialog = (
+			rect.top <= event.clientY &&
+			event.clientY <= rect.top + rect.height &&
+			rect.left <= event.clientX &&
+			event.clientX <= rect.left + rect.width
+		);
+		if (!isInDialog) {
+			this.#closeMobileNav();
+		}
+	}
+
 	connectedCallback() {
 		super.connectedCallback();
-		window.addEventListener("resize", this.#setPopoverPosition.bind(this));
+		window.addEventListener("resize", this.#handleResize.bind(this));
 		window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
 
 		// init
 		this.#setPopoverPosition();
 	}
 
+	#handleResize() {
+		this.#setPopoverPosition();
+		this.#closeMobileNav();
+	}
+
+	#renderNavItems() {
+		return NAV_ITEMS.map(
+			(item) => html`<a class="nav-item" href="${item.href}">${item.text}</a>`
+		);
+	}
+
+	#renderContactButton() {
+		return html`<div class="contact-me-container">
+			<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
+			<ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
+				<li>${this.#renderEmail()}</li>
+				<li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
+				<li>${this.#renderExternalLink("Bluesky", this.author.social.bluesky)}</li>
+			</ul>
+		</div>`;
+	}
+
 	render() {
 		return html` <div class="site-root">
 			<header>
+				<!-- Hamburger menu button (mobile only) -->
+				<button type="button" class="hamburger-menu" @click="${this.#openMobileNav}" aria-label="Open menu">
+					${hamburgerIcon}
+				</button>
+
+				<!-- Desktop navigation -->
 				<nav class="top-nav">
-					<a class="nav-item" href="/">Home</a>
-					<a class="nav-item" href="/blog">Blog</a>
-					<a class="nav-item" href="/reading">Reading</a>
-					<a class="nav-item" href="/about">About</a>
-					<div class="contact-me-container">
-						<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
-						<ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
-							<li>${this.#renderEmail()}</li>
-							<li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
-							<li>${this.#renderExternalLink("Bluesky", this.author.social.bluesky)}</li>
-						</ul>
-					</div>
+					${this.#renderNavItems()}
+					${this.#renderContactButton()}
 					<a class="search nav-item" href="/search">Search</a>
 					<a class="feed nav-item" href="/feed">${feedIcon}</a>
 				</nav>
 			</header>
+
+			<!-- Mobile navigation dialog -->
+			<dialog id="mobile-nav-dialog" @click="${this.#handleDialogClick}">
+				<div class="mobile-nav-content">
+					<button type="button" class="close-button" @click="${this.#closeMobileNav}" aria-label="Close menu">
+						×
+					</button>
+					<nav class="mobile-nav">
+						<div class="mobile-nav-main">
+							${this.#renderNavItems()}
+							${this.#renderContactButton()}
+						</div>
+						<div class="mobile-nav-footer">
+							<hr class="nav-divider" />
+							<a class="nav-item" href="/search">Search</a>
+							<a class="nav-item" href="/feed">RSS Feed</a>
+						</div>
+					</nav>
+				</div>
+			</dialog>
+
 			<main part="main">
 				<slot></slot>
 			</main>
@@ -137,6 +216,16 @@ export class AppElement extends LitElement {
 			aside {
 				display: none;
 			}
+		}
+
+		/* Hamburger menu - hidden on desktop, visible on mobile */
+		.hamburger-menu {
+			display: none;
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 0;
+			color: inherit;
 		}
 
 		::slotted(*:not([slot])) {
@@ -260,6 +349,111 @@ export class AppElement extends LitElement {
 			margin-top: 1rem;
 		}
 
+		/* Mobile navigation dialog */
+		#mobile-nav-dialog {
+			display: none; /* Hidden on desktop */
+			border: none;
+			padding: 0;
+			max-width: 75vw;
+			width: 75vw;
+			height: 100vh;
+			max-height: 100vh;
+			margin: 0;
+			left: 0;
+			top: 0;
+			background-color: var(--page-background-color);
+			color: inherit;
+			box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
+		}
+
+		#mobile-nav-dialog::backdrop {
+			background-color: rgba(0, 0, 0, 0.5);
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			#mobile-nav-dialog {
+				transition: transform 0.3s ease-out, overlay 0.3s ease-out allow-discrete, display 0.3s ease-out allow-discrete;
+				transform: translateX(-100%);
+			}
+
+			#mobile-nav-dialog[open] {
+				transform: translateX(0);
+			}
+
+			@starting-style {
+				#mobile-nav-dialog[open] {
+					transform: translateX(-100%);
+				}
+			}
+		}
+
+		.mobile-nav-content {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow: hidden;
+			box-sizing: border-box;
+			padding: 1rem;
+		}
+
+		.close-button {
+			align-self: flex-end;
+			background: none;
+			border: none;
+			font-size: 2rem;
+			cursor: pointer;
+			color: inherit;
+			padding: 0;
+			margin: 0;
+			margin-bottom: 0.5rem;
+			line-height: 1;
+			flex-shrink: 0;
+		}
+
+		.mobile-nav {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			overflow-y: auto;
+			min-height: 0;
+		}
+
+		.mobile-nav-main {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5rem;
+			flex: 0 0 auto;
+		}
+
+		.mobile-nav .nav-item {
+			font-weight: bold;
+			font-size: 1.25rem;
+		}
+
+		.mobile-nav .contact-me-container {
+			position: relative;
+		}
+
+		.mobile-nav-footer {
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			padding-top: 1rem;
+			margin-top: auto;
+		}
+
+		.mobile-nav-footer .nav-item {
+			font-weight: bold;
+			font-size: 1.25rem;
+		}
+
+		.nav-divider {
+			border: none;
+			border-top: 1px solid var(--font-color);
+			opacity: 0.3;
+			margin: 0;
+		}
+
 		@media (max-width: 768px) {
 			.hide-mobile {
 				display: none;
@@ -279,6 +473,21 @@ export class AppElement extends LitElement {
 			.nav-item {
 				font-size: 1rem;
 				font-weight: normal;
+			}
+
+			/* Show hamburger menu on mobile */
+			.hamburger-menu {
+				display: block;
+			}
+
+			/* Hide desktop navigation on mobile */
+			.top-nav {
+				display: none;
+			}
+
+			/* Show mobile dialog on mobile */
+			#mobile-nav-dialog {
+				display: block;
 			}
 		}
 	`;
