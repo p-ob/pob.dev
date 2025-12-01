@@ -1,9 +1,49 @@
 {
-  "feeds": [
-    {
-      "name": "Zach Leatherman",
-      "url": "https://www.zachleat.com/web/feed/",
-      "siteUrl": "https://www.zachleat.com"
-    }
-  ]
+	"feeds": [
+		{
+			"name": "Zach Leatherman",
+			"url": "https://www.zachleat.com/web/feed/",
+			"siteUrl": "https://www.zachleat.com"
+		},
+		{
+			"name": "Alex Russell",
+			"url": "https://infrequently.org/feed/",
+			"siteUrl": "https://infrequently.org"
+		},
+		{
+			"name": "Jake Archibald",
+			"url": "https://jakearchibald.com/posts.rss",
+			"siteUrl": "https://jakearchibald.com"
+		},
+		{
+			"name": "Una Kravets",
+			"url": "https://una.im/rss.xml",
+			"siteUrl": "https://una.im"
+		},
+		{
+			"name": "Scott Hanselman",
+			"url": "https://feeds.hanselman.com/ScottHanselman",
+			"siteUrl": "https://www.hanselman.com"
+		},
+		{
+			"name": "Sara Soueidan",
+			"url": "https://www.sarasoueidan.com/blog/index.xml",
+			"siteUrl": "https://www.sarasoueidan.com"
+		},
+		{
+			"name": "Jeremy Keith",
+			"url": "https://adactio.com/journal/rss",
+			"siteUrl": "https://adactio.com"
+		},
+		{
+			"name": "Lea Verou",
+			"url": "https://lea.verou.me/feed/",
+			"siteUrl": "https://lea.verou.me"
+		},
+		{
+			"name": "Dave Rupert",
+			"url": "https://daverupert.com/atom.xml",
+			"siteUrl": "https://daverupert.com"
+		}
+	]
 }

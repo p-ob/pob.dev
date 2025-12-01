@@ -1,8 +1,16 @@
 // Plugin to aggregate RSS feeds from external sources
 // Fetches feeds at build time and makes them available as global data
 
+import { Temporal } from "temporal-polyfill";
+
 export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
-  const { configFile = "feeds.json" } = options;
+  const { configFile = "feeds.json", durationLimit = null } = options;
+
+  // Watch the feeds configuration file for changes
+  eleventyConfig.addWatchTarget(configFile);
+
+  // Expose the duration limit as global data
+  eleventyConfig.addGlobalData("readingFeedDurationLimit", durationLimit);
 
   // Add global data for aggregated feeds
   eleventyConfig.addGlobalData("aggregatedFeeds", async () => {
@@ -68,15 +76,37 @@ export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
         }
       }
 
+      // Filter by date if durationLimit is provided
+      let filteredItems = allItems;
+      if (durationLimit) {
+        try {
+          const now = Temporal.Now.plainDateISO();
+          const duration = Temporal.Duration.from(durationLimit);
+          const cutoffDate = now.subtract(duration);
+
+          filteredItems = allItems.filter((item) => {
+            const itemDate = Temporal.PlainDate.from(item.date.substring(0, 10));
+            return Temporal.PlainDate.compare(itemDate, cutoffDate) >= 0;
+          });
+
+          console.log(
+            `[FeedAggregator] Filtered ${allItems.length} items to ${filteredItems.length} items (keeping posts from the last ${durationLimit})`
+          );
+        } catch (err) {
+          console.error(`[FeedAggregator] Invalid durationLimit "${durationLimit}":`, err.message);
+          console.warn(`[FeedAggregator] Proceeding without date filtering`);
+        }
+      }
+
       // Sort by date, newest first
-      allItems.sort((a, b) => {
+      filteredItems.sort((a, b) => {
         const dateA = new Date(a.date);
         const dateB = new Date(b.date);
         return dateB - dateA;
       });
 
-      console.log(`[FeedAggregator] Total items aggregated: ${allItems.length}`);
-      return allItems;
+      console.log(`[FeedAggregator] Total items aggregated: ${filteredItems.length}`);
+      return filteredItems;
     } catch (err) {
       console.error(`[FeedAggregator] Critical error:`, err);
       return [];

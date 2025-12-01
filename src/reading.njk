@@ -8,7 +8,12 @@ permalink: /reading/
 <link rel="stylesheet" href="/assets/css/feed.css">
 
 <h1>Reading</h1>
-<p class="feed-description">Articles and posts from around the web.</p>
+<p class="feed-description">
+  Articles and posts from around the web.
+  {% if readingFeedDurationLimit %}
+  Showing posts from the last {{ readingFeedDurationLimit | humanizeDuration }}.
+  {% endif %}
+</p>
 
 {% if aggregatedFeeds.length > 0 %}
 <ol class="feed-items">

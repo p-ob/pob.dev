@@ -63,6 +63,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPlugin(DraftPlugin);
   eleventyConfig.addPlugin(FeedAggregatorPlugin, {
     configFile: "feeds.json",
+    durationLimit: "P1Y6M", // 1 year 6 months
   });
 
   // this must come last
@@ -91,6 +92,37 @@ export default async function (eleventyConfig) {
 
   eleventyConfig.addFilter("except", (arr, ...exclusions) => {
     return arr.filter((x) => !exclusions.includes(x));
+  });
+
+  eleventyConfig.addFilter("humanizeDuration", (durationString) => {
+    if (!durationString) return null;
+
+    try {
+      // Parse ISO 8601 duration string (e.g., "P1Y6M", "P90D")
+      const match = durationString.match(/P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)W)?(?:(\d+)D)?/);
+      if (!match) return durationString;
+
+      const years = parseInt(match[1] || 0);
+      const months = parseInt(match[2] || 0);
+      const weeks = parseInt(match[3] || 0);
+      const days = parseInt(match[4] || 0);
+
+      const parts = [];
+      if (years > 0) parts.push(`${years} year${years > 1 ? "s" : ""}`);
+      if (months > 0) parts.push(`${months} month${months > 1 ? "s" : ""}`);
+      if (weeks > 0) parts.push(`${weeks} week${weeks > 1 ? "s" : ""}`);
+      if (days > 0) parts.push(`${days} day${days > 1 ? "s" : ""}`);
+
+      if (parts.length === 0) return durationString;
+      if (parts.length === 1) return parts[0];
+      if (parts.length === 2) return parts.join(" and ");
+
+      // For 3+ parts, use commas and "and" for the last part
+      const lastPart = parts.pop();
+      return parts.join(", ") + ", and " + lastPart;
+    } catch (err) {
+      return durationString;
+    }
   });
 
   eleventyConfig.addWatchTarget("./src/assets/js/components/");
