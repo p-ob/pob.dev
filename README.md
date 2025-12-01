@@ -4,6 +4,11 @@ This is the source code for my personal website, [pob.dev](https://pob.dev).
 
 A modern, performant personal website and blog built with static site generation and web components.
 
+> [!NOTE]
+> This project uses AI assistance (e.g. Claude Code) for development tasks such as code generation, refactoring, and documentation.
+>
+> Content on this site is authored solely by Patrick O'Brien.
+
 ## Quick Start
 
 ```bash

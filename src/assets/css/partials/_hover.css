@@ -1,0 +1,34 @@
+/* Global hover styles for interactive elements */
+
+/* Links in article content - subtle underline on hover */
+article a:not(.post):not(.card):not(.feed-item) {
+	text-decoration: underline;
+	text-decoration-color: transparent;
+	transition: text-decoration-color 0.2s ease;
+}
+
+article a:not(.post):not(.card):not(.feed-item):hover {
+	text-decoration-color: currentColor;
+}
+
+/* External links in footer */
+footer .external:hover {
+	text-decoration: underline;
+}
+
+/* Global button hover effects */
+button {
+	transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+button:not(:disabled):hover {
+	opacity: 0.8;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	article a,
+	button {
+		transition: none !important;
+	}
+}

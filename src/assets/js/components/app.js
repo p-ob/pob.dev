@@ -226,6 +226,11 @@ export class AppElement extends LitElement {
 			cursor: pointer;
 			padding: 0;
 			color: inherit;
+			transition: opacity 0.2s ease;
+		}
+
+		.hamburger-menu:hover {
+			opacity: 0.7;
 		}
 
 		::slotted(*:not([slot])) {
@@ -307,6 +312,11 @@ export class AppElement extends LitElement {
 		a {
 			color: inherit;
 			text-decoration: none;
+			transition: opacity 0.2s ease;
+		}
+
+		a:hover {
+			opacity: 0.7;
 		}
 
 		.contact-me {
@@ -318,6 +328,11 @@ export class AppElement extends LitElement {
 			padding: 0;
 			margin: 0;
 			font-size: inherit;
+			transition: opacity 0.2s ease;
+		}
+
+		.contact-me:hover {
+			opacity: 0.7;
 		}
 
 		.search {
@@ -408,6 +423,11 @@ export class AppElement extends LitElement {
 			margin-bottom: 0.5rem;
 			line-height: 1;
 			flex-shrink: 0;
+			transition: opacity 0.2s ease;
+		}
+
+		.close-button:hover {
+			opacity: 0.7;
 		}
 
 		.mobile-nav {
@@ -452,6 +472,17 @@ export class AppElement extends LitElement {
 			border-top: 1px solid var(--font-color);
 			opacity: 0.3;
 			margin: 0;
+		}
+
+		/* Respect reduced motion preferences */
+		@media (prefers-reduced-motion: reduce) {
+			a,
+			button,
+			.hamburger-menu,
+			.close-button,
+			.contact-me {
+				transition: none !important;
+			}
 		}
 
 		@media (max-width: 768px) {

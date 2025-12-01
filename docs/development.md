@@ -413,6 +413,17 @@ DEBUG=Eleventy* npm start
 - **Line width** - 120 characters (200 for Markdown/SCSS)
 - **Quotes** - Consistent use of template literals
 - **Semicolons** - Required
+- **Braces** - Always required, even for single-line statements
+
+```javascript
+// ✅ Good - always use braces
+if (condition) {
+	return null;
+}
+
+// ❌ Bad - no braces
+if (condition) return null;
+```
 
 ### Enforcing Style
 
