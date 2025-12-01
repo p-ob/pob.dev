@@ -10,11 +10,11 @@ noSidebar: true
   </header>
 
   {% set latestPost = collections.post | last %}
-  <a class="post" href="{{ latestPost.url }}">
+  <pob-tile href="{{ latestPost.url }}" style="--tile-padding: 2rem;">
     <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
     <div class="details">
       <strong>{{ latestPost.data.title }}</strong>
       <div>{{ latestPost.data.description }}</div>
     </div>
-  </a>
+  </pob-tile>
 </div>
