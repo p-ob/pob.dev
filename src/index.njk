@@ -4,12 +4,17 @@ noSidebar: true
 
 <link rel="stylesheet" href="/assets/css/index.css">
 
-<h2>Latest</h2>
-{% set latestPost = collections.post | last %}
-<a class="post" href="{{ latestPost.url }}">
-  <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
-  <div class="details">
-    <strong>{{ latestPost.data.title }}</strong>
-    <div>{{ latestPost.data.description }}</div>
-  </div>
-</a>
+<div class="home-container">
+  <header style="display: none;" class="home-header">
+    <h2>Patrick O'Brien</h2>
+  </header>
+
+  {% set latestPost = collections.post | last %}
+  <a class="post" href="{{ latestPost.url }}">
+    <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
+    <div class="details">
+      <strong>{{ latestPost.data.title }}</strong>
+      <div>{{ latestPost.data.description }}</div>
+    </div>
+  </a>
+</div>

@@ -99,7 +99,7 @@ export class AppElement extends LitElement {
 	}
 
 	#renderContactButton() {
-		return html`<div class="contact-me-container">
+		return html`<div class="contact-me-container hide-mobile">
 			<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
 			<ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
 				<li>${this.#renderEmail()}</li>
