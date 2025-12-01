@@ -13,6 +13,7 @@ function getLitComponents(...components) {
   const root = "src/assets/js/components/";
   return components.map((x) => `${root}${x}.js`);
 }
+const LIT_COMPONENTS = getLitComponents("app", "note", "tile");
 
 function passthroughCopyLitDependencies(eleventyConfig) {
   const modules = ["@webcomponents", "@lit", "@lit-labs", "lit", "lit-element", "lit-html"];
@@ -25,8 +26,6 @@ function passthroughCopyLitDependencies(eleventyConfig) {
     eleventyConfig.addPassthroughCopy(copyConfig);
   }
 }
-
-const LIT_COMPONENTS = getLitComponents("app", "note");
 
 export default async function (eleventyConfig) {
   /* passthrough copies */

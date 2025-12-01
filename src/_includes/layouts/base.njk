@@ -23,9 +23,11 @@
 			</nav>
 			{% endif %}
     </pob-app>
-		<script type="module" src="/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js"></script>
-		<script type="module" src="/assets/js/components/app.js"></script>
-		<script type="module" src="/assets/js/components/note.js"></script>
-		<script type="module" src="/assets/js/components/tile.js"></script>
+    <script type="module">
+      await import('/assets/external/@lit-labs/ssr-client/lit-element-hydrate-support.js');
+      import('/assets/js/components/app.js');
+			import('/assets/js/components/note.js');
+			import('/assets/js/components/tile.js');
+    </script>
   </body>
 </html>
