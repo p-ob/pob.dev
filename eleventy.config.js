@@ -68,7 +68,7 @@ export default async function (eleventyConfig) {
 
   // this must come last
   eleventyConfig.addPlugin(litPlugin, {
-    mode: "vm",
+    mode: "worker",
     componentModules: LIT_COMPONENTS,
   });
 
