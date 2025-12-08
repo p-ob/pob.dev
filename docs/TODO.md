@@ -13,34 +13,27 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
   - Leverage PageFind's filtering capabilities
 - **Effort:** Medium
 
-### [ ] Add Cache Headers for Static Assets
+### [x] Add Cache Headers for Static Assets
 - **Location:** `src/_headers`
-- **Description:** Fonts and versioned assets should use immutable cache headers
-- **Implementation:**
-  ```
-  /assets/fonts/*
-    Cache-Control: public, max-age=31536000, immutable
-  /assets/external/*
-    Cache-Control: public, max-age=31536000, immutable
-  ```
+- **Description:** ~~Fonts and versioned assets should use immutable cache headers~~ Implemented!
 - **Effort:** Low
 
-### [ ] Systematic Image Lazy Loading
-- **Description:** Add `loading="lazy"` and `decoding="async"` to images
-- **Location:** `eleventy.config.js` (eleventyImageTransformPlugin config)
-- **Also:** Ensure all images have explicit `width`/`height` to prevent CLS
+### [x] Systematic Image Lazy Loading
+- **Description:** ~~Add `loading="lazy"` and `decoding="async"` to images~~ Configured in eleventyImageTransformPlugin with avif/webp formats
+- **Location:** `eleventy.config.js`
 - **Effort:** Low
 
 ---
 
 ## Medium Priority
 
-### [ ] Add Service Worker for Offline Reading
-- **Description:** Enable offline reading for blog posts
-- **Implementation:**
-  - Use Workbox with stale-while-revalidate strategy
-  - Cache article HTML, CSS, fonts
-  - Cache PageFind index for offline search
+### [x] Add Service Worker for Offline Reading
+- **Description:** ~~Enable offline reading for blog posts~~ Implemented!
+- **Location:** `src/sw.js`
+- **Features:**
+  - Cache-first for fonts and external libs (immutable assets)
+  - Stale-while-revalidate for CSS/JS and PageFind index
+  - Network-first with cache fallback for HTML pages
 - **Effort:** Medium
 
 ### [ ] Improve Mobile Navigation UX

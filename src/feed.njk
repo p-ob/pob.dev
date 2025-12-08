@@ -3,6 +3,8 @@ title: Feed
 noSidebar: true
 ---
 
+<link rel="stylesheet" href="/assets/css/feed.css">
+
 To subscribe to this site's posts, I've provided various feed formats. Use the links below to subscribe to the feed of your choice:
 
 <table>
@@ -15,15 +17,54 @@ To subscribe to this site's posts, I've provided various feed formats. Use the l
   <tbody>
     <tr>
       <td><a href="https://cyber.harvard.edu/rss/rss.html" target="_blank">RSS</a></td>
-      <td><a href="/feed.rss" target="_blank">{{ metadata.host }}/feed.rss</a></td>
+      <td>
+        <span class="feed-url">
+          <a href="/feed.rss" target="_blank">{{ metadata.host }}/feed.rss</a>
+          <button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.rss" aria-label="Copy URL">
+            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+        </span>
+      </td>
     </tr>
     <tr>
       <td><a href="https://www.jsonfeed.org/" target="_blank">JSON</a></td>
-      <td><a href="/feed.json" target="_blank">{{ metadata.host }}/feed.json</a></td>
+      <td>
+        <span class="feed-url">
+          <a href="/feed.json" target="_blank">{{ metadata.host }}/feed.json</a>
+          <button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.json" aria-label="Copy URL">
+            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+        </span>
+      </td>
     </tr>
     <tr>
       <td><a href="https://datatracker.ietf.org/doc/html/rfc4287" target="_blank">Atom</a></td>
-      <td><a href="/feed.atom" target="_blank">{{ metadata.host }}/feed.atom</a></td>
+      <td>
+        <span class="feed-url">
+          <a href="/feed.atom" target="_blank">{{ metadata.host }}/feed.atom</a>
+          <button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.atom" aria-label="Copy URL">
+            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </button>
+        </span>
+      </td>
     </tr>
   </tbody>
 </table>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn => {
+	btn.addEventListener('click', async () => {
+		const url = btn.dataset.url;
+		try {
+			await navigator.clipboard.writeText(url);
+			btn.classList.add('copied');
+			setTimeout(() => btn.classList.remove('copied'), 2000);
+		} catch (err) {
+			// Silently fail
+		}
+	});
+});
+</script>

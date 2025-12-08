@@ -28,6 +28,11 @@
       import('/assets/js/components/app.js');
 			import('/assets/js/components/note.js');
 			import('/assets/js/components/tile.js');
+
+			// Register service worker for offline support
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('/sw.js');
+			}
     </script>
   </body>
 </html>

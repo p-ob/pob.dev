@@ -18,7 +18,9 @@ footer .external:hover {
 
 /* Global button hover effects */
 button {
-	transition: opacity 0.2s ease, transform 0.2s ease;
+	transition:
+		opacity 0.2s ease,
+		transform 0.2s ease;
 }
 
 button:not(:disabled):hover {

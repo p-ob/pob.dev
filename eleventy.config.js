@@ -33,6 +33,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
   eleventyConfig.addPassthroughCopy("src/robots.txt");
   eleventyConfig.addPassthroughCopy("src/_headers");
+  eleventyConfig.addPassthroughCopy("src/sw.js");
   passthroughCopyLitDependencies(eleventyConfig);
 
   /* global data */
@@ -40,7 +41,16 @@ export default async function (eleventyConfig) {
 
   /* plugins */
   eleventyConfig.addPlugin(EleventyRenderPlugin);
-  eleventyConfig.addPlugin(eleventyImageTransformPlugin);
+  eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
+    formats: ["avif", "webp", "auto"],
+    widths: ["auto"],
+    htmlOptions: {
+      imgAttributes: {
+        loading: "lazy",
+        decoding: "async",
+      },
+    },
+  });
   eleventyConfig.addPlugin(JsonHtmlPlugin);
   eleventyConfig.addPlugin(TableOfContentsPlugin, { parent: "#toc" });
   eleventyConfig.addPlugin(FeedsPlugin, {
