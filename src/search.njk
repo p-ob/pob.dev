@@ -8,7 +8,128 @@ excludeFromSearch: true
 
 <div id="search"></div>
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<style>
+	/* PageFind theme customization */
+	:root {
+		--pagefind-ui-scale: 1;
+		--pagefind-ui-primary: hsl(220, 60%, 50%);
+		--pagefind-ui-text: var(--font-color);
+		--pagefind-ui-background: var(--page-background-color);
+		--pagefind-ui-border: color-mix(in srgb, var(--font-color) 20%, transparent);
+		--pagefind-ui-tag: color-mix(in srgb, var(--page-background-color), gray 20%);
+		--pagefind-ui-border-radius: 4px;
+		--pagefind-ui-font: inherit;
+	}
+
+	/* Better highlight styling */
+	.pagefind-ui mark {
+		background-color: hsl(50, 100%, 70%);
+		color: hsl(0, 0%, 10%);
+		padding: 0.1em 0.2em;
+		border-radius: 2px;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--pagefind-ui-primary: hsl(220, 70%, 65%);
+		}
+
+		.pagefind-ui mark {
+			background-color: hsl(50, 80%, 40%);
+			color: hsl(0, 0%, 95%);
+		}
+	}
+
+	/* Keyboard navigation focus styles - only show outline on result container */
+	.pagefind-ui__result:focus-within {
+		outline: 2px solid var(--pagefind-ui-primary);
+		outline-offset: 4px;
+		border-radius: 4px;
+	}
+
+	.pagefind-ui__result-link:focus {
+		outline: none;
+	}
+
+	/* Improve result spacing */
+	.pagefind-ui__result-title {
+		margin-bottom: 0.25em;
+	}
+
+	.pagefind-ui__result-excerpt {
+		line-height: 1.5;
+		color: color-mix(in srgb, var(--font-color) 80%, transparent);
+	}
+
+	/* Search input improvements */
+	.pagefind-ui__search-input:focus {
+		outline: 2px solid var(--pagefind-ui-primary);
+		outline-offset: 2px;
+		border-color: var(--pagefind-ui-primary);
+	}
+</style>
 <script src="/pagefind/pagefind-ui.js"></script>
 <script type="module">
-			new PagefindUI({ element: "#search", showSubResults: true });
+	const search = new PagefindUI({
+		element: "#search",
+		showSubResults: true,
+		showImages: false,
+		excerptLength: 20,
+		autofocus: true,
+		ranking: {
+			pageLength: 0.5,
+			termFrequency: 1.0,
+			termSimilarity: 1.2,
+		},
+	});
+
+	// Load initial query from URL
+	const params = new URLSearchParams(window.location.search);
+	const initialQuery = params.get("q");
+	if (initialQuery) {
+		search.triggerSearch(initialQuery);
+	}
+
+	// Update URL when search input changes
+	const searchInput = document.querySelector(".pagefind-ui__search-input");
+	searchInput?.addEventListener("input", (e) => {
+		const query = e.target.value;
+		const url = new URL(window.location);
+		if (query) {
+			url.searchParams.set("q", query);
+		} else {
+			url.searchParams.delete("q");
+		}
+		history.replaceState(null, "", url);
+	});
+
+	// Keyboard navigation for search results
+	document.addEventListener("keydown", (e) => {
+		const results = document.querySelectorAll(".pagefind-ui__result-link");
+		if (results.length === 0) {
+			return;
+		}
+
+		const active = document.activeElement;
+		const searchInput = document.querySelector(".pagefind-ui__search-input");
+		let currentIndex = Array.from(results).indexOf(active);
+
+		if (e.key === "ArrowDown") {
+			e.preventDefault();
+			if (active === searchInput || currentIndex === -1) {
+				results[0]?.focus();
+			} else if (currentIndex < results.length - 1) {
+				results[currentIndex + 1]?.focus();
+			}
+		} else if (e.key === "ArrowUp") {
+			e.preventDefault();
+			if (currentIndex > 0) {
+				results[currentIndex - 1]?.focus();
+			} else if (currentIndex === 0) {
+				searchInput?.focus();
+			}
+		} else if (e.key === "Escape") {
+			searchInput?.focus();
+		}
+	});
 </script>

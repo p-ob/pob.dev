@@ -44,10 +44,6 @@ export class AppElement extends LitElement {
 		};
 	}
 
-	get #contactMeContainer() {
-		return this.shadowRoot.querySelector(".contact-me-container");
-	}
-
 	constructor() {
 		super();
 		this.currentYear = new Date().getFullYear();
@@ -86,14 +82,9 @@ export class AppElement extends LitElement {
 	connectedCallback() {
 		super.connectedCallback();
 		window.addEventListener("resize", this.#handleResize.bind(this));
-		window.addEventListener("scroll", this.#setPopoverPosition.bind(this));
-
-		// init
-		this.#setPopoverPosition();
 	}
 
 	#handleResize() {
-		this.#setPopoverPosition();
 		this.#closeMobileNav();
 	}
 
@@ -106,7 +97,7 @@ export class AppElement extends LitElement {
 	#renderContactButton() {
 		return html`<div class="contact-me-container hide-mobile">
 			<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
-			<ul id="contact-details" popover="" @toggle="${this.#onContactToggle}">
+			<ul id="contact-details" popover="">
 				<li>${this.#renderEmail()}</li>
 				<li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
 				<li>${this.#renderExternalLink("Bluesky", this.author.social.bluesky)}</li>
@@ -187,26 +178,6 @@ export class AppElement extends LitElement {
 	#renderEditLink() {
 		const editUrl = new URL(this.source, `${this.repository}/edit/${this.branch}/`);
 		return this.#renderExternalLink("Edit this page", editUrl, "hide-mobile");
-	}
-
-	/**
-	 * TODO: Remove this when CSS Anchor positioning is supported
-	 * @param {ToggleEvent} event
-	 */
-	#onContactToggle(event) {
-		if (event.newState === "open") {
-			this.#setPopoverPosition();
-		}
-	}
-
-	#setPopoverPosition() {
-		const popover = this.shadowRoot.querySelector("#contact-details");
-		const boundingRect = this.#contactMeContainer.getBoundingClientRect();
-
-		const top = boundingRect.top + boundingRect.height + window.scrollY;
-
-		popover.style.top = `${top}px`;
-		popover.style.left = `${boundingRect.left}px`;
 	}
 
 	static styles = css`
@@ -334,6 +305,7 @@ export class AppElement extends LitElement {
 			margin: 0;
 			font-size: inherit;
 			transition: opacity 0.2s ease;
+			anchor-name: --contact-button;
 		}
 
 		.contact-me:hover {
@@ -351,6 +323,30 @@ export class AppElement extends LitElement {
 		[popover] {
 			background-color: var(--page-background-color);
 			color: inherit;
+			border: 1px solid var(--faded-color);
+			border-radius: 0.5rem;
+			padding: 0.5rem 0;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		}
+
+		#contact-details {
+			list-style: none;
+			margin: 0;
+		}
+
+		#contact-details li {
+			padding: 0.375rem 1rem;
+		}
+
+		#contact-details a {
+			font-weight: normal;
+			font-size: 1rem;
+			text-decoration: none;
+		}
+
+		#contact-details a:hover {
+			opacity: 1;
+			text-decoration: underline;
 		}
 
 		.contact-me-container {
@@ -364,9 +360,11 @@ export class AppElement extends LitElement {
 		}
 
 		#contact-details:popover-open {
-			position: absolute;
 			inset: unset;
-			margin-top: 1rem;
+			margin: 0;
+			position-anchor: --contact-button;
+			position-area: bottom span-right;
+			margin-top: 0.5rem;
 		}
 
 		/* Mobile navigation dialog */
