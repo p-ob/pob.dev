@@ -1,20 +1,7 @@
 <head>
 	<!-- Build date: {{ metadata.buildDate }} -->
 	<script type="importmap">
-	{
-		"imports": {
-			"lit": "/assets/external/lit/index.js",
-			"lit/": "/assets/external/lit/",
-			"@lit/reactive-element": "/assets/external/@lit/reactive-element/reactive-element.js",
-			"@lit/reactive-element/": "/assets/external/@lit/reactive-element/",
-			"@lit-labs/ssr-dom-shim": "/assets/external/@lit-labs/ssr-dom-shim/index.js",
-			"@lit-labs/ssr-client": "/assets/external/@lit-labs/ssr-client/index.js",
-			"@lit-labs/ssr-client/": "/assets/external/@lit-labs/ssr-client/",
-			"lit-element/": "/assets/external/lit-element/",
-			"lit-html": "/assets/external/lit-html/lit-html.js",
-			"lit-html/": "/assets/external/lit-html/"
-		}
-	}
+	{{ externals.importMap | dump | safe }}
 	</script>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
