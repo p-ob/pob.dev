@@ -376,8 +376,8 @@ export class AppElement extends LitElement {
 			padding: 0;
 			max-width: 75vw;
 			width: 75vw;
-			height: 100vh;
-			max-height: 100vh;
+			height: 100dvh;
+			max-height: 100dvh;
 			margin: 0;
 			left: 0;
 			top: 0;
