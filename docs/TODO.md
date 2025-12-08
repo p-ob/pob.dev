@@ -4,13 +4,13 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
 
 ## High Priority
 
-### [ ] Complete Tag Filtering Feature
-- **Location:** `src/assets/css/partials/blog.css`
-- **Description:** The blog page has a TODO comment for tag filters that was never implemented
-- **Options:**
-  - Add client-side JavaScript filtering
-  - Generate static tag archive pages at build time
-  - Leverage PageFind's filtering capabilities
+### [x] Complete Tag Filtering Feature
+- **Location:** `src/blog.njk`, `src/assets/css/blog.css`
+- **Description:** ~~The blog page has a TODO comment for tag filters that was never implemented~~ Implemented!
+- **Implementation:**
+  - Tag filter links on the blog page linking to static tag archive pages
+  - Tags on individual posts are now clickable links
+  - Tag archive pages include "back to all posts" navigation
 - **Effort:** Medium
 
 ### [x] Add Cache Headers for Static Assets
@@ -144,7 +144,7 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
 | RSS autodiscovery | Low | Medium | Medium |
 | Reading time filter | Low | Low | Nice to have |
 | JSON-LD structured data | Low | Medium | Nice to have |
-| Tag filtering | Medium | Medium | High |
+| ~~Tag filtering~~ | ~~Medium~~ | ~~Medium~~ | ~~High~~ (Done) |
 | Service worker | Medium | High | Medium |
 | Dark mode toggle | Medium | Medium | Nice to have |
 | Related posts | Medium | Low | Nice to have |

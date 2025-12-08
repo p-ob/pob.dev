@@ -1,1 +1,63 @@
-/* TODO: css for tag filters */
+@layer layout {
+	.tag-filters {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.tag-filters-label {
+		font-size: 0.875rem;
+		color: var(--color-text-secondary, #666);
+	}
+
+	.tag-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.tag-list li {
+		display: contents;
+	}
+
+	.tag {
+		color: #333;
+		background-color: #f0f0f0;
+		display: inline-block;
+		border-radius: 3px;
+		padding: 5px 10px;
+		font-size: 14px;
+		text-decoration: none;
+		transition: background-color 0.2s ease;
+	}
+
+	.tag:hover {
+		background-color: #e0e0e0;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.tag-filters-label {
+			color: var(--color-text-secondary, #999);
+		}
+
+		.tag {
+			color: #ccc;
+			background-color: #444;
+		}
+
+		.tag:hover {
+			background-color: #555;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.tag {
+			transition: none !important;
+		}
+	}
+}

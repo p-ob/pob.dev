@@ -10,5 +10,27 @@ eleventyImport:
 
 <h1>Posts</h1>
 
+{% set allTags = [] %}
+{% for post in collections.post %}
+	{% if post.data.tags %}
+		{% for tag in post.data.tags | except("post") %}
+			{% if tag not in allTags %}
+				{% set allTags = allTags.concat([tag]) %}
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+{% endfor %}
+
+{% if allTags.length %}
+<nav class="tag-filters" aria-label="Filter by tag">
+	<span class="tag-filters-label">Filter by tag:</span>
+	<ul class="tag-list">
+		{% for tag in allTags | sort %}
+		<li><a href="/blog/tags/{{ tag }}/" class="tag">{{ tag }}</a></li>
+		{% endfor %}
+	</ul>
+</nav>
+{% endif %}
+
 {% set data = { posts: collections.post | reverse } %}
 {% renderFile "./src/_includes/components/post-list.njk", data %}

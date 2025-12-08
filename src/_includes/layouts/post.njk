@@ -10,13 +10,13 @@ pageType: article
 
 {% if tags %}
 	{% set displayTags = tags | except("post") %}
-  {% if displayTags.length %}
-    <div class="tags">
-      {% for tag in displayTags %}
-        <span class="tag">{{ tag }}</span>
-      {% endfor %}
-    </div>
-  {% endif %}
+	{% if displayTags.length %}
+		<div class="tags">
+			{% for tag in displayTags %}
+				<a href="/blog/tags/{{ tag }}/" class="tag">{{ tag }}</a>
+			{% endfor %}
+		</div>
+	{% endif %}
 {% endif %}
 
 <hr/>

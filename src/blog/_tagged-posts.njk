@@ -5,14 +5,20 @@ pagination:
   alias: tag
   filter:
     - post
+    - all
 permalink: /blog/tags/{{ tag }}/
 override:tags: []
 pageType: default
 layout: base
 excludeFromSearch: true
+noSidebar: true
 ---
 
-<h1>Tagged “{{ tag }}”</h1>
+<link rel="stylesheet" href="/assets/css/blog.css">
+
+<p><a href="/blog/">&larr; All posts</a></p>
+
+<h1>Tagged "{{ tag }}"</h1>
 
 {% set data = { posts: collections[ tag ] | reverse } %}
 {% renderFile "./src/_includes/components/post-list.njk", data %}
