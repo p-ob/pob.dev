@@ -8,7 +8,7 @@ permalink: /reading/
 <link rel="stylesheet" href="/assets/css/reading.css">
 
 <h1>Reading</h1>
-<p class="feed-description">
+<p class="reading-description">
   Articles and posts from around the web.
   {% if readingFeedDurationLimit %}
   Showing posts from the last {{ readingFeedDurationLimit | humanizeDuration }}.
@@ -16,15 +16,15 @@ permalink: /reading/
 </p>
 
 {% if aggregatedFeeds.length > 0 %}
-<ol class="feed-items">
+<ol class="reading-items">
 {%- for item in aggregatedFeeds -%}
   <li>
     <pob-tile href="{{ item.link }}" target="_blank">
       {% set itemDate = item.date | toDate %}
-      <time class="feed-date" datetime="{{ item.date }}">{{ itemDate | readableDate }}</time>
-      <div class="feed-details">
-        <strong class="feed-title">{{ item.title }}</strong>
-        <div class="feed-source">{{ item.source.name }}</div>
+      <time class="reading-date" datetime="{{ item.date }}">{{ itemDate | readableDate }}</time>
+      <div class="reading-details">
+        <strong class="reading-title">{{ item.title }}</strong>
+        <div class="reading-source">{{ item.source.name }}</div>
       </div>
     </pob-tile>
   </li>
