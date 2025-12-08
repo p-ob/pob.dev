@@ -11,7 +11,7 @@
 	"devDependencies": {
 		"@11ty/eleventy": "^3.1.2",
 		"@11ty/eleventy-img": "^6.0.4",
-		"@11ty/eleventy-navigation": "^1.0.4",
+		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^2.0.4",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.5",
 		"clean-css": "^5.3.3",
@@ -19,11 +19,11 @@
 		"lit": "^3.3.1",
 		"markdown-it-footnote": "^4.0.0",
 		"pagefind": "^1.4.0",
-		"prettier": "^3.7.3",
+		"prettier": "^3.7.4",
 		"rss-parser": "^3.13.0",
 		"slugify": "^1.6.6",
 		"temporal-polyfill": "^0.3.0",
-		"wrangler": "^4.51.0"
+		"wrangler": "^4.53.0"
 	},
 	"scripts": {
 		"build": "npm run build:11ty && npm run build:index",
