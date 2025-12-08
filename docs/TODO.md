@@ -129,11 +129,10 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
 
 ## Technical Debt
 
-### [ ] CSS Anchor Positioning for Popovers
-- **Location:** `src/assets/js/components/app.js` (lines 195-217)
-- **Description:** Manual popover positioning should use CSS Anchor when available
-- **Implementation:** Add feature detection, progressive enhancement
-- **Browser Support:** Chrome 125+, waiting on Firefox/Safari
+### [x] CSS Anchor Positioning for Popovers
+- **Location:** `src/assets/js/components/app.js`
+- **Description:** ~~Manual popover positioning should use CSS Anchor when available~~ Implemented!
+- **Browser Support:** Now supported in all major browsers
 - **Effort:** Low
 
 ### [ ] Error Boundaries for Web Components
