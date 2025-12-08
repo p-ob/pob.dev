@@ -57,11 +57,16 @@ export class AppElement extends LitElement {
 	#openMobileNav() {
 		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
 		dialog?.showModal();
+		document.body.style.overflow = "hidden";
 	}
 
 	#closeMobileNav() {
 		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
 		dialog?.close();
+	}
+
+	#onDialogClose() {
+		document.body.style.overflow = "";
 	}
 
 	#handleDialogClick(event) {
@@ -127,7 +132,7 @@ export class AppElement extends LitElement {
 			</header>
 
 			<!-- Mobile navigation dialog -->
-			<dialog id="mobile-nav-dialog" @click="${this.#handleDialogClick}">
+			<dialog id="mobile-nav-dialog" @click="${this.#handleDialogClick}" @close="${this.#onDialogClose}">
 				<div class="mobile-nav-content">
 					<button type="button" class="close-button" @click="${this.#closeMobileNav}" aria-label="Close menu">
 						×
@@ -459,6 +464,7 @@ export class AppElement extends LitElement {
 			flex-direction: column;
 			gap: 1rem;
 			padding-top: 1rem;
+			padding-bottom: 1rem;
 			margin-top: auto;
 		}
 
