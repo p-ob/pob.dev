@@ -464,7 +464,6 @@ export class AppElement extends LitElement {
 			flex-direction: column;
 			gap: 1rem;
 			padding-top: 1rem;
-			padding-bottom: 1rem;
 			margin-top: auto;
 		}
 
