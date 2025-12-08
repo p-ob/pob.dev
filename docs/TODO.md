@@ -61,12 +61,12 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
   ```
 - **Effort:** Low
 
-### [ ] Enhance PageFind Search
+### [x] Enhance PageFind Search
 - **Description:** Improve search experience
 - **Improvements:**
-  - Add custom ranking weights (title > body)
-  - Better result excerpts/highlighting
-  - Keyboard navigation (arrow keys) in results
+  - ~~Add custom ranking weights (title > body)~~ Already configured via `data-pagefind-weight="10"` on titles
+  - ~~Better result excerpts/highlighting~~ Increased excerptLength, styled mark elements
+  - ~~Keyboard navigation (arrow keys) in results~~ Arrow keys navigate, Escape returns to input
 - **Location:** `src/search.njk`
 - **Effort:** Medium
 
