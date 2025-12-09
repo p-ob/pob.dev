@@ -55,7 +55,7 @@ on:
 **Workflow Steps:**
 
 1. **Checkout repository** - Clones the repo
-2. **Setup Node.js** - Installs Node.js 22
+2. **Setup Node.js** - Installs Node.js 24
 3. **Install dependencies** - Runs `npm ci`
 4. **Build site** - Runs `npm run build`
 5. **Publish to Cloudflare** - Deploys via Wrangler
@@ -222,12 +222,14 @@ Cloudflare automatically:
 
 ### 3. Update site metadata
 
-Update [src/_data/metadata.json](../src/_data/metadata.json) with your domain:
+Update [src/_data/metadata.js](../src/_data/metadata.js) with your domain:
 
-```json
-{
-  "url": "https://yourdomain.com"
-}
+```javascript
+export default {
+  // ...
+  host: "https://yourdomain.com",
+  // ...
+};
 ```
 
 ## Monitoring Deployments
@@ -309,7 +311,7 @@ git checkout main
 
 - **Build errors** - Fix syntax errors, missing dependencies
 - **Missing secrets** - Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
-- **Node version mismatch** - Ensure Node 22+ in workflow
+- **Node version mismatch** - Ensure Node 24+ in workflow
 
 **Fix and retry:**
 

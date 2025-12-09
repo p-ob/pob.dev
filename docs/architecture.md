@@ -12,7 +12,7 @@ pob.dev is a statically-generated personal website and blog built with modern we
 
 - **[Eleventy (11ty) 3.1.2](https://www.11ty.dev/)** - Static site generator that processes templates and content
 - **[Lit 3.3.1](https://lit.dev/)** - Web Components library with server-side rendering support
-- **[PageFind 1.3.0](https://pagefind.app/)** - Static search index generation for client-side search
+- **[PageFind 1.4.0](https://pagefind.app/)** - Static search index generation for client-side search
 - **[Cloudflare Workers](https://workers.cloudflare.com/)** - Edge computing platform for hosting
 
 ### Supporting Libraries
@@ -21,8 +21,7 @@ pob.dev is a statically-generated personal website and blog built with modern we
 - **clean-css** - CSS minification and optimization
 - **rss-parser** - RSS feed aggregation from external sources
 - **temporal-polyfill** - Temporal API polyfill for date/duration handling
-- **@11ty/eleventy-img** - Image optimization pipeline
-- **@11ty/eleventy-navigation** - Navigation structure helpers
+- **@11ty/eleventy-img 6.0.4** - Image optimization pipeline
 - **@11ty/eleventy-plugin-rss** - RSS/Atom/JSON feed generation
 - **linkedom** - Lightweight DOM implementation for SSR
 - **slugify** - URL-friendly slug generation
@@ -33,23 +32,25 @@ pob.dev is a statically-generated personal website and blog built with modern we
 pob.dev/
 ├── src/                          # Source files
 │   ├── _data/                    # Global data files
-│   │   ├── author.json           # Author information
-│   │   └── metadata.json         # Site metadata
+│   │   ├── author.js             # Author information
+│   │   └── metadata.js           # Site metadata (includes commit SHA)
 │   ├── _includes/
 │   │   ├── layouts/              # Page layouts
 │   │   │   ├── base.njk          # Base HTML template
-│   │   │   └── post.njk          # Blog post layout
+│   │   │   ├── post.njk          # Blog post layout
+│   │   │   └── partials/         # Layout partials
+│   │   │       └── _head.njk     # HTML head content
 │   │   └── components/           # Reusable components
 │   │       └── post-list.njk     # Post listing component
 │   ├── assets/
 │   │   ├── css/                  # Stylesheets
-│   │   │   ├── global.css        # Main stylesheet
-│   │   │   ├── partials/         # CSS partials (reset, config, base)
-│   │   │   └── components/       # Component styles (note, toc, search)
-│   │   ├── fonts/                # Web fonts (Libre Baskerville)
+│   │   │   ├── global.css        # Main stylesheet with layer imports
+│   │   │   ├── partials/         # CSS partials (reset, vars, base, utility, hover)
+│   │   │   └── components/       # Component styles (post-list)
 │   │   └── js/components/        # Lit web components
 │   │       ├── app.js            # Main app shell
-│   │       └── note.js           # Note component
+│   │       ├── note.js           # Note component
+│   │       └── tile.js           # Tile/card component
 │   ├── blog/                     # Blog posts
 │   │   ├── blog.11tydata.js      # Blog collection configuration
 │   │   └── YYYY/MM/              # Date-based organization
@@ -58,13 +59,16 @@ pob.dev/
 │   ├── blog.njk                  # Blog listing page
 │   ├── reading.njk               # RSS feed reader page
 │   ├── search.njk                # Search page
+│   ├── feed.njk                  # Feed listing page
 │   ├── about.md                  # About page
 │   ├── sw.js                     # Service worker source
 │   ├── sw.11ty.js                # Service worker build template
+│   ├── _headers                  # Cloudflare headers configuration
 │   ├── favicon.ico
 │   └── robots.txt
 ├── 11ty/                         # Custom Eleventy plugins
 │   ├── draft.js                  # Draft post handling
+│   ├── externals.js              # External dependency management with import maps
 │   ├── feeds.js                  # RSS/Atom/JSON feed generation
 │   ├── feed-aggregator.js        # External feed aggregation
 │   ├── json-html.js              # JSON sanitization filter
@@ -145,6 +149,31 @@ pob.dev/
 - Semantic HTML with custom styling
 - Slotted content support
 - Source: [src/assets/js/components/note.js](../src/assets/js/components/note.js)
+
+**`<pob-tile>`** - Card/tile component
+- Optionally linkable with `href` attribute
+- Supports `target` attribute for link behavior
+- Hover effects with reduced motion support
+- Dark mode aware styling
+- Source: [src/assets/js/components/tile.js](../src/assets/js/components/tile.js)
+
+### External Dependencies
+
+The site uses an import map system for managing external dependencies like Lit, eliminating the need for bundlers.
+
+**How it works:**
+- The `externals.js` plugin reads package versions from `node_modules`
+- Generates versioned paths for cache busting (e.g., `/assets/external/lit-3.3.1/`)
+- Creates an import map that the browser uses to resolve bare module specifiers
+- Dependencies are copied to the output directory with version-stamped paths
+
+**Benefits:**
+- No build step required for dependencies
+- Browser-native module resolution
+- Automatic cache invalidation on version updates
+- Smaller bundle sizes (no bundler overhead)
+
+See [11ty/externals.js](../11ty/externals.js)
 
 ### Service Worker
 
@@ -230,14 +259,15 @@ npm run build
 CSS is organized using CSS layers for explicit cascade control:
 
 ```css
-@layer reset, config, base, utility, layout;
+@layer reset, config, base, utility, interactions, layout;
 ```
 
 **Layers:**
 - `reset` - Normalize browser defaults
-- `config` - CSS custom properties and design tokens
+- `config` - CSS custom properties and design tokens (defined in `_vars.css`)
 - `base` - Base element styles
 - `utility` - Utility classes
+- `interactions` - Hover and interaction styles
 - `layout` - Component and layout styles
 
 **Features:**
@@ -281,7 +311,7 @@ External links in markdown are automatically enhanced:
 
 ## Data Flow
 
-1. **Content** (Markdown files) + **Data** (JSON files) → Eleventy
+1. **Content** (Markdown files) + **Data** (JS files) → Eleventy
 2. Eleventy processes templates with Nunjucks/Liquid
 3. Lit components are server-side rendered
 4. Static HTML + CSS + minimal JS generated

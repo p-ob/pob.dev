@@ -99,8 +99,8 @@ npm outdated
 
 - **Eleventy** - Static site generator (currently 3.1.2)
 - **Lit** - Web components library (currently 3.3.1)
-- **PageFind** - Search functionality (currently 1.3.0)
-- **Wrangler** - Cloudflare deployment (currently 4.29.0)
+- **PageFind** - Search functionality (currently 1.4.0)
+- **Wrangler** - Cloudflare deployment (currently 4.53.0)
 
 #### Security Audit
 
@@ -130,7 +130,7 @@ Check if Node.js has new LTS versions:
 node --version
 ```
 
-Current requirement: **Node.js 22+**
+Current requirement: **Node.js 22+** (CI uses Node.js 24)
 
 **Update if needed:**
 
@@ -260,7 +260,7 @@ npm install
 
 1. Check error message for file and line number
 2. Review template syntax
-3. Ensure all data files are valid JSON
+3. Ensure all data files are valid JavaScript (`.js` files)
 4. Check frontmatter formatting
 
 ```bash
@@ -377,7 +377,7 @@ git push origin main
 
 1. Check browser supports `prefers-color-scheme`
 2. Verify system dark mode is enabled
-3. Check CSS custom properties in [src/assets/css/partials/config.css](../src/assets/css/partials/config.css)
+3. Check CSS custom properties in [src/assets/css/partials/_vars.css](../src/assets/css/partials/_vars.css)
 4. Inspect with browser DevTools
 5. Clear browser cache
 
@@ -621,8 +621,8 @@ git filter-branch --tree-filter 'rm -f path/to/large/file' HEAD
 
 ```bash
 # Using nvm (recommended)
-nvm install 22
-nvm use 22
+nvm install 24
+nvm use 24
 
 # Verify
 node --version
@@ -638,6 +638,8 @@ node --version
 }
 ```
 
+Note: The `engines` field specifies minimum supported version. CI may use a newer version.
+
 3. **Update GitHub Actions**
 
 Edit [.github/workflows/deploy.yml](../.github/workflows/deploy.yml):
@@ -646,7 +648,7 @@ Edit [.github/workflows/deploy.yml](../.github/workflows/deploy.yml):
 - name: Set up Node.js
   uses: actions/setup-node@v4
   with:
-    node-version: '22'
+    node-version: '24'
 ```
 
 4. **Test thoroughly**
@@ -660,7 +662,7 @@ npm start
 5. **Deploy and monitor**
 
 ```bash
-git commit -m "chore: upgrade to Node.js 22"
+git commit -m "chore: upgrade to Node.js 24"
 git push origin main
 ```
 

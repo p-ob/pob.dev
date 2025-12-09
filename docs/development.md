@@ -4,7 +4,7 @@ This guide will help you set up and develop on pob.dev locally.
 
 ## Prerequisites
 
-- **Node.js** - Version 22 or higher
+- **Node.js** - Version 22 or higher (24 recommended for CI parity)
 - **npm** - Comes with Node.js
 - **Git** - For version control
 
@@ -115,14 +115,15 @@ All source content lives here:
 
 ```
 src/
-├── _data/              # Global data files (author, metadata)
+├── _data/              # Global data files (author.js, metadata.js)
 ├── _includes/          # Layouts and reusable components
-├── assets/             # Static assets (CSS, JS, fonts)
+├── assets/             # Static assets (CSS, JS)
 ├── blog/               # Blog posts (organized by year/month)
 ├── index.njk           # Homepage
 ├── blog.njk            # Blog listing
 ├── reading.njk         # RSS feed reader
 ├── search.njk          # Search page
+├── feed.njk            # Feed listing page
 └── about.md            # About page
 ```
 
@@ -131,6 +132,7 @@ src/
 Eleventy plugins that extend functionality:
 
 - `draft.js` - Hides draft posts in production
+- `externals.js` - Manages external dependencies with import maps
 - `feeds.js` - Generates RSS/Atom/JSON feeds
 - `feed-aggregator.js` - Aggregates external RSS feeds
 - `json-html.js` - Sanitizes JSON for HTML output
@@ -239,24 +241,31 @@ No action needed - it just works!
 CSS is organized using CSS layers:
 
 ```css
-@layer reset, config, base, utility, layout;
+@layer reset, config, base, utility, interactions, layout;
 ```
 
 **Adding styles:**
 
-1. **Global utilities** → `src/assets/css/partials/base.css`
+1. **Global utilities** → `src/assets/css/partials/_base.css`
 2. **Component styles** → `src/assets/css/components/component-name.css`
-3. **Theme variables** → `src/assets/css/partials/config.css`
+3. **Theme variables** → `src/assets/css/partials/_vars.css`
+4. **Hover/interaction styles** → `src/assets/css/partials/_hover.css`
 
 ### CSS Custom Properties
 
-Theme variables are defined in `config.css`:
+Theme variables are defined in `_vars.css`:
 
 ```css
-@property --color-primary {
+@property --font-color {
 	syntax: "<color>";
 	inherits: true;
-	initial-value: #2c3e50;
+	initial-value: hsl(0, 0%, 20%);
+}
+
+@property --page-background-color {
+	syntax: "<color>";
+	inherits: true;
+	initial-value: hsl(0, 0%, 96%);
 }
 ```
 
@@ -265,7 +274,8 @@ Dark mode variants use `prefers-color-scheme`:
 ```css
 @media (prefers-color-scheme: dark) {
 	:root {
-		--color-primary: #ecf0f1;
+		--font-color: hsl(0, 0%, 91%);
+		--page-background-color: hsl(220, 4%, 14%);
 	}
 }
 ```
@@ -288,6 +298,7 @@ Web components live in `src/assets/js/components/`:
 
 - `app.js` - Main application shell
 - `note.js` - Note component
+- `tile.js` - Card/tile component
 
 ### Creating a Component
 
@@ -395,7 +406,7 @@ Feeds are fetched at build time and cached in the static output.
 **Build failing**
 - Run `npm run clean` to clear build artifacts
 - Delete `node_modules/` and run `npm ci`
-- Check Node.js version: `node --version` (should be 22+)
+- Check Node.js version: `node --version` (should be 22+, 24 recommended)
 
 ### Verbose Output
 
