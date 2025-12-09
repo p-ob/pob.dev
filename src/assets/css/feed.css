@@ -18,16 +18,15 @@
 		width: 5rem;
 		height: 5rem;
 		border-radius: 1rem;
-		background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+		background: color-mix(in srgb, var(--font-color) 15%, transparent);
 		margin-bottom: 1.5rem;
-		box-shadow: 0 10px 40px -10px rgba(249, 115, 22, 0.5);
 	}
 
 	.feed-icon-large svg {
 		width: 2.5rem;
 		height: 2.5rem;
 		fill: none;
-		stroke: white;
+		stroke: var(--font-color);
 		stroke-width: 2;
 		stroke-linecap: round;
 		stroke-linejoin: round;
@@ -88,20 +87,20 @@
 		stroke-linejoin: round;
 	}
 
-	/* Card variants */
+	/* Card variants - subtle grayscale differentiation */
 	.feed-card--rss .feed-card__icon {
-		background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
-		color: white;
+		background: color-mix(in srgb, var(--font-color) 12%, transparent);
+		color: var(--font-color);
 	}
 
 	.feed-card--json .feed-card__icon {
-		background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
-		color: #422006;
+		background: color-mix(in srgb, var(--font-color) 18%, transparent);
+		color: var(--font-color);
 	}
 
 	.feed-card--atom .feed-card__icon {
-		background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-		color: white;
+		background: color-mix(in srgb, var(--font-color) 24%, transparent);
+		color: var(--font-color);
 	}
 
 	/* Card content */
@@ -176,7 +175,7 @@
 
 	.copy-btn .check-icon {
 		display: none;
-		stroke: #22c55e;
+		stroke: var(--font-color);
 	}
 
 	.copy-btn.copied .copy-icon {
