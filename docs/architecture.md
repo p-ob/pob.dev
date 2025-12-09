@@ -59,6 +59,8 @@ pob.dev/
 │   ├── reading.njk               # RSS feed reader page
 │   ├── search.njk                # Search page
 │   ├── about.md                  # About page
+│   ├── sw.js                     # Service worker source
+│   ├── sw.11ty.js                # Service worker build template
 │   ├── favicon.ico
 │   └── robots.txt
 ├── 11ty/                         # Custom Eleventy plugins
@@ -144,6 +146,38 @@ pob.dev/
 - Slotted content support
 - Source: [src/assets/js/components/note.js](../src/assets/js/components/note.js)
 
+### Service Worker
+
+The site includes a service worker for offline reading support and improved performance.
+
+**Files:**
+- [src/sw.js](../src/sw.js) - Service worker implementation
+- [src/sw.11ty.js](../src/sw.11ty.js) - Eleventy template that processes the service worker
+
+**Cache Versioning:**
+- Cache name is generated from the git commit SHA: `pob-dev-{commitSha}`
+- The first 8 characters of the commit SHA are used (e.g., `pob-dev-a1b2c3d4`)
+- This ensures cache invalidation on every deployment
+- Old caches are automatically cleaned up on activation
+
+**Caching Strategies:**
+- **Cache-first** - Fonts and external libraries (immutable assets)
+- **Stale-while-revalidate** - CSS, JS, and PageFind search index
+- **Network-first** - HTML pages (with cache fallback for offline)
+- **Network-only** - Default for other requests
+
+**Precached Assets:**
+- Homepage (`/`)
+- Blog listing (`/blog`)
+- Global stylesheet (`/assets/css/global.css`)
+
+**How it works:**
+1. `sw.11ty.js` reads `sw.js` at build time
+2. Replaces the `%%CACHE_NAME%%` placeholder with `pob-dev-{commitSha}`
+3. Outputs the processed service worker to `/sw.js`
+4. On install, critical assets are precached
+5. On activation, old caches from previous deployments are purged
+
 ### Feed System
 
 Multiple feed formats available:
@@ -225,6 +259,7 @@ This site demonstrates modern web platform capabilities:
 - **CSS Layers** - Explicit cascade control
 - **CSS `@property`** - Type-safe custom properties
 - **Server-Side Rendering** - Lit components rendered at build time
+- **Service Worker** - Offline support and intelligent caching
 
 ## Performance Optimizations
 
@@ -235,6 +270,7 @@ This site demonstrates modern web platform capabilities:
 - Efficient search index
 - Edge deployment via Cloudflare Workers
 - Incremental development builds
+- Service worker caching with commit-based versioning
 
 ## External Link Handling
 
