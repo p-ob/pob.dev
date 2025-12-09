@@ -5,54 +5,94 @@ noSidebar: true
 
 <link rel="stylesheet" href="/assets/css/feed.css">
 
-To subscribe to this site's posts, I've provided various feed formats. Use the links below to subscribe to the feed of your choice:
+<div class="feed-container">
+	<header class="feed-header">
+		<div class="feed-icon-large">
+			<svg viewBox="0 0 24 24" aria-hidden="true">
+				<circle cx="6" cy="18" r="3"></circle>
+				<path d="M3 3v3a15 15 0 0 1 15 15h3A18 18 0 0 0 3 3z"></path>
+				<path d="M3 9v3a9 9 0 0 1 9 9h3A12 12 0 0 0 3 9z"></path>
+			</svg>
+		</div>
+		<p class="feed-description">Subscribe to my posts using your favorite feed reader. Pick a format below:</p>
+	</header>
 
-<table>
-  <thead>
-    <tr>
-      <th>Type</th>
-      <th>URL</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="https://cyber.harvard.edu/rss/rss.html" target="_blank">RSS</a></td>
-      <td>
-        <span class="feed-url">
-          <a href="/feed.rss" target="_blank">{{ metadata.host }}/feed.rss</a>
-          <button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.rss" aria-label="Copy URL">
-            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </button>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td><a href="https://www.jsonfeed.org/" target="_blank">JSON</a></td>
-      <td>
-        <span class="feed-url">
-          <a href="/feed.json" target="_blank">{{ metadata.host }}/feed.json</a>
-          <button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.json" aria-label="Copy URL">
-            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </button>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td><a href="https://datatracker.ietf.org/doc/html/rfc4287" target="_blank">Atom</a></td>
-      <td>
-        <span class="feed-url">
-          <a href="/feed.atom" target="_blank">{{ metadata.host }}/feed.atom</a>
-          <button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.atom" aria-label="Copy URL">
-            <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </button>
-        </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+	<div class="feed-cards">
+		<article class="feed-card feed-card--rss">
+			<div class="feed-card__icon">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="6" cy="18" r="3"></circle>
+					<path d="M3 3v3a15 15 0 0 1 15 15h3A18 18 0 0 0 3 3z"></path>
+					<path d="M3 9v3a9 9 0 0 1 9 9h3A12 12 0 0 0 3 9z"></path>
+				</svg>
+			</div>
+			<div class="feed-card__content">
+				<h2 class="feed-card__title">RSS</h2>
+				<p class="feed-card__subtitle">The classic syndication format</p>
+				<div class="feed-card__url">
+					<code>{{ metadata.host }}/feed.rss</code>
+					<button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.rss" aria-label="Copy RSS feed URL">
+						<svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+						<svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+					</button>
+				</div>
+			</div>
+			<a href="/feed.rss" class="feed-card__link" target="_blank" rel="noopener">
+				<span>Open feed</span>
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+			</a>
+		</article>
+
+		<article class="feed-card feed-card--json">
+			<div class="feed-card__icon">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"></path>
+					<path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"></path>
+				</svg>
+			</div>
+			<div class="feed-card__content">
+				<h2 class="feed-card__title">JSON Feed</h2>
+				<p class="feed-card__subtitle">Modern, developer-friendly</p>
+				<div class="feed-card__url">
+					<code>{{ metadata.host }}/feed.json</code>
+					<button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.json" aria-label="Copy JSON feed URL">
+						<svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+						<svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+					</button>
+				</div>
+			</div>
+			<a href="/feed.json" class="feed-card__link" target="_blank" rel="noopener">
+				<span>Open feed</span>
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+			</a>
+		</article>
+
+		<article class="feed-card feed-card--atom">
+			<div class="feed-card__icon">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<circle cx="12" cy="12" r="3"></circle>
+					<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
+					<ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"></ellipse>
+				</svg>
+			</div>
+			<div class="feed-card__content">
+				<h2 class="feed-card__title">Atom</h2>
+				<p class="feed-card__subtitle">RFC 4287 standard format</p>
+				<div class="feed-card__url">
+					<code>{{ metadata.host }}/feed.atom</code>
+					<button type="button" class="copy-btn" data-url="{{ metadata.host }}/feed.atom" aria-label="Copy Atom feed URL">
+						<svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+						<svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+					</button>
+				</div>
+			</div>
+			<a href="/feed.atom" class="feed-card__link" target="_blank" rel="noopener">
+				<span>Open feed</span>
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+			</a>
+		</article>
+	</div>
+</div>
 
 <script>
 document.querySelectorAll('.copy-btn').forEach(btn => {

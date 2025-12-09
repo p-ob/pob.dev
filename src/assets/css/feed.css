@@ -1,25 +1,167 @@
 @layer layout {
-	.feed-url {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
+	.feed-container {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 1rem;
 	}
 
+	/* Header section */
+	.feed-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.feed-icon-large {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 5rem;
+		height: 5rem;
+		border-radius: 1rem;
+		background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+		margin-bottom: 1.5rem;
+		box-shadow: 0 10px 40px -10px rgba(249, 115, 22, 0.5);
+	}
+
+	.feed-icon-large svg {
+		width: 2.5rem;
+		height: 2.5rem;
+		fill: none;
+		stroke: white;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.feed-description {
+		font-size: 1.125rem;
+		opacity: 0.8;
+		max-width: 400px;
+		margin: 0 auto;
+		line-height: 1.6;
+	}
+
+	/* Cards grid */
+	.feed-cards {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	/* Individual card */
+	.feed-card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		padding: 1.5rem;
+		border-radius: 1rem;
+		background: var(--code-background-color);
+		border: 1px solid color-mix(in srgb, var(--font-color) 10%, transparent);
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.feed-card:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.2);
+	}
+
+	/* Card icon */
+	.feed-card__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 3rem;
+		height: 3rem;
+		border-radius: 0.75rem;
+		margin-bottom: 1rem;
+	}
+
+	.feed-card__icon svg {
+		width: 1.5rem;
+		height: 1.5rem;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	/* Card variants */
+	.feed-card--rss .feed-card__icon {
+		background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+		color: white;
+	}
+
+	.feed-card--json .feed-card__icon {
+		background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+		color: #422006;
+	}
+
+	.feed-card--atom .feed-card__icon {
+		background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+		color: white;
+	}
+
+	/* Card content */
+	.feed-card__content {
+		flex: 1;
+	}
+
+	.feed-card__title {
+		font-size: 1.25rem;
+		font-weight: 600;
+		margin: 0 0 0.25rem 0;
+	}
+
+	.feed-card__subtitle {
+		font-size: 0.875rem;
+		opacity: 0.7;
+		margin: 0 0 1rem 0;
+	}
+
+	/* URL display */
+	.feed-card__url {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 0.75rem;
+		background: var(--page-background-color);
+		border-radius: 0.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.feed-card__url code {
+		flex: 1;
+		font-size: 0.75rem;
+		background: none;
+		padding: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	/* Copy button */
 	.copy-btn {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0.25rem;
+		padding: 0.375rem;
 		border: none;
-		border-radius: 0.25rem;
+		border-radius: 0.375rem;
 		background: transparent;
 		color: inherit;
 		cursor: pointer;
-		transition: opacity 0.2s ease;
+		opacity: 0.6;
+		transition:
+			opacity 0.2s ease,
+			background 0.2s ease;
 	}
 
 	.copy-btn:hover {
-		opacity: 0.7;
+		opacity: 1;
+		background: color-mix(in srgb, var(--font-color) 10%, transparent);
 	}
 
 	.copy-btn svg {
@@ -34,7 +176,7 @@
 
 	.copy-btn .check-icon {
 		display: none;
-		stroke: var(--color-success, #22c55e);
+		stroke: #22c55e;
 	}
 
 	.copy-btn.copied .copy-icon {
@@ -43,5 +185,50 @@
 
 	.copy-btn.copied .check-icon {
 		display: block;
+	}
+
+	/* Card link */
+	.feed-card__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: fit-content;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: inherit;
+		text-decoration: none;
+		opacity: 0.8;
+		transition: opacity 0.2s ease;
+	}
+
+	.feed-card__link:hover {
+		opacity: 1;
+	}
+
+	.feed-card__link svg {
+		width: 1rem;
+		height: 1rem;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		.feed-cards {
+			grid-template-columns: 1fr;
+		}
+
+		.feed-icon-large {
+			width: 4rem;
+			height: 4rem;
+		}
+
+		.feed-icon-large svg {
+			width: 2rem;
+			height: 2rem;
+		}
 	}
 }
