@@ -1,5 +1,5 @@
 // Service Worker for offline reading support
-const CACHE_NAME = "pob-dev-v1";
+const CACHE_NAME = "pob-dev-v2";
 
 // Assets to precache on install
 const PRECACHE_ASSETS = ["/", "/blog", "/assets/css/global.css"];
