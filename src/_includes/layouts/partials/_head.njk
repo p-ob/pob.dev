@@ -21,4 +21,30 @@
 	<link rel="alternate" type="application/rss+xml" title="{{ author.name }} RSS Feed" href="/feed.rss">
 	<link rel="alternate" type="application/atom+xml" title="{{ author.name }} Atom Feed" href="/feed.atom">
 	<link rel="alternate" type="application/feed+json" title="{{ author.name }} JSON Feed" href="/feed.json">
+	{% if pageType == 'article' %}
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": "{{ title }}",
+		"description": "{{ description }}",
+		"datePublished": "{{ page.date | machineDate }}",
+		"url": "{{ metadata.host }}{{ page.url }}",
+		"author": {
+			"@type": "Person",
+			"name": "{{ author.name }}",
+			"url": "{{ metadata.host }}"
+		},
+		"publisher": {
+			"@type": "Person",
+			"name": "{{ author.name }}",
+			"url": "{{ metadata.host }}"
+		},
+		"mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "{{ metadata.host }}{{ page.url }}"
+		}
+	}
+	</script>
+	{% endif %}
 </head>

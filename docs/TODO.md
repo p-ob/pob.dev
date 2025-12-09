@@ -2,66 +2,21 @@
 
 Recommendations for pob.dev based on codebase analysis (December 2025).
 
-## High Priority
+## Summary
 
-### [x] Complete Tag Filtering Feature
-- **Location:** `src/blog.njk`, `src/assets/css/blog.css`
-- **Description:** ~~The blog page has a TODO comment for tag filters that was never implemented~~ Implemented!
-- **Implementation:**
-  - Tag filter links on the blog page linking to static tag archive pages
-  - Tags on individual posts are now clickable links
-  - Tag archive pages include "back to all posts" navigation
-- **Effort:** Medium
+The site is in excellent shape. Most originally planned features have been implemented:
 
-### [x] Add Cache Headers for Static Assets
-- **Location:** `src/_headers`
-- **Description:** ~~Fonts and versioned assets should use immutable cache headers~~ Implemented!
-- **Effort:** Low
+**Completed:**
+- Tag filtering with archive pages
+- Cache headers for static assets
+- Image lazy loading (AVIF/WebP)
+- Service worker with intelligent caching
+- RSS feed autodiscovery
+- Enhanced PageFind search with keyboard navigation
+- CSS anchor positioning for popovers
+- Mobile navigation with slide-in animation
 
-### [x] Systematic Image Lazy Loading
-- **Description:** ~~Add `loading="lazy"` and `decoding="async"` to images~~ Configured in eleventyImageTransformPlugin with avif/webp formats
-- **Location:** `eleventy.config.js`
-- **Effort:** Low
-
----
-
-## Medium Priority
-
-### [x] Add Service Worker for Offline Reading
-- **Description:** ~~Enable offline reading for blog posts~~ Implemented!
-- **Location:** `src/sw.js`
-- **Features:**
-  - Cache-first for fonts and external libs (immutable assets)
-  - Stale-while-revalidate for CSS/JS and PageFind index
-  - Network-first with cache fallback for HTML pages
-- **Effort:** Medium
-
-### [ ] Improve Mobile Navigation UX
-- **Location:** `src/assets/js/components/app.js` (lines 396-428)
-- **Improvements:**
-  - Add slide-in animation for drawer
-  - Add backdrop blur effect
-  - Consider swipe-to-close gesture
-- **Effort:** Medium
-
-### [x] Add RSS Feed Autodiscovery
-- **Location:** `src/_includes/layouts/partials/_head.njk`
-- **Implementation:**
-  ```html
-  <link rel="alternate" type="application/rss+xml" title="pob.dev RSS Feed" href="/feed.rss">
-  <link rel="alternate" type="application/atom+xml" title="pob.dev Atom Feed" href="/feed.atom">
-  <link rel="alternate" type="application/feed+json" title="pob.dev JSON Feed" href="/feed.json">
-  ```
-- **Effort:** Low
-
-### [x] Enhance PageFind Search
-- **Description:** Improve search experience
-- **Improvements:**
-  - ~~Add custom ranking weights (title > body)~~ Already configured via `data-pagefind-weight="10"` on titles
-  - ~~Better result excerpts/highlighting~~ Increased excerptLength, styled mark elements
-  - ~~Keyboard navigation (arrow keys) in results~~ Arrow keys navigate, Escape returns to input
-- **Location:** `src/search.njk`
-- **Effort:** Medium
+**Remaining items are all "nice to have" polish features.**
 
 ---
 
@@ -73,8 +28,9 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
   - Add toggle button to header
   - Store preference in `localStorage`
   - Fall back to `prefers-color-scheme` if no preference
-- **Location:** `src/assets/js/components/app.js`
+- **Location:** `src/assets/js/components/app.js`, `src/assets/css/partials/config.css`
 - **Effort:** Medium
+- **Impact:** Medium - some users prefer manual control
 
 ### [ ] Add Reading Time Estimates
 - **Description:** Show estimated reading time on blog posts
@@ -87,65 +43,79 @@ Recommendations for pob.dev based on codebase analysis (December 2025).
   ```
 - **Location:** `eleventy.config.js`, `src/_includes/layouts/post.njk`
 - **Effort:** Low
+- **Impact:** Low - nice polish feature
 
 ### [ ] Add Related Posts Section
 - **Description:** Show related posts based on shared tags
 - **Implementation:** Compute at build time using tag intersection
 - **Location:** `src/_includes/layouts/post.njk`
 - **Effort:** Medium
+- **Impact:** Low - increases engagement, but needs more posts to be useful
 
-### [ ] Full Content in RSS Feeds
-- **Description:** Currently feeds use description/excerpt only
-- **Implementation:** Add full post content to feed items
-- **Location:** `src/feed.njk`
-- **Effort:** Low
-
-### [ ] Add Structured Data (JSON-LD)
+### [x] Add Structured Data (JSON-LD)
 - **Description:** Add BlogPosting schema for better SEO
 - **Implementation:** Add JSON-LD script to post layout
 - **Location:** `src/_includes/layouts/post.njk`
-- **Example:**
-  ```html
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "{{ title }}",
-    "datePublished": "{{ date | machineDate }}",
-    "author": { "@type": "Person", "name": "{{ author.name }}" }
-  }
-  </script>
-  ```
 - **Effort:** Low
+- **Impact:** Medium - improves rich snippets in search results
+
+### [ ] Mobile Nav Backdrop Blur
+- **Description:** Add blur effect to mobile nav backdrop for polish
+- **Implementation:** Add `backdrop-filter: blur(4px)` to `#mobile-nav-dialog::backdrop`
+- **Location:** `src/assets/js/components/app.js`
+- **Effort:** Low
+- **Impact:** Low - purely aesthetic polish
+
+### [ ] Swipe-to-Close Mobile Nav
+- **Description:** Add touch gesture to close mobile navigation
+- **Implementation:** Add touch event listeners for swipe-left gesture
+- **Location:** `src/assets/js/components/app.js`
+- **Effort:** Medium
+- **Impact:** Low - nice UX polish for mobile users
 
 ---
 
 ## Technical Debt
 
-### [x] CSS Anchor Positioning for Popovers
-- **Location:** `src/assets/js/components/app.js`
-- **Description:** ~~Manual popover positioning should use CSS Anchor when available~~ Implemented!
-- **Browser Support:** Now supported in all major browsers
-- **Effort:** Low
-
 ### [ ] Error Boundaries for Web Components
 - **Description:** Add error handling for failed Lit hydration
 - **Implementation:** Wrap hydration in try/catch, show fallback content
+- **Location:** `src/assets/js/components/`
 - **Effort:** Low
+- **Impact:** Low - defensive coding, unlikely to occur
+
+---
+
+## Completed
+
+- [x] Complete Tag Filtering Feature
+- [x] Add Cache Headers for Static Assets
+- [x] Systematic Image Lazy Loading
+- [x] Add Service Worker for Offline Reading
+- [x] Add RSS Feed Autodiscovery
+- [x] Enhance PageFind Search
+- [x] CSS Anchor Positioning for Popovers
+- [x] Mobile Navigation with Animations
 
 ---
 
 ## Quick Reference
 
-| Task | Effort | Impact | Priority |
-|------|--------|--------|----------|
-| Cache headers for fonts | Low | Medium | High |
-| Image lazy loading | Low | Medium | High |
-| RSS autodiscovery | Low | Medium | Medium |
-| Reading time filter | Low | Low | Nice to have |
-| JSON-LD structured data | Low | Medium | Nice to have |
-| ~~Tag filtering~~ | ~~Medium~~ | ~~Medium~~ | ~~High~~ (Done) |
-| Service worker | Medium | High | Medium |
-| Dark mode toggle | Medium | Medium | Nice to have |
-| Related posts | Medium | Low | Nice to have |
-| Mobile nav improvements | Medium | Medium | Medium |
+| Task | Effort | Impact |
+|------|--------|--------|
+| Dark mode toggle | Medium | Medium |
+| Reading time filter | Low | Low |
+| ~~JSON-LD structured data~~ | ~~Low~~ | ~~Medium~~ |
+| Related posts | Medium | Low |
+| Mobile nav backdrop blur | Low | Low |
+| Swipe-to-close gesture | Medium | Low |
+| Error boundaries | Low | Low |
+
+---
+
+## Notes
+
+- The RSS feeds already include full post content via `@11ty/eleventy-plugin-rss`
+- Mobile navigation already has slide-in animation using modern CSS (`@starting-style`)
+- All high and medium priority items from the original list have been completed
+- Consider adding more blog posts before implementing "related posts" feature

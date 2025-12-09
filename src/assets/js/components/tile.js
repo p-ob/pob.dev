@@ -15,7 +15,6 @@ export class TileElement extends LitElement {
 		super();
 		this.href = "";
 		this.target = "";
-		// Only attach internals in browser environment (not during SSR)
 		if (!isServer) {
 			this.#internals = this.attachInternals();
 			this.#internals.role = "article";

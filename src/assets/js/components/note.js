@@ -1,6 +1,8 @@
-import { html, css, LitElement } from "lit";
+import { html, css, LitElement, isServer } from "lit";
 
 export class NoteElement extends LitElement {
+	#internals;
+
 	static properties = {
 		type: { type: String },
 	};
@@ -53,6 +55,10 @@ export class NoteElement extends LitElement {
 	constructor() {
 		super();
 		this.type = "note";
+		if (!isServer) {
+			this.#internals = this.attachInternals();
+			this.#internals.role = "note";
+		}
 	}
 
 	render() {
