@@ -249,7 +249,7 @@ CSS is organized using CSS layers:
 1. **Global utilities** → `src/assets/css/partials/_base.css`
 2. **Component styles** → `src/assets/css/components/component-name.css`
 3. **Theme variables** → `src/assets/css/partials/_vars.css`
-4. **Hover/interaction styles** → `src/assets/css/partials/_hover.css`
+4. **Interaction styles** → `src/assets/css/partials/_interactions.css`
 
 ### CSS Custom Properties
 

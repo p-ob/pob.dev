@@ -1,4 +1,4 @@
-/* Global hover styles for interactive elements */
+/* Interaction styles: hover, focus, transitions, and motion preferences */
 
 /* Links in article content - visible underline, stronger on hover */
 article a:not(.post):not(.card):not(.feed-item) {
