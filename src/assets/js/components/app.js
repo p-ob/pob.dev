@@ -231,7 +231,7 @@ export class AppElement extends LitElement {
 			grid-template-columns: 20vw 1fr 20vw;
 			grid-template-rows: auto 1fr auto;
 			grid-gap: 10px;
-			min-height: 100vh;
+			min-height: 100dvh;
 		}
 
 		header {
@@ -260,21 +260,19 @@ export class AppElement extends LitElement {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
-			.footer-contact-me,
-			.copyright {
-				margin-left: auto;
-			}
+			position: relative;
 
 			.footer-contact-me {
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				gap: 0.5rem;
+				margin-right: 1rem;
 			}
 
-			> * {
-				padding-right: 1rem;
+			.copyright {
+				position: absolute;
+				right: 2rem;
 			}
 		}
 
@@ -523,6 +521,22 @@ export class AppElement extends LitElement {
 			/* Show mobile dialog on mobile */
 			#mobile-nav-dialog {
 				display: block;
+			}
+
+			/* Mobile footer adjustments */
+			footer {
+				flex-direction: column;
+				gap: 0.5rem;
+				padding: 1rem;
+
+				.copyright {
+					position: static;
+					text-align: center;
+				}
+
+				.footer-contact-me {
+					display: none;
+				}
 			}
 		}
 	`;
