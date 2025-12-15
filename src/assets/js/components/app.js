@@ -231,7 +231,7 @@ export class AppElement extends LitElement {
 			grid-template-columns: 20vw 1fr 20vw;
 			grid-template-rows: auto 1fr auto;
 			grid-gap: 10px;
-			min-height: 100vh;
+			min-height: 100dvh;
 		}
 
 		header {
@@ -535,7 +535,7 @@ export class AppElement extends LitElement {
 				}
 
 				.footer-contact-me {
-					margin-right: 0;
+					display: none;
 				}
 			}
 		}
