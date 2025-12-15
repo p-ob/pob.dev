@@ -260,21 +260,13 @@ export class AppElement extends LitElement {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
-			.footer-contact-me,
-			.copyright {
-				margin-left: auto;
-			}
+			gap: 1rem;
 
 			.footer-contact-me {
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				gap: 0.5rem;
-			}
-
-			> * {
-				padding-right: 1rem;
 			}
 		}
 
