@@ -4,11 +4,15 @@
 
 :root {
 	font-family: system-ui;
-	font-size: 18px;
+	font-size: 16px;
 	line-height: 1.5;
 	color: var(--font-color);
 	background-color: var(--page-background-color);
 	scroll-behavior: smooth;
+
+	@media (width >= 768px) {
+		font-size: 18px;
+	}
 }
 
 article > p:first-of-type::first-letter {

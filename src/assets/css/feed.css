@@ -215,7 +215,7 @@
 	}
 
 	/* Responsive */
-	@media (max-width: 768px) {
+	@media (width <= 768px) {
 		.feed-cards {
 			grid-template-columns: 1fr;
 		}
