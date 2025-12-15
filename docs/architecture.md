@@ -276,6 +276,22 @@ CSS is organized using CSS layers for explicit cascade control:
 - Mobile-first responsive design
 - BEM-like component naming
 
+**Breakpoints:**
+The site uses a three-tier responsive system (defined in `_vars.css`):
+
+| Breakpoint | Width | Purpose |
+|------------|-------|---------|
+| Mobile | < 768px | Single column layouts, 16px base font |
+| Tablet | 768px - 1023px | Two column grids, 18px base font |
+| Desktop | ≥ 1024px | Three column grids, 18px base font |
+
+Use the modern range syntax for media queries:
+```css
+@media (width >= 768px) { /* tablet and up */ }
+@media (width >= 1024px) { /* desktop */ }
+@media (width < 768px) { /* mobile only */ }
+```
+
 See [src/assets/css/global.css](../src/assets/css/global.css)
 
 ## Modern Web Standards

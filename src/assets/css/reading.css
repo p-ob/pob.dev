@@ -45,13 +45,13 @@
 		gap: 0.25rem;
 	}
 
-	@media (max-width: 1024px) {
+	@media (width < 1024px) {
 		.reading-items {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@media (max-width: 640px) {
+	@media (width < 768px) {
 		.reading-items {
 			grid-template-columns: 1fr;
 		}

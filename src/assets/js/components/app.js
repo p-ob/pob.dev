@@ -141,7 +141,7 @@ export class AppElement extends LitElement {
 				<span class="footer-contact-me">${this.#renderEmail()}</span>
 				${this.#renderEditLink()}
 				<small class="copyright">
-					&copy; <span class="hide-mobile">Copyright</span> ${this.currentYear}, ${this.author.name}
+					&copy; <span class="hide-tablet">Copyright</span> ${this.currentYear}, ${this.author.name}
 					${this.commitSha ? html` | commit ${this.#renderCommitLink()}` : ""}
 				</small>
 			</footer>
@@ -168,7 +168,7 @@ export class AppElement extends LitElement {
 
 	#renderEditLink() {
 		const editUrl = new URL(this.source, `${this.repository}edit/${this.branch}/`);
-		return this.#renderExternalLink("Edit this page", editUrl, "hide-mobile");
+		return this.#renderExternalLink("Edit this page", editUrl, "hide-tablet");
 	}
 
 	#renderCommitLink() {
@@ -487,7 +487,13 @@ export class AppElement extends LitElement {
 			}
 		}
 
-		@media (max-width: 768px) {
+		@media (width <= 1024px) {
+			.hide-tablet {
+				display: none;
+			}
+		}
+
+		@media (width <= 768px) {
 			.hide-mobile {
 				display: none;
 			}

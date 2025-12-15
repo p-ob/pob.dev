@@ -56,9 +56,13 @@ npm run deploy         # Deploy to Cloudflare Workers
 
 **CSS:**
 - Layer order: `reset, config, base, utility, layout`
-- Use CSS custom properties in `src/assets/css/partials/config.css`
+- Use CSS custom properties in `src/assets/css/partials/_vars.css`
 - Dark mode via `prefers-color-scheme`
 - BEM-like naming for components
+- Breakpoints (mobile-first):
+  - `768px` - tablet (2 columns, 18px font)
+  - `1024px` - desktop (3 columns)
+- Use modern media query syntax: `@media (width >= 768px)`
 
 **Web Components:**
 - Located in `src/assets/js/components/`
