@@ -1,6 +1,21 @@
+# License
+
+This repository uses a dual licensing model.
+
+## Code - MIT License
+
+The following are licensed under the MIT License:
+
+- Build configuration and scripts (`11ty/`, `*.config.js`, `*.json`)
+- Templates and layouts (`src/_includes/`)
+- CSS stylesheets (`src/assets/css/`)
+- JavaScript and web components (`src/assets/js/`)
+- Documentation (`docs/`)
+
+```
 MIT License
 
-Copyright (c) 2024 Patrick O'Brien
+Copyright (c) 2025 Patrick O'Brien
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +34,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+
+## Content - All Rights Reserved
+
+The following are **NOT** licensed for reuse and remain under full copyright:
+
+- Blog posts and written content (`src/blog/`)
+- Personal information and data (`src/_data/`)
+- Images and media (`src/assets/images/`, `src/assets/fonts/`)
+- The pob.dev name and branding
+
+Copyright (c) 2025 Patrick O'Brien. All rights reserved.
+
+You may not reproduce, distribute, or create derivative works from this content
+without explicit written permission from the author.
