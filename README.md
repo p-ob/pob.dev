@@ -57,4 +57,6 @@ Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for gui
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details
+© 2025 Patrick O'Brien. All rights reserved.
+
+This source code is proprietary. No part of this repository may be copied, modified, distributed, or used without prior written permission.
