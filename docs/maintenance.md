@@ -148,10 +148,6 @@ Current requirement: **Node.js 22+** (CI uses Node.js 24)
 - Update screenshots if design changed
 - Review [CONTRIBUTING.md](../CONTRIBUTING.md)
 
-#### License Review
-
-Ensure [LICENSE](../LICENSE) is up-to-date and dependencies are compatible.
-
 #### Accessibility Audit
 
 Test with accessibility tools:

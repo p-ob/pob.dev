@@ -472,10 +472,6 @@ Contributors are recognized in:
 - GitHub contributors list
 - Acknowledgment in release notes (for significant contributions)
 
-## License
-
-By contributing, you agree that your contributions will be licensed under the same [MIT License](LICENSE) that covers this project.
-
 ## Questions?
 
 If you have questions about contributing:
