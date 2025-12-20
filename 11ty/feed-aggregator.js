@@ -3,17 +3,34 @@
 
 import { Temporal } from "temporal-polyfill";
 
+// Module-level cache to avoid refetching on every watch rebuild
+let cachedFeeds = null;
+let cacheConfigFile = null;
+
 export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
   const { configFile = "feeds.json", durationLimit = null } = options;
 
   // Watch the feeds configuration file for changes
   eleventyConfig.addWatchTarget(configFile);
 
+  // Clear cache when feeds.json changes
+  eleventyConfig.on("eleventy.beforeWatch", (changedFiles) => {
+    if (changedFiles.some((file) => file.endsWith(configFile))) {
+      console.log(`[FeedAggregator] ${configFile} changed, clearing cache`);
+      cachedFeeds = null;
+    }
+  });
+
   // Expose the duration limit as global data
   eleventyConfig.addGlobalData("readingFeedDurationLimit", durationLimit);
 
   // Add global data for aggregated feeds
   eleventyConfig.addGlobalData("aggregatedFeeds", async () => {
+    // Return cached data if available
+    if (cachedFeeds !== null && cacheConfigFile === configFile) {
+      console.log(`[FeedAggregator] Using cached feed data (${cachedFeeds.length} items)`);
+      return cachedFeeds;
+    }
     try {
       // Dynamic import of RSS parser
       const Parser = (await import("rss-parser")).default;
@@ -106,6 +123,11 @@ export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
       });
 
       console.log(`[FeedAggregator] Total items aggregated: ${filteredItems.length}`);
+
+      // Cache the results
+      cachedFeeds = filteredItems;
+      cacheConfigFile = configFile;
+
       return filteredItems;
     } catch (err) {
       console.error(`[FeedAggregator] Critical error:`, err);

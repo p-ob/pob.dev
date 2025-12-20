@@ -7,6 +7,9 @@ pageType: article
 
 <h1 data-pagefind-weight="10" data-pagefind-meta="title">{{ title }}</h1>
 <time datetime="{{ page.date | machineDate }}">{{ page.date | readableDate }}</time>
+{%- if updatedDate %}
+	<span class="updated">(Updated <time datetime="{{ updatedDate | machineDate }}">{{ updatedDate | readableDate }}</time>)</span>
+{%- endif %}
 
 {% if tags %}
 	{% set displayTags = tags | except("post") %}

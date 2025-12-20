@@ -28,6 +28,9 @@
 		"headline": "{{ title }}",
 		"description": "{{ description }}",
 		"datePublished": "{{ page.date | machineDate }}",
+		{%- if updatedDate %}
+		"dateModified": "{{ updatedDate | machineDate }}",
+		{%- endif %}
 		"url": "{{ metadata.host }}{{ page.url }}",
 		"author": {
 			"@type": "Person",

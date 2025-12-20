@@ -182,6 +182,25 @@ Your content here...
 4. **Optional frontmatter fields**
    - `tags` - Array of tags for categorization
    - `draft` - Set to `true` to mark as draft (visible in dev only)
+   - `updatedDate` - Last modification date (displays alongside publish date)
+
+### Updated Posts
+
+When you update a post significantly, add the `updatedDate` field:
+
+```yaml
+---
+title: My Post
+description: A post that was updated
+date: 2024-11-30
+updatedDate: 2025-01-15
+---
+```
+
+This will:
+- Display as "November 30, 2024 (Updated January 15, 2025)" on the post
+- Add `dateModified` to Schema.org structured data for SEO
+- Keep the original `date` for sorting and feeds
 
 ### Draft Posts
 

@@ -51,8 +51,9 @@ npm run deploy         # Deploy to Cloudflare Workers
 **Blog Posts:**
 - Location: `src/blog/YYYY/MM/post-name.md`
 - Requires frontmatter: `title`, `description`, `date`
-- Optional: `tags`, `draft: true`
+- Optional: `tags`, `draft: true`, `updatedDate`
 - Drafts visible in dev, hidden in production
+- Use `updatedDate` when updating a post (displays as "(Updated ...)")
 
 **CSS:**
 - Layer order: `reset, config, base, utility, layout`
