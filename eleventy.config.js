@@ -1,6 +1,7 @@
 import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
+import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
@@ -72,6 +73,7 @@ export default async function (eleventyConfig) {
 		configFile: "feeds.json",
 		durationLimit: "P1Y6M", // 1 year 6 months
 	});
+	eleventyConfig.addPlugin(syntaxHighlight);
 
 	// this must come last
 	eleventyConfig.addPlugin(litPlugin, {
