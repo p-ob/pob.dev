@@ -85,10 +85,16 @@ export default async function (eleventyConfig) {
 	});
 
 	eleventyConfig.addFilter("readableDate", (date, opts = { year: "numeric", month: "long", day: "numeric" }) => {
+		if (!date) {
+			return "";
+		}
 		return new Intl.DateTimeFormat("en-US", opts).format(date);
 	});
 
 	eleventyConfig.addFilter("machineDate", (date) => {
+		if (!date) {
+			return "";
+		}
 		return date.toISOString();
 	});
 
