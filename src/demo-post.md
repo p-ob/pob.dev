@@ -38,7 +38,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magn
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat. Sed vitae velit ut arcu ultricies faucibus. Duis vitae dui ac arcu interdum pulvinar.
 
+```javascript
+// I am JavaScript
+function loremIpsumExample() {
+    const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+	  console.log(text);
+}
+```
+
+```csharp
+// I am C#
+public LoremIpsumExample()
+{
+	  string text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+	  logger.LogInformation(text);
+}
+```
+
 ```python
+# I am Python
 def lorem_ipsum_example():
     text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
     print(text)

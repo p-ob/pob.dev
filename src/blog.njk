@@ -24,7 +24,7 @@ eleventyImport:
 {% if allTags.length %}
 <nav class="tag-filters" aria-label="Filter by tag">
 	<span class="tag-filters-label">Filter by tag:</span>
-	<ul class="tag-list">
+	<ul class="tags-list">
 		{% for tag in allTags | sort %}
 		<li><a href="/blog/tags/{{ tag }}/" class="tag">{{ tag }}</a></li>
 		{% endfor %}
