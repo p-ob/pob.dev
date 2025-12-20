@@ -31,44 +31,46 @@
 		}
 	}
 
-	.tags {
+	.tags-list {
 		display: flex;
 		margin-top: 1rem;
 	}
 
-	.tag {
-		color: #333;
-		background-color: #f0f0f0;
-		display: inline-block;
-		border-radius: 3px;
-		padding: 5px 10px;
-		font-size: 14px;
-		text-decoration: none;
-		transition: background-color 0.2s ease;
-	}
-
-	.tag + .tag {
-		margin-left: 1ch;
-	}
-
-	.tag:hover {
-		background-color: #e0e0e0;
-	}
-
-	@media (prefers-color-scheme: dark) {
+	@scope (.tags-list) {
 		.tag {
-			color: #ccc;
-			background-color: #444;
+			color: #333;
+			background-color: #f0f0f0;
+			display: inline-block;
+			border-radius: 3px;
+			padding: 5px 10px;
+			font-size: 14px;
+			text-decoration: none;
+			transition: background-color 0.2s ease;
+		}
+
+		.tag + .tag {
+			margin-left: 1ch;
 		}
 
 		.tag:hover {
-			background-color: #555;
+			background-color: #e0e0e0;
 		}
-	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.tag {
-			transition: none !important;
+		@media (prefers-color-scheme: dark) {
+			.tag {
+				color: #ccc;
+				background-color: #444;
+			}
+
+			.tag:hover {
+				background-color: #555;
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			.tag {
+				transition: none !important;
+			}
 		}
 	}
 

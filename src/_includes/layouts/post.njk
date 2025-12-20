@@ -14,7 +14,7 @@ pageType: article
 {% if tags %}
 	{% set displayTags = tags | except("post") %}
 	{% if displayTags.length %}
-		<div class="tags">
+		<div class="tags-list">
 			{% for tag in displayTags %}
 				<a href="/blog/tags/{{ tag }}/" class="tag">{{ tag }}</a>
 			{% endfor %}
