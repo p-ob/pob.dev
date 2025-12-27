@@ -17,7 +17,7 @@
 		"@lit-labs/eleventy-plugin-lit": "^1.0.5",
 		"clean-css": "^5.3.3",
 		"linkedom": "^0.18.12",
-		"lit": "^3.3.1",
+		"lit": "^3.3.2",
 		"markdown-it-footnote": "^4.0.0",
 		"pagefind": "^1.4.0",
 		"prettier": "^3.7.4",
