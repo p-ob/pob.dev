@@ -38,6 +38,16 @@ export class NoteElement extends LitElement {
 			--note-accent: #f44336;
 		}
 
+		:host([type="success"]) {
+			--note-background: color-mix(in srgb, var(--page-background-color, hsl(0, 0%, 96%)), #4caf50 10%);
+			--note-accent: #4caf50;
+		}
+
+		:host([type="info"]) {
+			--note-background: color-mix(in srgb, var(--page-background-color, hsl(0, 0%, 96%)), #00bcd4 10%);
+			--note-accent: #00bcd4;
+		}
+
 		::slotted(*) {
 			margin: 0;
 		}
@@ -69,6 +79,12 @@ export class NoteElement extends LitElement {
 				break;
 			case "error":
 				label = "ERROR";
+				break;
+			case "success":
+				label = "SUCCESS";
+				break;
+			case "info":
+				label = "INFO";
 				break;
 			case "note":
 			default:

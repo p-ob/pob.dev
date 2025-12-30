@@ -5,6 +5,7 @@ import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
 import markdownItFootnote from "markdown-it-footnote";
+import markdownItContainer from "markdown-it-container";
 import { FeedsPlugin } from "./11ty/feeds.js";
 import { DraftPlugin } from "./11ty/draft.js";
 import { FeedAggregatorPlugin } from "./11ty/feed-aggregator.js";
@@ -164,6 +165,70 @@ export default async function (eleventyConfig) {
 	// additional config
 	eleventyConfig.amendLibrary("md", (mdLib) => {
 		mdLib.use(markdownItFootnote);
+
+		// Add container support for note types
+		const noteTypes = ["note", "warning", "success", "info"];
+		noteTypes.forEach((type) => {
+			mdLib.use(markdownItContainer, type, {
+				render: function (tokens, idx) {
+					if (tokens[idx].nesting === 1) {
+						// opening tag
+						return `<pob-note type="${type}">\n`;
+					} else {
+						// closing tag
+						return "</pob-note>\n";
+					}
+				},
+			});
+		});
+
+		// Add support for GitLab-style blockquote alerts: > [!TYPE]
+		// Use a core rule to transform blockquotes into pob-note elements
+		mdLib.core.ruler.after("block", "gitlab_alerts", function (state) {
+			const tokens = state.tokens;
+			for (let i = 0; i < tokens.length; i++) {
+				if (tokens[i].type === "blockquote_open") {
+					// Check if the next token is a paragraph containing an alert marker
+					const nextToken = tokens[i + 1];
+					if (nextToken && nextToken.type === "paragraph_open") {
+						const contentToken = tokens[i + 2];
+						if (contentToken && contentToken.type === "inline") {
+							const match = contentToken.content.match(/^\[!(note|warning|success|info)\]\s*/i);
+							if (match) {
+								const type = match[1].toLowerCase();
+								// Remove the alert marker from the content
+								contentToken.content = contentToken.content.replace(/^\[!(note|warning|success|info)\]\s*/i, "");
+								// Also update children if they exist
+								if (contentToken.children && contentToken.children.length > 0) {
+									const firstChild = contentToken.children[0];
+									if (firstChild.type === "text") {
+										firstChild.content = firstChild.content.replace(/^\[!(note|warning|success|info)\]\s*/i, "");
+									}
+								}
+								// Convert blockquote to pob-note
+								tokens[i].type = "pob_note_open";
+								tokens[i].tag = "pob-note";
+								tokens[i].attrSet("type", type);
+								// Find the corresponding closing tag
+								let depth = 1;
+								for (let j = i + 1; j < tokens.length; j++) {
+									if (tokens[j].type === "blockquote_open") {
+										depth++;
+									} else if (tokens[j].type === "blockquote_close") {
+										depth--;
+										if (depth === 0) {
+											tokens[j].type = "pob_note_close";
+											tokens[j].tag = "pob-note";
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
 
 		const defaultRender =
 			mdLib.renderer.rules.link_open ||
