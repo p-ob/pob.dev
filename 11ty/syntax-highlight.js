@@ -1,9 +1,13 @@
 /**
  * Eleventy plugin for syntax highlighting using <syntax-highlight> element
  * Transforms code blocks to use the syntax-highlight web component
+ * and tracks which languages are used on each page
  */
 
 export function SyntaxHighlightPlugin(eleventyConfig) {
+	// Track languages used on the current page
+	const pageLanguages = new Map();
+
 	// Transform markdown code blocks to use <syntax-highlight> element
 	eleventyConfig.amendLibrary("md", (mdLib) => {
 		// Store the default fence renderer
@@ -39,6 +43,15 @@ export function SyntaxHighlightPlugin(eleventyConfig) {
 
 			const language = languageMap[langName.toLowerCase()] || langName.toLowerCase();
 
+			// Track the language for this page (stored in env if available)
+			if (env && env.page) {
+				const pageKey = env.page.inputPath || "unknown";
+				if (!pageLanguages.has(pageKey)) {
+					pageLanguages.set(pageKey, new Set());
+				}
+				pageLanguages.get(pageKey).add(language);
+			}
+
 			// Escape HTML in content
 			const escapedContent = content
 				.replace(/&/g, "&amp;")
@@ -52,5 +65,24 @@ export function SyntaxHighlightPlugin(eleventyConfig) {
 		};
 
 		return mdLib;
+	});
+
+	// Add a filter to get languages for the current page
+	eleventyConfig.addFilter("getCodeLanguages", function (page) {
+		const inputPath = page?.inputPath;
+		if (!inputPath) {
+			return [];
+		}
+
+		const languages = pageLanguages.get(inputPath);
+		if (!languages || languages.size === 0) {
+			return [];
+		}
+
+		// Always include the base languages
+		const baseLanguages = new Set(["markup", "css", "javascript"]);
+		const allLanguages = new Set([...baseLanguages, ...languages]);
+
+		return Array.from(allLanguages);
 	});
 }
