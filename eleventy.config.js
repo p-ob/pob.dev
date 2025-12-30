@@ -170,7 +170,8 @@ export default async function (eleventyConfig) {
 		const noteTypes = ["note", "warning", "success", "info", "error"];
 		const noteTypePattern = new RegExp(`^\\[!(${noteTypes.join("|")})\\]\\s*`, "i");
 
-		noteTypes.forEach((type) => {
+		for (let i = 0; i < noteTypes.length; i++) {
+			const type = noteTypes[i];
 			mdLib.use(markdownItContainer, type, {
 				render: function (tokens, idx) {
 					if (tokens[idx].nesting === 1) {
@@ -182,7 +183,7 @@ export default async function (eleventyConfig) {
 					}
 				},
 			});
-		});
+		}
 
 		// Add support for GitLab-style blockquote alerts: > [!TYPE]
 		// Use a core rule to transform blockquotes into pob-note elements
@@ -192,16 +193,16 @@ export default async function (eleventyConfig) {
 				if (tokens[i].type === "blockquote_open") {
 					// Check if the next token is a paragraph containing an alert marker
 					const nextToken = tokens[i + 1];
-					if (nextToken && nextToken.type === "paragraph_open") {
+					if (nextToken?.type === "paragraph_open") {
 						const contentToken = tokens[i + 2];
-						if (contentToken && contentToken.type === "inline") {
+						if (contentToken?.type === "inline") {
 							const match = contentToken.content.match(noteTypePattern);
 							if (match) {
 								const type = match[1].toLowerCase();
 								// Remove the alert marker from the content
 								contentToken.content = contentToken.content.replace(noteTypePattern, "");
 								// Also update children if they exist
-								if (contentToken.children && contentToken.children.length > 0) {
+								if (contentToken.children?.length > 0) {
 									const firstChild = contentToken.children[0];
 									if (firstChild.type === "text") {
 										firstChild.content = firstChild.content.replace(noteTypePattern, "");
