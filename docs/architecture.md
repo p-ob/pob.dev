@@ -157,6 +157,57 @@ pob.dev/
 - Dark mode aware styling
 - Source: [src/assets/js/components/tile.js](../src/assets/js/components/tile.js)
 
+### Syntax Highlighting
+
+The site uses [`<syntax-highlight>`](https://github.com/andreruffert/syntax-highlight-element) for code block syntax highlighting, leveraging the CSS Custom Highlight API for better performance and cleaner markup.
+
+**Key Features:**
+- **Per-page optimization** - Only loads languages actually used on each page
+- **Zero overhead for non-code pages** - Pages without code blocks don't load the library
+- **Clean DOM** - No `<span>` elements wrapping every token
+- **Modern API** - Uses CSS Custom Highlight API instead of DOM manipulation
+- **CDN-based** - Prism grammars loaded from CDN at runtime
+
+**How it works:**
+1. During markdown processing, the `syntax-highlight.js` plugin tracks which languages are used on each page
+2. At render time, the `getCodeLanguages` filter extracts the page-specific languages
+3. The base layout conditionally loads `<syntax-highlight>` element only if code blocks exist
+4. Configuration includes base languages (markup, css, javascript) plus page-specific ones
+
+**Example output:**
+```html
+<!-- Before (old Prism with spans) -->
+<pre class="language-javascript"><code class="language-javascript">
+  <span class="token keyword">function</span> ...
+</code></pre>
+
+<!-- After (syntax-highlight-element) -->
+<syntax-highlight language="javascript">
+function example() { ... }
+</syntax-highlight>
+```
+
+**Supported languages:**
+- Base: markup (HTML/XML), css, javascript
+- Additional (loaded on-demand): python, csharp, bash, and [many more](https://prismjs.com/#supported-languages)
+
+**Styling:**
+- CSS Custom Highlight API selectors (e.g., `::highlight(keyword)`)
+- Dark mode support via CSS custom properties
+- Consistent with site's color scheme
+- Source: [src/assets/css/partials/_code.css](../src/assets/css/partials/_code.css)
+
+**Implementation:**
+- Plugin: [11ty/syntax-highlight.js](../11ty/syntax-highlight.js)
+- Language detection and tracking during build
+- Per-page configuration in [src/_includes/layouts/base.njk](../src/_includes/layouts/base.njk)
+
+**Performance benefits:**
+- Pages without code: 0 KB overhead (library not loaded)
+- Pages with code: Only loads the specific languages used
+- Example: A post with only JavaScript loads 3 languages (markup, css, javascript)
+- Example: A post with JS, Python, C# loads 5 languages (markup, css, javascript, python, csharp)
+
 ### External Dependencies
 
 The site uses an import map system for managing external dependencies like Lit, eliminating the need for bundlers.
