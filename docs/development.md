@@ -258,6 +258,44 @@ The site supports all [Prism languages](https://prismjs.com/#supported-languages
 - `json` - JSON
 - `markdown`, `md` - Markdown
 
+#### Note Boxes
+
+Use GitLab-style alert syntax to create styled note boxes. Four types are supported:
+
+**Note** - General information or reminders:
+```markdown
+> [!note]
+> This is important information readers should know.
+```
+
+**Info** - Helpful tips or additional context:
+```markdown
+> [!info]
+> This provides helpful context or tips.
+```
+
+**Success** - Positive outcomes or achievements:
+```markdown
+> [!success]
+> The operation completed successfully!
+```
+
+**Warning** - Important cautions or considerations:
+```markdown
+> [!warning]
+> Be careful when doing this operation.
+```
+
+**Multi-line notes:**
+```markdown
+> [!warning]
+> This warning spans multiple lines.
+> Each line should start with `> ` to be included.
+> The note will display all lines together.
+```
+
+Notes are rendered as `<pob-note>` web components with appropriate styling for each type.
+
 **Language aliases:**
 
 Many languages have aliases that map to the same grammar:
