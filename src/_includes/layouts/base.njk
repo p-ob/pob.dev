@@ -28,6 +28,14 @@
       import('/assets/js/components/app.js');
 			import('/assets/js/components/note.js');
 			import('/assets/js/components/tile.js');
+
+			// Configure syntax-highlight-element with additional languages
+			// Must be set before importing the element
+			window.she = window.she || {};
+			window.she.config = {
+				languages: ['markup', 'css', 'javascript', 'csharp', 'python'],
+			};
+
 			import('syntax-highlight-element');
 
 			// Register service worker for offline support
