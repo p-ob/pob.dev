@@ -26,6 +26,7 @@ syntax-highlight {
 ::highlight(doctype),
 ::highlight(cdata) {
 	color: var(--code-comment);
+	font-style: italic;
 }
 
 ::highlight(punctuation) {
