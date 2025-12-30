@@ -1,7 +1,9 @@
-/* Syntax highlighting styles for Prism.js */
+/* Syntax highlighting styles for syntax-highlight-element */
+/* Uses CSS Custom Highlight API instead of <span> elements */
 
 /* Code block container */
-pre[class*="language-"] {
+syntax-highlight {
+	display: block;
 	background-color: var(--code-background-color);
 	border-radius: 6px;
 	padding: 1rem;
@@ -10,90 +12,73 @@ pre[class*="language-"] {
 	font-size: 0.9em;
 	line-height: 1.5;
 	tab-size: 2;
-}
-
-pre[class*="language-"] code {
-	background-color: transparent;
-	padding: 0;
-	border-radius: 0;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	hyphens: none;
 	font-family: "Consolas", "Menlo", "Monaco", "Courier New", monospace;
 }
 
-/* Token styles - scoped to code blocks */
-@scope (pre[class*="language-"]) {
-	.token.comment,
-	.token.prolog,
-	.token.doctype,
-	.token.cdata {
-		color: var(--code-comment);
-		font-style: italic;
-	}
-
-	.token.punctuation {
-		color: var(--code-punctuation);
-	}
-
-	.token.namespace {
-		opacity: 0.7;
-	}
-
-	.token.property,
-	.token.tag,
-	.token.boolean,
-	.token.number,
-	.token.constant,
-	.token.symbol,
-	.token.deleted {
-		color: var(--code-property);
-	}
-
-	.token.selector,
-	.token.attr-name,
-	.token.string,
-	.token.char,
-	.token.builtin,
-	.token.inserted {
-		color: var(--code-string);
-	}
-
-	.token.operator,
-	.token.entity,
-	.token.url {
-		color: var(--code-operator);
-	}
-
-	.language-css .token.string,
-	.style .token.string {
-		color: var(--code-operator);
-	}
-
-	.token.atrule,
-	.token.attr-value,
-	.token.keyword {
-		color: var(--code-keyword);
-	}
-
-	.token.function,
-	.token.class-name {
-		color: var(--code-function);
-	}
-
-	.token.regex,
-	.token.important,
-	.token.variable {
-		color: var(--code-variable);
-	}
-
-	.token.important,
-	.token.bold {
-		font-weight: bold;
-	}
-
-	.token.italic {
-		font-style: italic;
-	}
-
-	.token.entity {
-		cursor: help;
-	}
+/* Token styles using CSS Custom Highlight API */
+::highlight(comment),
+::highlight(prolog),
+::highlight(doctype),
+::highlight(cdata) {
+	color: var(--code-comment);
 }
+
+::highlight(punctuation) {
+	color: var(--code-punctuation);
+}
+
+::highlight(namespace) {
+	opacity: 0.7;
+}
+
+::highlight(property),
+::highlight(tag),
+::highlight(boolean),
+::highlight(number),
+::highlight(constant),
+::highlight(symbol),
+::highlight(deleted) {
+	color: var(--code-property);
+}
+
+::highlight(selector),
+::highlight(attr-name),
+::highlight(string),
+::highlight(char),
+::highlight(builtin),
+::highlight(inserted) {
+	color: var(--code-string);
+}
+
+::highlight(operator),
+::highlight(entity),
+::highlight(url) {
+	color: var(--code-operator);
+}
+
+::highlight(css-string) {
+	color: var(--code-operator);
+}
+
+::highlight(atrule),
+::highlight(attr-value),
+::highlight(keyword) {
+	color: var(--code-keyword);
+}
+
+::highlight(function),
+::highlight(class-name) {
+	color: var(--code-function);
+}
+
+::highlight(regex),
+::highlight(important),
+::highlight(variable) {
+	color: var(--code-variable);
+}
+

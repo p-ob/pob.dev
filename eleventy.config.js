@@ -1,7 +1,6 @@
 import litPlugin from "@lit-labs/eleventy-plugin-lit";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
-import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
@@ -10,6 +9,7 @@ import { FeedsPlugin } from "./11ty/feeds.js";
 import { DraftPlugin } from "./11ty/draft.js";
 import { FeedAggregatorPlugin } from "./11ty/feed-aggregator.js";
 import { ExternalsPlugin } from "./11ty/externals.js";
+import { SyntaxHighlightPlugin } from "./11ty/syntax-highlight.js";
 
 function getLitComponents(...components) {
 	const root = "src/assets/js/components/";
@@ -31,6 +31,7 @@ export default async function (eleventyConfig) {
 			"@lit/reactive-element",
 			"@lit-labs/ssr-client",
 			"@lit-labs/ssr-dom-shim",
+			"syntax-highlight-element",
 		],
 	});
 
@@ -73,7 +74,7 @@ export default async function (eleventyConfig) {
 		configFile: "feeds.json",
 		durationLimit: "P1Y6M", // 1 year 6 months
 	});
-	eleventyConfig.addPlugin(syntaxHighlight);
+	eleventyConfig.addPlugin(SyntaxHighlightPlugin);
 
 	// this must come last
 	eleventyConfig.addPlugin(litPlugin, {
