@@ -167,7 +167,7 @@ export default async function (eleventyConfig) {
 		mdLib.use(markdownItFootnote);
 
 		// Add container support for note types
-		const noteTypes = ["note", "warning", "success", "info"];
+		const noteTypes = ["note", "warning", "success", "info", "error"];
 		const noteTypePattern = new RegExp(`^\\[!(${noteTypes.join("|")})\\]\\s*`, "i");
 
 		noteTypes.forEach((type) => {

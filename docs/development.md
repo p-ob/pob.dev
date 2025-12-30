@@ -260,7 +260,7 @@ The site supports all [Prism languages](https://prismjs.com/#supported-languages
 
 #### Note Boxes
 
-Use GitLab-style alert syntax to create styled note boxes. Four types are supported:
+Use GitLab-style alert syntax to create styled note boxes. Five types are supported:
 
 **Note** - General information or reminders:
 ```markdown
@@ -284,6 +284,12 @@ Use GitLab-style alert syntax to create styled note boxes. Four types are suppor
 ```markdown
 > [!warning]
 > Be careful when doing this operation.
+```
+
+**Error** - Critical errors or failures:
+```markdown
+> [!error]
+> An error occurred during processing.
 ```
 
 **Multi-line notes:**

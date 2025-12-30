@@ -129,22 +129,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magn
 The following examples demonstrate the different note types available:
 
 > [!note]
-> This is a standard note. Use this for general information or reminders that readers should be aware of.
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 > [!info]
-> This is an informational note. Use this for helpful tips or additional context that enhances understanding.
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 > [!success]
-> This is a success note. Use this to highlight positive outcomes, achievements, or successful completions.
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 > [!warning]
-> This is a warning note. Use this to alert readers about potential issues, risks, or important considerations they should keep in mind.
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!error]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
 ### Multi-line Notes
 
 Notes can also span multiple lines:
 
 > [!warning]
-> This is a multi-line warning that demonstrates how content flows across multiple lines.
-> Each line maintains the proper formatting and styling.
-> This helps when you need to provide more detailed explanations or longer messages to your readers.
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+> Nullam in diam sed magna posuere tincidunt non sit amet ligula.
+> Vivamus non sapien at erat scelerisque placerat.
