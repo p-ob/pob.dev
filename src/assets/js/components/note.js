@@ -5,6 +5,7 @@ export class NoteElement extends LitElement {
 
 	static properties = {
 		type: { type: String },
+		label: { type: String },
 	};
 
 	static styles = css`
@@ -38,6 +39,16 @@ export class NoteElement extends LitElement {
 			--note-accent: #f44336;
 		}
 
+		:host([type="success"]) {
+			--note-background: color-mix(in srgb, var(--page-background-color, hsl(0, 0%, 96%)), #4caf50 10%);
+			--note-accent: #4caf50;
+		}
+
+		:host([type="info"]) {
+			--note-background: color-mix(in srgb, var(--page-background-color, hsl(0, 0%, 96%)), #00bcd4 10%);
+			--note-accent: #00bcd4;
+		}
+
 		::slotted(*) {
 			margin: 0;
 		}
@@ -62,17 +73,25 @@ export class NoteElement extends LitElement {
 	}
 
 	render() {
-		let label = "";
-		switch (this.type) {
-			case "warning":
-				label = "WARNING";
-				break;
-			case "error":
-				label = "ERROR";
-				break;
-			case "note":
-			default:
-				label = "NOTE";
+		let label = this.label || "";
+		if (!label) {
+			switch (this.type) {
+				case "warning":
+					label = "WARNING";
+					break;
+				case "error":
+					label = "ERROR";
+					break;
+				case "success":
+					label = "SUCCESS";
+					break;
+				case "info":
+					label = "INFO";
+					break;
+				case "note":
+				default:
+					label = "NOTE";
+			}
 		}
 		return html`
 			${label ? html`<span class="note-label">${label}</span>` : ""}

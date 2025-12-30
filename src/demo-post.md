@@ -123,3 +123,41 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magn
 ### Final Thoughts 2
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat. Sed vitae velit ut arcu ultricies faucibus. Duis vitae dui ac arcu interdum pulvinar.
+
+## Note Components
+
+The following examples demonstrate the different note types available:
+
+> [!note]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!info]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!success]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!warning]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!error]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+### Multi-line Notes
+
+Notes can also span multiple lines:
+
+> [!warning]
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+> Nullam in diam sed magna posuere tincidunt non sit amet ligula.
+> Vivamus non sapien at erat scelerisque placerat.
+
+### Custom Labels
+
+Notes can have custom labels:
+
+> [!warning] Data deletion
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!info] Pro tip
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.

@@ -5,6 +5,7 @@ import { JsonHtmlPlugin } from "./11ty/json-html.js";
 import { TableOfContentsPlugin } from "./11ty/table-of-contents.js";
 import CleanCSS from "clean-css";
 import markdownItFootnote from "markdown-it-footnote";
+import markdownItContainer from "markdown-it-container";
 import { FeedsPlugin } from "./11ty/feeds.js";
 import { DraftPlugin } from "./11ty/draft.js";
 import { FeedAggregatorPlugin } from "./11ty/feed-aggregator.js";
@@ -164,6 +165,82 @@ export default async function (eleventyConfig) {
 	// additional config
 	eleventyConfig.amendLibrary("md", (mdLib) => {
 		mdLib.use(markdownItFootnote);
+
+		// Add container support for note types
+		const noteTypes = ["note", "warning", "success", "info", "error"];
+		// Pattern to match [!TYPE] with optional custom label on the same line only
+		// Captures: [1] = type, [2] = custom label (if present, text after space but before newline)
+		const noteTypePattern = new RegExp(`^\\[!(${noteTypes.join("|")})\\](?: +([^\\n]+))?`, "i");
+
+		for (let i = 0; i < noteTypes.length; i++) {
+			const type = noteTypes[i];
+			mdLib.use(markdownItContainer, type, {
+				render: function (tokens, idx) {
+					if (tokens[idx].nesting === 1) {
+						// opening tag
+						return `<pob-note type="${type}">\n`;
+					} else {
+						// closing tag
+						return "</pob-note>\n";
+					}
+				},
+			});
+		}
+
+		// Add support for GitLab-style blockquote alerts: > [!TYPE] or > [!TYPE] Custom Label
+		// Use a core rule to transform blockquotes into pob-note elements
+		mdLib.core.ruler.after("block", "gitlab_alerts", function (state) {
+			const tokens = state.tokens;
+			for (let i = 0; i < tokens.length; i++) {
+				if (tokens[i].type === "blockquote_open") {
+					// Check if the next token is a paragraph containing an alert marker
+					const nextToken = tokens[i + 1];
+					if (nextToken?.type === "paragraph_open") {
+						const contentToken = tokens[i + 2];
+						if (contentToken?.type === "inline") {
+							const match = contentToken.content.match(noteTypePattern);
+							if (match) {
+								const type = match[1].toLowerCase();
+								const customLabel = match[2]?.trim(); // Custom label if provided
+								const markerText = match[0]; // Full matched text to remove
+								
+								// Remove the alert marker from the content
+								contentToken.content = contentToken.content.replace(markerText, "").trim();
+								
+								// Also update children if they exist
+								if (contentToken.children?.length > 0) {
+									const firstChild = contentToken.children[0];
+									if (firstChild.type === "text") {
+										firstChild.content = firstChild.content.replace(markerText, "").trim();
+									}
+								}
+								// Convert blockquote to pob-note
+								tokens[i].type = "pob_note_open";
+								tokens[i].tag = "pob-note";
+								tokens[i].attrSet("type", type);
+								if (customLabel) {
+									tokens[i].attrSet("label", customLabel);
+								}
+								// Find the corresponding closing tag
+								let depth = 1;
+								for (let j = i + 1; j < tokens.length; j++) {
+									if (tokens[j].type === "blockquote_open") {
+										depth++;
+									} else if (tokens[j].type === "blockquote_close") {
+										depth--;
+										if (depth === 0) {
+											tokens[j].type = "pob_note_close";
+											tokens[j].tag = "pob-note";
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		});
 
 		const defaultRender =
 			mdLib.renderer.rules.link_open ||
