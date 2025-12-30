@@ -41,8 +41,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magn
 ```javascript
 // I am JavaScript
 function loremIpsumExample() {
-    const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-	  console.log(text);
+	const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+	console.log(text);
 }
 ```
 

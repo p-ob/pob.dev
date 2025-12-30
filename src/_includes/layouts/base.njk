@@ -29,6 +29,18 @@
 			import('/assets/js/components/note.js');
 			import('/assets/js/components/tile.js');
 
+			// Configure syntax-highlight-element with page-specific languages
+			// Must be set before importing the element
+			{% set codeLanguages = page | getCodeLanguages %}
+			{% if codeLanguages.length > 0 %}
+			window.she = window.she || {};
+			window.she.config = {
+				languages: {{ codeLanguages | dump | safe }},
+			};
+
+			import('syntax-highlight-element');
+			{% endif %}
+
 			// Register service worker for offline support
 			if ('serviceWorker' in navigator) {
 				navigator.serviceWorker.register('/sw.js');

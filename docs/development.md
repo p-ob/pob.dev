@@ -137,6 +137,7 @@ Eleventy plugins that extend functionality:
 - `feed-aggregator.js` - Aggregates external RSS feeds
 - `json-html.js` - Sanitizes JSON for HTML output
 - `table-of-contents.js` - Generates article TOC
+- `syntax-highlight.js` - Per-page syntax highlighting with language detection
 
 ### Configuration Files
 
@@ -225,9 +226,76 @@ Drafts are:
 Standard markdown plus:
 
 - **Footnotes** - Via markdown-it-footnote
-- **Code blocks** - With syntax highlighting
+- **Code blocks** - With automatic syntax highlighting (see below)
 - **External links** - Automatically open in new tab
 - **Images** - Automatically optimized by Eleventy
+
+#### Code Blocks with Syntax Highlighting
+
+Code blocks automatically get syntax highlighting using the `<syntax-highlight>` element. The system intelligently loads only the languages you use.
+
+**Basic usage:**
+
+````markdown
+```javascript
+function hello() {
+  console.log("Hello, world!");
+}
+```
+````
+
+**Supported languages:**
+
+The site supports all [Prism languages](https://prismjs.com/#supported-languages). Common ones include:
+
+- `javascript`, `js` - JavaScript
+- `typescript`, `ts` - TypeScript  
+- `python`, `py` - Python
+- `csharp`, `cs` - C#
+- `bash`, `sh`, `shell` - Shell scripts
+- `html`, `xml` - Markup
+- `css`, `scss` - Stylesheets
+- `json` - JSON
+- `markdown`, `md` - Markdown
+
+**Language aliases:**
+
+Many languages have aliases that map to the same grammar:
+- `js` → `javascript`
+- `py` → `python`
+- `cs` → `csharp`
+- `sh`, `shell` → `bash`
+
+**Multiple languages in one post:**
+
+````markdown
+```javascript
+// JavaScript example
+const x = 42;
+```
+
+```python
+# Python example
+x = 42
+```
+
+```csharp
+// C# example
+int x = 42;
+```
+````
+
+When you use multiple languages, only those specific languages are loaded from the CDN. Pages without code blocks don't load the syntax highlighting library at all, improving performance.
+
+**How it works:**
+1. The build process detects which languages are used in your post
+2. The page loads only those specific languages (plus base languages: markup, css, javascript)
+3. Syntax highlighting happens at runtime using the CSS Custom Highlight API
+4. No `<span>` elements clutter your HTML – just clean, semantic markup
+
+**Styling:**
+
+Code blocks automatically match your site's theme (light/dark mode) using CSS custom properties. The highlighting styles are defined in `src/assets/css/partials/_code.css`.
 
 ### Using Web Components
 

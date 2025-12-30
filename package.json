@@ -13,7 +13,6 @@
 		"@11ty/eleventy-img": "^6.0.4",
 		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^2.0.4",
-		"@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.6",
 		"clean-css": "^5.3.3",
 		"linkedom": "^0.18.12",
@@ -23,6 +22,7 @@
 		"prettier": "^3.7.4",
 		"rss-parser": "^3.13.0",
 		"slugify": "^1.6.6",
+		"syntax-highlight-element": "^1.2.0",
 		"temporal-polyfill": "^0.3.0",
 		"wrangler": "^4.56.0"
 	},

@@ -3,7 +3,7 @@ import { resolve } from "path";
 
 /**
  * Resolves the entry point from a package.json exports field.
- * Handles nested conditional exports (browser, default, etc.)
+ * Handles nested conditional exports (browser, import, default, etc.)
  */
 function resolveEntryPoint(exports) {
 	if (typeof exports === "string") {
@@ -11,7 +11,7 @@ function resolveEntryPoint(exports) {
 	}
 
 	if (typeof exports === "object") {
-		// Priority: browser.default -> browser -> default
+		// Priority: browser.default -> browser -> import -> default
 		if (exports.browser) {
 			if (typeof exports.browser === "string") {
 				return exports.browser;
@@ -19,6 +19,9 @@ function resolveEntryPoint(exports) {
 			if (exports.browser.default) {
 				return exports.browser.default;
 			}
+		}
+		if (exports.import) {
+			return exports.import;
 		}
 		if (exports.default) {
 			return exports.default;
