@@ -300,6 +300,16 @@ Use GitLab-style alert syntax to create styled note boxes. Five types are suppor
 > The note will display all lines together.
 ```
 
+**Custom labels:**
+You can override the default label with custom text:
+```markdown
+> [!warning] Data deletion
+> The following instructions will make your data unrecoverable.
+
+> [!info] Pro tip
+> Use keyboard shortcuts to speed up your workflow.
+```
+
 Notes are rendered as `<pob-note>` web components with appropriate styling for each type.
 
 **Language aliases:**

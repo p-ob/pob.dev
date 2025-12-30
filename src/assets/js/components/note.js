@@ -5,6 +5,7 @@ export class NoteElement extends LitElement {
 
 	static properties = {
 		type: { type: String },
+		label: { type: String },
 	};
 
 	static styles = css`
@@ -72,23 +73,25 @@ export class NoteElement extends LitElement {
 	}
 
 	render() {
-		let label = "";
-		switch (this.type) {
-			case "warning":
-				label = "WARNING";
-				break;
-			case "error":
-				label = "ERROR";
-				break;
-			case "success":
-				label = "SUCCESS";
-				break;
-			case "info":
-				label = "INFO";
-				break;
-			case "note":
-			default:
-				label = "NOTE";
+		let label = this.label || "";
+		if (!label) {
+			switch (this.type) {
+				case "warning":
+					label = "WARNING";
+					break;
+				case "error":
+					label = "ERROR";
+					break;
+				case "success":
+					label = "SUCCESS";
+					break;
+				case "info":
+					label = "INFO";
+					break;
+				case "note":
+				default:
+					label = "NOTE";
+			}
 		}
 		return html`
 			${label ? html`<span class="note-label">${label}</span>` : ""}

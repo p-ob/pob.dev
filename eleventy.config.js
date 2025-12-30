@@ -168,7 +168,9 @@ export default async function (eleventyConfig) {
 
 		// Add container support for note types
 		const noteTypes = ["note", "warning", "success", "info", "error"];
-		const noteTypePattern = new RegExp(`^\\[!(${noteTypes.join("|")})\\]\\s*`, "i");
+		// Pattern to match [!TYPE] with optional custom label on the same line only
+		// Captures: [1] = type, [2] = custom label (if present, text after space but before newline)
+		const noteTypePattern = new RegExp(`^\\[!(${noteTypes.join("|")})\\](?: +([^\\n]+))?`, "i");
 
 		for (let i = 0; i < noteTypes.length; i++) {
 			const type = noteTypes[i];
@@ -185,7 +187,7 @@ export default async function (eleventyConfig) {
 			});
 		}
 
-		// Add support for GitLab-style blockquote alerts: > [!TYPE]
+		// Add support for GitLab-style blockquote alerts: > [!TYPE] or > [!TYPE] Custom Label
 		// Use a core rule to transform blockquotes into pob-note elements
 		mdLib.core.ruler.after("block", "gitlab_alerts", function (state) {
 			const tokens = state.tokens;
@@ -199,19 +201,26 @@ export default async function (eleventyConfig) {
 							const match = contentToken.content.match(noteTypePattern);
 							if (match) {
 								const type = match[1].toLowerCase();
+								const customLabel = match[2]?.trim(); // Custom label if provided
+								const markerText = match[0]; // Full matched text to remove
+								
 								// Remove the alert marker from the content
-								contentToken.content = contentToken.content.replace(noteTypePattern, "");
+								contentToken.content = contentToken.content.replace(markerText, "").trim();
+								
 								// Also update children if they exist
 								if (contentToken.children?.length > 0) {
 									const firstChild = contentToken.children[0];
 									if (firstChild.type === "text") {
-										firstChild.content = firstChild.content.replace(noteTypePattern, "");
+										firstChild.content = firstChild.content.replace(markerText, "").trim();
 									}
 								}
 								// Convert blockquote to pob-note
 								tokens[i].type = "pob_note_open";
 								tokens[i].tag = "pob-note";
 								tokens[i].attrSet("type", type);
+								if (customLabel) {
+									tokens[i].attrSet("label", customLabel);
+								}
 								// Find the corresponding closing tag
 								let depth = 1;
 								for (let j = i + 1; j < tokens.length; j++) {

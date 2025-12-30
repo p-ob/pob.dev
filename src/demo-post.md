@@ -151,3 +151,13 @@ Notes can also span multiple lines:
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 > Nullam in diam sed magna posuere tincidunt non sit amet ligula.
 > Vivamus non sapien at erat scelerisque placerat.
+
+### Custom Labels
+
+Notes can have custom labels:
+
+> [!warning] Data deletion
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+> [!info] Pro tip
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
