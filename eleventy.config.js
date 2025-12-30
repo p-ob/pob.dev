@@ -168,6 +168,8 @@ export default async function (eleventyConfig) {
 
 		// Add container support for note types
 		const noteTypes = ["note", "warning", "success", "info"];
+		const noteTypePattern = new RegExp(`^\\[!(${noteTypes.join("|")})\\]\\s*`, "i");
+
 		noteTypes.forEach((type) => {
 			mdLib.use(markdownItContainer, type, {
 				render: function (tokens, idx) {
@@ -193,16 +195,16 @@ export default async function (eleventyConfig) {
 					if (nextToken && nextToken.type === "paragraph_open") {
 						const contentToken = tokens[i + 2];
 						if (contentToken && contentToken.type === "inline") {
-							const match = contentToken.content.match(/^\[!(note|warning|success|info)\]\s*/i);
+							const match = contentToken.content.match(noteTypePattern);
 							if (match) {
 								const type = match[1].toLowerCase();
 								// Remove the alert marker from the content
-								contentToken.content = contentToken.content.replace(/^\[!(note|warning|success|info)\]\s*/i, "");
+								contentToken.content = contentToken.content.replace(noteTypePattern, "");
 								// Also update children if they exist
 								if (contentToken.children && contentToken.children.length > 0) {
 									const firstChild = contentToken.children[0];
 									if (firstChild.type === "text") {
-										firstChild.content = firstChild.content.replace(/^\[!(note|warning|success|info)\]\s*/i, "");
+										firstChild.content = firstChild.content.replace(noteTypePattern, "");
 									}
 								}
 								// Convert blockquote to pob-note
