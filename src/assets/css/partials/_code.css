@@ -81,4 +81,3 @@ syntax-highlight {
 ::highlight(variable) {
 	color: var(--code-variable);
 }
-
