@@ -44,8 +44,8 @@ export function SyntaxHighlightPlugin(eleventyConfig) {
 			const language = languageMap[langName.toLowerCase()] || langName.toLowerCase();
 
 			// Track the language for this page (stored in env if available)
-			if (env && env.page) {
-				const pageKey = env.page.inputPath || "unknown";
+			if (env?.page?.inputPath) {
+				const pageKey = env.page.inputPath;
 				if (!pageLanguages.has(pageKey)) {
 					pageLanguages.set(pageKey, new Set());
 				}
