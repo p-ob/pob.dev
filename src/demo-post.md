@@ -191,6 +191,8 @@ This section demonstrates the new HTML live preview mode. The following code blo
 		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 		padding: 1.5rem;
 		max-width: 600px;
+		background: #ffffff;
+		color: #2c3e50;
 	}
 
 	.demo-title {
@@ -235,6 +237,43 @@ This section demonstrates the new HTML live preview mode. The following code blo
 		background: #ecf0f1;
 		border-left: 4px solid #3498db;
 		color: #2c3e50;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.demo-container {
+			background: #1e1e1e;
+			color: #e0e0e0;
+		}
+
+		.demo-title {
+			color: #e0e0e0;
+		}
+
+		.demo-text {
+			color: #c0c0c0;
+		}
+
+		.demo-subtitle {
+			color: #c0c0c0;
+		}
+
+		.demo-list {
+			color: #c0c0c0;
+		}
+
+		.demo-button {
+			background: #2980b9;
+		}
+
+		.demo-button:hover {
+			background: #3498db;
+		}
+
+		.demo-message {
+			background: #2d2d2d;
+			border-left: 4px solid #2980b9;
+			color: #e0e0e0;
+		}
 	}
 </style>
 
