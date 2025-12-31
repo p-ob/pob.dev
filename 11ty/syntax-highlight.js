@@ -16,7 +16,9 @@ export function SyntaxHighlightPlugin(eleventyConfig) {
 		mdLib.renderer.rules.fence = function (tokens, idx, options, env, self) {
 			const token = tokens[idx];
 			const info = token.info ? token.info.trim() : "";
-			const langName = info ? info.split(/\s+/g)[0] : "plaintext";
+			const parts = info ? info.split(/\s+/g) : [];
+			const langName = parts[0] || "plaintext";
+			const isLive = parts.includes("live");
 			const content = token.content;
 
 			// Map common language aliases to syntax-highlight-element supported languages
@@ -60,8 +62,14 @@ export function SyntaxHighlightPlugin(eleventyConfig) {
 				.replace(/"/g, "&quot;")
 				.replace(/'/g, "&#039;");
 
-			// Return the syntax-highlight element
-			return `<syntax-highlight language="${language}">${escapedContent}</syntax-highlight>\n`;
+			// Return the syntax-highlight element, optionally wrapped in pob-demo for live demos
+			const syntaxHighlight = `<syntax-highlight language="${language}">${escapedContent}</syntax-highlight>`;
+
+			if (isLive) {
+				return `<pob-demo>${syntaxHighlight}</pob-demo>\n`;
+			}
+
+			return `${syntaxHighlight}\n`;
 		};
 
 		return mdLib;

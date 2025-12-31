@@ -347,6 +347,58 @@ When you use multiple languages, only those specific languages are loaded from t
 3. Syntax highlighting happens at runtime using the CSS Custom Highlight API
 4. No `<span>` elements clutter your HTML – just clean, semantic markup
 
+#### Live HTML Demos
+
+You can make HTML code blocks interactive by adding the `live` modifier. This renders the code in a sandboxed iframe that readers can run.
+
+**Basic usage:**
+
+````markdown
+```html live
+<button onclick="alert('Hello!')">Click me</button>
+```
+````
+
+This will display:
+1. The syntax-highlighted code block
+2. A "Run" button in a toolbar below the code
+3. When clicked, an "Output" panel slides in showing the live rendered HTML
+
+**Features:**
+- **Sandboxed execution** - Code runs in an iframe with `sandbox="allow-scripts"` for security
+- **Dark mode support** - The output panel respects the user's color scheme preference
+- **Auto-sizing** - The iframe automatically resizes to fit its content
+- **One-click run** - Click "Run" to see the result; the demo stays visible
+
+**Example with CSS and JavaScript:**
+
+````markdown
+```html live
+<button id="btn">Count: 0</button>
+
+<style>
+  #btn {
+    padding: 0.5em 1em;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  let count = 0;
+  document.getElementById('btn').onclick = () => {
+    count++;
+    document.getElementById('btn').textContent = `Count: ${count}`;
+  };
+</script>
+```
+````
+
+**Limitations:**
+- Only works with `html` language blocks
+- Cannot access the parent page's DOM or styles
+- External resources may be blocked by the sandbox
+
 **Styling:**
 
 Code blocks automatically match your site's theme (light/dark mode) using CSS custom properties. The highlighting styles are defined in `src/assets/css/partials/_code.css`.
@@ -438,7 +490,8 @@ Use BEM-like naming:
 Web components live in `src/assets/js/components/`:
 
 - `app.js` - Main application shell
-- `note.js` - Note component
+- `demo.js` - Live code demo component (used by `html live` code blocks)
+- `note.js` - Note/alert component
 - `tile.js` - Card/tile component
 
 ### Creating a Component

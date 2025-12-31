@@ -69,7 +69,13 @@ npm run deploy         # Deploy to Cloudflare Workers
 - Located in `src/assets/js/components/`
 - Built with Lit
 - Server-side rendered at build time
-- Examples: `<pob-app>`, `<pob-note>`
+- Examples: `<pob-app>`, `<pob-note>`, `<pob-demo>`
+
+**Live Code Demos:**
+- Use ` ```html live ` to create interactive HTML demos
+- Renders code block with a "Run" button
+- Clicking "Run" shows the output in a sandboxed iframe
+- Supports inline CSS and JavaScript
 
 **External Feeds:**
 - Configure in `feeds.json`
