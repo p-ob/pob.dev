@@ -4,6 +4,7 @@ export class DemoElement extends LitElement {
 	static properties = {
 		_showPreview: { state: true },
 		_lineCount: { state: true },
+		_lineNumbers: { state: true },
 	};
 
 	static styles = css`
@@ -45,7 +46,6 @@ export class DemoElement extends LitElement {
 			border: none !important;
 			border-radius: 0 !important;
 			white-space: pre-wrap !important;
-			word-wrap: break-word !important;
 			overflow-wrap: break-word !important;
 			overflow-x: visible !important;
 		}
@@ -142,16 +142,15 @@ export class DemoElement extends LitElement {
 		super();
 		this._showPreview = false;
 		this._lineCount = 0;
+		this._lineNumbers = [];
 	}
 
 	render() {
-		const lineNumbers = Array.from({ length: this._lineCount }, (_, i) => i + 1);
-
 		return html`
 			<div class="demo-container">
 				<div class="code-section">
 					${this._lineCount > 0
-						? html`<div class="line-numbers">${lineNumbers.map((num) => html`<span>${num}</span>`)}</div>`
+						? html`<div class="line-numbers">${this._lineNumbers.map((num) => html`<span>${num}</span>`)}</div>`
 						: null}
 					<slot @slotchange=${this.#onSlotChange}></slot>
 				</div>
@@ -218,12 +217,15 @@ export class DemoElement extends LitElement {
 	}
 
 	#updateLineCount(content) {
-		if (!content) {
+		if (!content || !content.trim()) {
 			this._lineCount = 0;
+			this._lineNumbers = [];
 			return;
 		}
 		// Count lines in the content
 		this._lineCount = content.split("\n").length;
+		// Generate line numbers array
+		this._lineNumbers = Array.from({ length: this._lineCount }, (_, i) => i + 1);
 	}
 
 	#runDemo() {
