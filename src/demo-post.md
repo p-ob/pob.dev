@@ -241,7 +241,8 @@ This section demonstrates the new HTML live preview mode. The following code blo
 <script>
 	document.getElementById("toggleBtn").addEventListener("click", function () {
 		const message = document.getElementById("message");
-		message.style.display = message.style.display === "none" ? "block" : "none";
+		const currentDisplay = window.getComputedStyle(message).display;
+		message.style.display = currentDisplay === "none" ? "block" : "none";
 	});
 </script>
 ```
