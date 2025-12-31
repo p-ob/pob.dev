@@ -161,3 +161,129 @@ Notes can have custom labels:
 
 > [!info] Pro tip
 > Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+## HTML Live Preview Demo
+
+This section demonstrates the new HTML live preview mode. The following code block can be run interactively by clicking the "Run" button below it:
+
+```html live
+<div class="demo-container">
+	<h2 class="demo-title">Lorem Ipsum Dolor Sit Amet</h2>
+
+	<p class="demo-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat.</p>
+
+	<h3 class="demo-subtitle">Consectetur Adipiscing</h3>
+
+	<ul class="demo-list">
+		<li>Sed vitae velit ut arcu ultricies faucibus</li>
+		<li>Duis vitae dui ac arcu interdum pulvinar</li>
+		<li>Nullam in diam sed magna posuere tincidunt</li>
+		<li>Vivamus non sapien at erat scelerisque</li>
+	</ul>
+
+	<button class="demo-button" id="toggleBtn">Toggle Message</button>
+
+	<p class="demo-message" id="message">Lorem ipsum dolor sit amet! This message can be toggled on and off.</p>
+</div>
+
+<style>
+	.demo-container {
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		padding: 1.5rem;
+		max-width: 600px;
+		background: #ffffff;
+		color: #2c3e50;
+	}
+
+	.demo-title {
+		color: #2c3e50;
+		margin-top: 0;
+	}
+
+	.demo-text {
+		line-height: 1.6;
+		color: #34495e;
+	}
+
+	.demo-subtitle {
+		color: #34495e;
+		margin-top: 1.5rem;
+	}
+
+	.demo-list {
+		line-height: 1.8;
+		color: #34495e;
+	}
+
+	.demo-button {
+		background: #3498db;
+		color: white;
+		border: none;
+		padding: 0.75rem 1.5rem;
+		font-size: 1rem;
+		cursor: pointer;
+		border-radius: 4px;
+		margin-top: 1rem;
+	}
+
+	.demo-button:hover {
+		background: #2980b9;
+	}
+
+	.demo-message {
+		display: none;
+		margin-top: 1rem;
+		padding: 1rem;
+		background: #ecf0f1;
+		border-left: 4px solid #3498db;
+		color: #2c3e50;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.demo-container {
+			background: #1e1e1e;
+			color: #e0e0e0;
+		}
+
+		.demo-title {
+			color: #e0e0e0;
+		}
+
+		.demo-text {
+			color: #c0c0c0;
+		}
+
+		.demo-subtitle {
+			color: #c0c0c0;
+		}
+
+		.demo-list {
+			color: #c0c0c0;
+		}
+
+		.demo-button {
+			background: #2980b9;
+		}
+
+		.demo-button:hover {
+			background: #3498db;
+		}
+
+		.demo-message {
+			background: #2d2d2d;
+			border-left: 4px solid #2980b9;
+			color: #e0e0e0;
+		}
+	}
+</style>
+
+<script>
+	document.getElementById("toggleBtn").addEventListener("click", function () {
+		const message = document.getElementById("message");
+		const currentDisplay = window.getComputedStyle(message).display;
+		message.style.display = currentDisplay === "none" ? "block" : "none";
+	});
+</script>
+```
+
+This interactive example showcases how the live preview mode allows readers to run and interact with HTML, CSS, and JavaScript directly within the page.
