@@ -3,6 +3,7 @@ import { html, css, LitElement } from "lit";
 export class DemoElement extends LitElement {
 	static properties = {
 		_showPreview: { state: true },
+		_lineCount: { state: true },
 	};
 
 	static styles = css`
@@ -19,12 +20,34 @@ export class DemoElement extends LitElement {
 
 		.code-section {
 			position: relative;
+			display: grid;
+			grid-template-columns: auto 1fr;
+		}
+
+		.line-numbers {
+			padding: 1rem 0.75rem 1rem 1rem;
+			background: var(--code-background-color, hsl(0, 0%, 93%));
+			border-right: 1px solid var(--faded-color, hsl(0, 0%, 70%));
+			font-family: "Consolas", "Menlo", "Monaco", "Courier New", monospace;
+			font-size: 0.9em;
+			line-height: 1.5;
+			text-align: right;
+			user-select: none;
+			color: var(--code-comment, hsl(0, 0%, 45%));
+		}
+
+		.line-numbers span {
+			display: block;
 		}
 
 		::slotted(syntax-highlight) {
 			margin: 0 !important;
 			border: none !important;
 			border-radius: 0 !important;
+			white-space: pre-wrap !important;
+			word-wrap: break-word !important;
+			overflow-wrap: break-word !important;
+			overflow-x: visible !important;
 		}
 
 		.toolbar {
@@ -48,7 +71,9 @@ export class DemoElement extends LitElement {
 			border: 1px solid var(--faded-color, hsl(0, 0%, 70%));
 			border-radius: 0.25em;
 			cursor: pointer;
-			transition: background 0.15s ease, opacity 0.15s ease;
+			transition:
+				background 0.15s ease,
+				opacity 0.15s ease;
 		}
 
 		.run-button:hover:not(:disabled) {
@@ -116,20 +141,22 @@ export class DemoElement extends LitElement {
 	constructor() {
 		super();
 		this._showPreview = false;
+		this._lineCount = 0;
 	}
 
 	render() {
+		const lineNumbers = Array.from({ length: this._lineCount }, (_, i) => i + 1);
+
 		return html`
 			<div class="demo-container">
 				<div class="code-section">
+					${this._lineCount > 0
+						? html`<div class="line-numbers">${lineNumbers.map((num) => html`<span>${num}</span>`)}</div>`
+						: null}
 					<slot @slotchange=${this.#onSlotChange}></slot>
 				</div>
 				<div class="toolbar">
-					<button
-						class="run-button"
-						@click=${this.#runDemo}
-						?disabled=${this._showPreview}
-					>
+					<button class="run-button" @click=${this.#runDemo} ?disabled=${this._showPreview}>
 						<svg viewBox="0 0 24 24" aria-hidden="true">
 							<path d="M8 5v14l11-7z" />
 						</svg>
@@ -168,12 +195,14 @@ export class DemoElement extends LitElement {
 				// For <syntax-highlight>, get innerHTML and decode entities
 				if (node.tagName === "SYNTAX-HIGHLIGHT") {
 					this.#htmlContent = this.#decodeHtmlEntities(node.innerHTML || "");
+					this.#updateLineCount(this.#htmlContent);
 					return;
 				}
 
 				// Check for <code> element
 				if (node.tagName === "CODE") {
 					this.#htmlContent = this.#decodeHtmlEntities(node.textContent || "");
+					this.#updateLineCount(this.#htmlContent);
 					return;
 				}
 
@@ -181,10 +210,20 @@ export class DemoElement extends LitElement {
 				const codeElement = node.querySelector("code");
 				if (codeElement) {
 					this.#htmlContent = this.#decodeHtmlEntities(codeElement.textContent || "");
+					this.#updateLineCount(this.#htmlContent);
 					return;
 				}
 			}
 		}
+	}
+
+	#updateLineCount(content) {
+		if (!content) {
+			this._lineCount = 0;
+			return;
+		}
+		// Count lines in the content
+		this._lineCount = content.split("\n").length;
 	}
 
 	#runDemo() {
