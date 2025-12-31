@@ -31,14 +31,11 @@ export class DemoElement extends LitElement {
 			border-right: 1px solid var(--faded-color, hsl(0, 0%, 70%));
 			font-family: "Consolas", "Menlo", "Monaco", "Courier New", monospace;
 			font-size: 0.9em;
-			line-height: 1.5;
 			text-align: right;
 			user-select: none;
 			color: var(--code-comment, hsl(0, 0%, 45%));
-		}
-
-		.line-numbers span {
-			display: block;
+			white-space: pre;
+			line-height: 1.5;
 		}
 
 		::slotted(syntax-highlight) {
@@ -146,12 +143,12 @@ export class DemoElement extends LitElement {
 	}
 
 	render() {
+		const lineNumbersText = this._lineNumbers.join("\n");
+
 		return html`
 			<div class="demo-container">
 				<div class="code-section">
-					${this._lineCount > 0
-						? html`<div class="line-numbers">${this._lineNumbers.map((num) => html`<span>${num}</span>`)}</div>`
-						: null}
+					${this._lineCount > 0 ? html`<div class="line-numbers">${lineNumbersText}</div>` : null}
 					<slot @slotchange=${this.#onSlotChange}></slot>
 				</div>
 				<div class="toolbar">
