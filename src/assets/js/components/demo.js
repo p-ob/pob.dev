@@ -48,7 +48,9 @@ export class DemoElement extends LitElement {
 			border: 1px solid var(--faded-color, hsl(0, 0%, 70%));
 			border-radius: 0.25em;
 			cursor: pointer;
-			transition: background 0.15s ease, opacity 0.15s ease;
+			transition:
+				background 0.15s ease,
+				opacity 0.15s ease;
 		}
 
 		.run-button:hover:not(:disabled) {
@@ -125,11 +127,7 @@ export class DemoElement extends LitElement {
 					<slot @slotchange=${this.#onSlotChange}></slot>
 				</div>
 				<div class="toolbar">
-					<button
-						class="run-button"
-						@click=${this.#runDemo}
-						?disabled=${this._showPreview}
-					>
+					<button class="run-button" @click=${this.#runDemo} ?disabled=${this._showPreview}>
 						<svg viewBox="0 0 24 24" aria-hidden="true">
 							<path d="M8 5v14l11-7z" />
 						</svg>
