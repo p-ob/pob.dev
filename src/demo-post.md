@@ -167,39 +167,83 @@ Notes can have custom labels:
 This section demonstrates the new HTML live preview mode. The following code block can be run interactively by clicking the "Run" button below it:
 
 ```html live
-<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 1.5rem; max-width: 600px;">
-	<h2 style="color: #2c3e50; margin-top: 0;">Lorem Ipsum Dolor Sit Amet</h2>
+<div class="demo-container">
+	<h2 class="demo-title">Lorem Ipsum Dolor Sit Amet</h2>
 
-	<p style="line-height: 1.6; color: #34495e;">
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat.
-	</p>
+	<p class="demo-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in diam sed magna posuere tincidunt non sit amet ligula. Vivamus non sapien at erat scelerisque placerat.</p>
 
-	<h3 style="color: #34495e; margin-top: 1.5rem;">Consectetur Adipiscing</h3>
+	<h3 class="demo-subtitle">Consectetur Adipiscing</h3>
 
-	<ul style="line-height: 1.8; color: #34495e;">
+	<ul class="demo-list">
 		<li>Sed vitae velit ut arcu ultricies faucibus</li>
 		<li>Duis vitae dui ac arcu interdum pulvinar</li>
 		<li>Nullam in diam sed magna posuere tincidunt</li>
 		<li>Vivamus non sapien at erat scelerisque</li>
 	</ul>
 
-	<button
-		onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'"
-		style="background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; border-radius: 4px; margin-top: 1rem;"
-	>
-		Toggle Message
-	</button>
+	<button class="demo-button" id="toggleBtn">Toggle Message</button>
 
-	<p style="display: none; margin-top: 1rem; padding: 1rem; background: #ecf0f1; border-left: 4px solid #3498db; color: #2c3e50;">
-		Lorem ipsum dolor sit amet! This message can be toggled on and off.
-	</p>
+	<p class="demo-message" id="message">Lorem ipsum dolor sit amet! This message can be toggled on and off.</p>
 </div>
 
 <style>
-	button:hover {
-		background: #2980b9 !important;
+	.demo-container {
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		padding: 1.5rem;
+		max-width: 600px;
+	}
+
+	.demo-title {
+		color: #2c3e50;
+		margin-top: 0;
+	}
+
+	.demo-text {
+		line-height: 1.6;
+		color: #34495e;
+	}
+
+	.demo-subtitle {
+		color: #34495e;
+		margin-top: 1.5rem;
+	}
+
+	.demo-list {
+		line-height: 1.8;
+		color: #34495e;
+	}
+
+	.demo-button {
+		background: #3498db;
+		color: white;
+		border: none;
+		padding: 0.75rem 1.5rem;
+		font-size: 1rem;
+		cursor: pointer;
+		border-radius: 4px;
+		margin-top: 1rem;
+	}
+
+	.demo-button:hover {
+		background: #2980b9;
+	}
+
+	.demo-message {
+		display: none;
+		margin-top: 1rem;
+		padding: 1rem;
+		background: #ecf0f1;
+		border-left: 4px solid #3498db;
+		color: #2c3e50;
 	}
 </style>
+
+<script>
+	document.getElementById("toggleBtn").addEventListener("click", function () {
+		const message = document.getElementById("message");
+		message.style.display = message.style.display === "none" ? "block" : "none";
+	});
+</script>
 ```
 
 This interactive example showcases how the live preview mode allows readers to run and interact with HTML, CSS, and JavaScript directly within the page.
