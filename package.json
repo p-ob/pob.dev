@@ -39,6 +39,7 @@
 		"dev": "wrangler dev",
 		"deploy": "wrangler deploy",
 		"test": "playwright test",
+		"test:unit": "node --experimental-test-module-mocks --test tests/unit/**/*.test.js",
 		"test:ui": "playwright test --ui"
 	}
 }
