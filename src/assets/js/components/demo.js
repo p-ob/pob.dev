@@ -140,7 +140,7 @@ export class DemoElement extends LitElement {
 							<div class="preview-header">
 								<span class="preview-label">Output</span>
 							</div>
-							<iframe class="demo-frame" sandbox="allow-scripts"></iframe>
+							<iframe class="demo-frame" sandbox="allow-scripts allow-popups"></iframe>
 						</div>
 					</div>
 				</div>
@@ -199,30 +199,32 @@ export class DemoElement extends LitElement {
 		}
 
 		// Create the iframe document with dark mode support
+		// Use <base target="_blank"> to open all links in new tabs, preventing navigation within the iframe
 		const iframeDoc = `<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<style>
-		body {
-			margin: 1em;
-			font-family: system-ui, -apple-system, sans-serif;
-			color: hsl(0, 0%, 20%);
-			background: hsl(0, 0%, 100%);
-		}
+			<html>
+			<head>
+				<meta charset="utf-8">
+				<base target="_blank">
+				<style>
+					body {
+						margin: 1em;
+						font-family: system-ui, -apple-system, sans-serif;
+						color: hsl(0, 0%, 20%);
+						background: hsl(0, 0%, 100%);
+					}
 
-		@media (prefers-color-scheme: dark) {
-			body {
-				color: hsl(0, 0%, 91%);
-				background: hsl(220, 4%, 14%);
-			}
-		}
-	</style>
-</head>
-<body>
-${this.#htmlContent}
-</body>
-</html>`;
+					@media (prefers-color-scheme: dark) {
+						body {
+							color: hsl(0, 0%, 91%);
+							background: hsl(220, 4%, 14%);
+						}
+					}
+				</style>
+			</head>
+			<body>
+			${this.#htmlContent}
+			</body>
+			</html>`;
 
 		// Use srcdoc for security (combined with sandbox attribute)
 		this.#iframe.srcdoc = iframeDoc;
