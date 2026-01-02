@@ -5,8 +5,10 @@ import { EleventyMock } from "./mocks/eleventy.mock.js";
 
 // Mutable mock state
 let mockShouldThrow = false;
+// Use dynamic date to avoid timezone/date based CI failures
+const today = new Date().toISOString();
 let mockFeedItems = [
-    { title: "Post 1", link: "https://example.com/1", isoDate: "2025-01-01T12:00:00Z" },
+    { title: "Post 1", link: "https://example.com/1", isoDate: today },
     { title: "Old Post", link: "https://example.com/2", isoDate: "2020-01-01T12:00:00Z" }
 ];
 let mockFsContent = {
