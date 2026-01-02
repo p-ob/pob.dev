@@ -67,6 +67,7 @@ syntax-highlight {
 }
 
 ::highlight(atrule),
+::highlight(rule),
 ::highlight(attr-value),
 ::highlight(keyword) {
 	color: var(--code-keyword);

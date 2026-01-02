@@ -63,7 +63,7 @@ export function SyntaxHighlightPlugin(eleventyConfig) {
 				.replace(/'/g, "&#039;");
 
 			// Return the syntax-highlight element, optionally wrapped in pob-demo for live demos
-			const syntaxHighlight = `<syntax-highlight language="${language}">${escapedContent}</syntax-highlight>`;
+			const syntaxHighlight = `<syntax-highlight language="${language}" tabindex="-1">${escapedContent}</syntax-highlight>`;
 
 			if (isLive) {
 				return `<pob-demo>${syntaxHighlight}</pob-demo>\n`;

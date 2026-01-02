@@ -14,6 +14,7 @@
 		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^2.0.4",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.6",
+		"@playwright/test": "^1.57.0",
 		"clean-css": "^5.3.3",
 		"linkedom": "^0.18.12",
 		"lit": "^3.3.2",
@@ -36,6 +37,8 @@
 		"lint": "prettier --check \"src/**/*.{js,md,css,json,html}\"",
 		"format": "prettier --write \"src/**/*.{js,md,css,json,html}\"",
 		"dev": "wrangler dev",
-		"deploy": "wrangler deploy"
+		"deploy": "wrangler deploy",
+		"test": "playwright test",
+		"test:ui": "playwright test --ui"
 	}
 }
