@@ -16,14 +16,16 @@ export default defineConfig({
             name: "chromium",
             use: { ...devices["Desktop Chrome"] },
         },
-        {
-            name: "firefox",
-            use: { ...devices["Desktop Firefox"] },
-        },
-        {
-            name: "webkit",
-            use: { ...devices["Desktop Safari"] },
-        },
+        // Firefox browser testing disabled - only Chromium is used for E2E tests
+        // {
+        //     name: "firefox",
+        //     use: { ...devices["Desktop Firefox"] },
+        // },
+        // Webkit browser testing disabled - only Chromium is used for E2E tests
+        // {
+        //     name: "webkit",
+        //     use: { ...devices["Desktop Safari"] },
+        // },
     ],
     webServer: {
         command: "npm start",
