@@ -1,4 +1,3 @@
-
 export class EleventyMock {
 	constructor() {
 		this.plugins = [];
