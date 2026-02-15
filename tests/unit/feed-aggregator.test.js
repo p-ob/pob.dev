@@ -77,10 +77,11 @@ describe("FeedAggregatorPlugin", () => {
 		// Execute the function
 		const results = await dataFn();
 
-		// Should include today's post but exclude the future post
-		assert.strictEqual(results.length, 1, "Should filter out future posts");
-		assert.strictEqual(results[0].title, "Post 1", "Should only include current post");
+		// Should include today's post and old post, but exclude the future post
+		assert.strictEqual(results.length, 2, "Should filter out only future posts");
 		assert.ok(!results.some((item) => item.title === "Future Post"), "Should not include future posts");
+		assert.ok(results.some((item) => item.title === "Post 1"), "Should include current post");
+		assert.ok(results.some((item) => item.title === "Old Post"), "Should include old posts when no duration limit");
 	});
 
 	it("should handle fetch errors gracefully", async () => {
