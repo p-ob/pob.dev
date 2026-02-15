@@ -1,4 +1,4 @@
-import { test, describe, it, mock } from "node:test";
+import { describe, it, mock } from "node:test";
 import assert from "node:assert";
 import { EleventyMock } from "./mocks/eleventy.mock.js";
 
@@ -6,9 +6,11 @@ import { EleventyMock } from "./mocks/eleventy.mock.js";
 let mockShouldThrow = false;
 // Use dynamic date to avoid timezone/date based CI failures
 const today = new Date().toISOString();
+const futureDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(); // 30 days in the future
 let mockFeedItems = [
 	{ title: "Post 1", link: "https://example.com/1", isoDate: today },
 	{ title: "Old Post", link: "https://example.com/2", isoDate: "2020-01-01T12:00:00Z" },
+	{ title: "Future Post", link: "https://example.com/3", isoDate: futureDate },
 ];
 let mockFsContent = {
 	feeds: [{ name: "Test Blog", url: "https://example.com/rss", siteUrl: "https://example.com" }],
@@ -55,8 +57,30 @@ describe("FeedAggregatorPlugin", () => {
 		// Execute the function
 		const results = await dataFn();
 
-		assert.strictEqual(results.length, 1, "Should filter out old posts");
+		assert.strictEqual(results.length, 1, "Should filter out old and future posts");
 		assert.strictEqual(results[0].title, "Post 1");
+	});
+
+	it("should filter out future-dated posts", async () => {
+		mockShouldThrow = false;
+		const mockEleventy = new EleventyMock();
+
+		FeedAggregatorPlugin(mockEleventy, {});
+
+		// Emit event to clear cache
+		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
+
+		// Get the global data function
+		const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
+		assert.ok(dataFn);
+
+		// Execute the function
+		const results = await dataFn();
+
+		// Should include today's post but exclude the future post
+		assert.strictEqual(results.length, 1, "Should filter out future posts");
+		assert.strictEqual(results[0].title, "Post 1", "Should only include current post");
+		assert.ok(!results.some((item) => item.title === "Future Post"), "Should not include future posts");
 	});
 
 	it("should handle fetch errors gracefully", async () => {

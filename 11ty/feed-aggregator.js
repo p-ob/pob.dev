@@ -93,26 +93,49 @@ export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
         }
       }
 
-      // Filter by date if durationLimit is provided
+      // Filter by date: exclude future posts and apply duration limit if set
       let filteredItems = allItems;
-      if (durationLimit) {
-        try {
-          const now = Temporal.Now.plainDateISO();
+      try {
+        const now = Temporal.Now.plainDateISO();
+
+        // Calculate cutoff date if duration limit is provided
+        let cutoffDate = null;
+        if (durationLimit) {
           const duration = Temporal.Duration.from(durationLimit);
-          const cutoffDate = now.subtract(duration);
-
-          filteredItems = allItems.filter((item) => {
-            const itemDate = Temporal.PlainDate.from(item.date.substring(0, 10));
-            return Temporal.PlainDate.compare(itemDate, cutoffDate) >= 0;
-          });
-
-          console.log(
-            `[FeedAggregator] Filtered ${allItems.length} items to ${filteredItems.length} items (keeping posts from the last ${durationLimit})`
-          );
-        } catch (err) {
-          console.error(`[FeedAggregator] Invalid durationLimit "${durationLimit}":`, err.message);
-          console.warn(`[FeedAggregator] Proceeding without date filtering`);
+          cutoffDate = now.subtract(duration);
         }
+
+        filteredItems = allItems.filter((item) => {
+          const itemDate = Temporal.PlainDate.from(item.date.substring(0, 10));
+
+          // Exclude future-dated posts
+          if (Temporal.PlainDate.compare(itemDate, now) > 0) {
+            return false;
+          }
+
+          // Apply duration limit if set
+          if (cutoffDate) {
+            return Temporal.PlainDate.compare(itemDate, cutoffDate) >= 0;
+          }
+
+          return true;
+        });
+
+        if (durationLimit) {
+          console.log(
+            `[FeedAggregator] Filtered ${allItems.length} items to ${filteredItems.length} items (keeping posts from the last ${durationLimit}, excluding future posts)`
+          );
+        } else {
+          const futurePostsCount = allItems.length - filteredItems.length;
+          if (futurePostsCount > 0) {
+            console.log(
+              `[FeedAggregator] Filtered out ${futurePostsCount} future-dated posts (${filteredItems.length} items remaining)`
+            );
+          }
+        }
+      } catch (err) {
+        console.error(`[FeedAggregator] Error filtering by date:`, err.message);
+        console.warn(`[FeedAggregator] Proceeding without date filtering`);
       }
 
       // Sort by date, newest first
