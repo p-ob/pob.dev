@@ -14,7 +14,7 @@
 		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^3.0.0",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.6",
-		"@playwright/test": "^1.58.2",
+		"@playwright/test": "^1.59.1",
 		"clean-css": "^5.3.3",
 		"linkedom": "^0.18.12",
 		"lit": "^3.3.2",
