@@ -1,7 +1,51 @@
 @layer layout {
 	.reading-description {
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 		color: var(--text-secondary, #666);
+	}
+
+	.reading-acknowledgements {
+		margin-bottom: 2rem;
+		font-size: 0.875rem;
+		color: var(--text-secondary, #666);
+
+		summary {
+			cursor: pointer;
+			user-select: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 0.375rem;
+			color: var(--text-secondary, #666);
+			transition: opacity 0.2s ease;
+
+			&:hover {
+				opacity: 0.7;
+			}
+		}
+	}
+
+	.reading-acknowledgements-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.375rem 1rem;
+		list-style: none;
+		padding: 0;
+		margin: 0.75rem 0 0;
+
+		li a {
+			color: inherit;
+			text-decoration: underline;
+		}
+
+		li a:hover {
+			opacity: 0.7;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.reading-acknowledgements summary {
+			transition: none;
+		}
 	}
 
 	.reading-items {

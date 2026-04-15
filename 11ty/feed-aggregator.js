@@ -7,6 +7,14 @@ import { Temporal } from "temporal-polyfill";
 let cachedFeeds = null;
 let cacheConfigFile = null;
 
+async function readFeedConfig(configFile) {
+  const fs = await import("fs/promises");
+  const path = await import("path");
+  const configPath = path.resolve(configFile);
+  const configContent = await fs.readFile(configPath, "utf-8");
+  return JSON.parse(configContent);
+}
+
 export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
   const { configFile = "feeds.json", durationLimit = null } = options;
 
@@ -23,6 +31,17 @@ export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
 
   // Expose the duration limit as global data
   eleventyConfig.addGlobalData("readingFeedDurationLimit", durationLimit);
+
+  // Expose the list of feed sources as global data
+  eleventyConfig.addGlobalData("readingFeedSources", async () => {
+    try {
+      const feedConfig = await readFeedConfig(configFile);
+      return Array.isArray(feedConfig.feeds) ? feedConfig.feeds : [];
+    } catch (err) {
+      console.warn(`[FeedAggregator] Could not read feed sources from ${configFile}:`, err.message);
+      return [];
+    }
+  });
 
   // Add global data for aggregated feeds
   eleventyConfig.addGlobalData("aggregatedFeeds", async () => {
@@ -44,14 +63,9 @@ export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
       });
 
       // Read feed configuration
-      const fs = await import("fs/promises");
-      const path = await import("path");
-
       let feedConfig;
       try {
-        const configPath = path.resolve(configFile);
-        const configContent = await fs.readFile(configPath, "utf-8");
-        feedConfig = JSON.parse(configContent);
+        feedConfig = await readFeedConfig(configFile);
       } catch (err) {
         console.warn(`[FeedAggregator] Could not read ${configFile}:`, err.message);
         return [];
