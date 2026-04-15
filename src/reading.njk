@@ -15,6 +15,19 @@ permalink: /reading/
   {% endif %}
 </p>
 
+{% if readingFeedSources.length > 0 %}
+<details class="reading-acknowledgements">
+  <summary>Acknowledgements</summary>
+  <ul class="reading-acknowledgements-list">
+    {%- for source in readingFeedSources -%}
+    <li>
+      <a href="{{ source.siteUrl }}" target="_blank" rel="noopener noreferrer">{{ source.name }}</a>
+    </li>
+    {%- endfor -%}
+  </ul>
+</details>
+{% endif %}
+
 {% if aggregatedFeeds.length > 0 %}
 <ol class="reading-items">
 {%- for item in aggregatedFeeds -%}
