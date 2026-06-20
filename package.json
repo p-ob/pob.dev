@@ -25,7 +25,7 @@
 		"rss-parser": "^3.13.0",
 		"slugify": "^1.6.9",
 		"syntax-highlight-element": "^1.2.0",
-		"temporal-polyfill": "^0.3.2",
+		"temporal-polyfill": "^1.0.1",
 		"wrangler": "^4.100.0"
 	},
 	"scripts": {
