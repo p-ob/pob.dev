@@ -4,7 +4,7 @@ This guide will help you set up and develop on pob.dev locally.
 
 ## Prerequisites
 
-- **Node.js** - Version 22 or higher (24 recommended for CI parity)
+- **Node.js** - Version 22 or higher (CI uses 22)
 - **npm** - Comes with Node.js
 - **Git** - For version control
 
@@ -600,7 +600,7 @@ Feeds are fetched at build time and cached in the static output.
 **Build failing**
 - Run `npm run clean` to clear build artifacts
 - Delete `node_modules/` and run `npm ci`
-- Check Node.js version: `node --version` (should be 22+, 24 recommended)
+- Check Node.js version: `node --version` (should be 22+)
 
 ### Verbose Output
 
@@ -683,10 +683,22 @@ Before submitting changes:
 
 ### Automated Testing
 
-This project does not currently have automated tests. Changes are validated through:
-- Manual testing
-- Linting (`npm run lint`)
-- Production build success
+The project has two test suites, both run in CI on every push and pull request:
+
+**Unit tests** (`tests/unit/`) - Cover the custom Eleventy plugins in `11ty/` using the Node.js built-in test runner:
+
+```bash
+npm run test:unit
+```
+
+**End-to-end tests** (`tests/e2e/`) - Playwright browser tests covering the homepage, blog, feeds, reading page, dark mode, and page structure:
+
+```bash
+npm test        # Headless run (starts the dev server automatically)
+npm run test:ui # Interactive Playwright UI mode
+```
+
+When changing a plugin in `11ty/`, update its corresponding test in `tests/unit/`. When changing page structure or behavior, run `npm test` to catch regressions.
 
 ## Performance Considerations
 

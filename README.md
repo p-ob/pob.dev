@@ -40,7 +40,7 @@ Visit [http://localhost:8080](http://localhost:8080) after starting the developm
 - External feed aggregation
 - Automatic dark mode
 - Responsive design
-- Hourly automated builds
+- Daily automated builds
 
 ## Documentation
 

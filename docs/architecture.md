@@ -10,10 +10,13 @@ pob.dev is a statically-generated personal website and blog built with modern we
 
 ### Core Technologies
 
-- **[Eleventy (11ty) 3.1.2](https://www.11ty.dev/)** - Static site generator that processes templates and content
-- **[Lit 3.3.1](https://lit.dev/)** - Web Components library with server-side rendering support
-- **[PageFind 1.4.0](https://pagefind.app/)** - Static search index generation for client-side search
+Current versions live in [package.json](../package.json).
+
+- **[Eleventy (11ty)](https://www.11ty.dev/)** - Static site generator that processes templates and content
+- **[Lit](https://lit.dev/)** - Web Components library with server-side rendering support
+- **[PageFind](https://pagefind.app/)** - Static search index generation for client-side search
 - **[Cloudflare Workers](https://workers.cloudflare.com/)** - Edge computing platform for hosting
+- **[Playwright](https://playwright.dev/)** - End-to-end browser testing
 
 ### Supporting Libraries
 
@@ -21,7 +24,7 @@ pob.dev is a statically-generated personal website and blog built with modern we
 - **clean-css** - CSS minification and optimization
 - **rss-parser** - RSS feed aggregation from external sources
 - **temporal-polyfill** - Temporal API polyfill for date/duration handling
-- **@11ty/eleventy-img 6.0.4** - Image optimization pipeline
+- **@11ty/eleventy-img** - Image optimization pipeline
 - **@11ty/eleventy-plugin-rss** - RSS/Atom/JSON feed generation
 - **linkedom** - Lightweight DOM implementation for SSR
 - **slugify** - URL-friendly slug generation
@@ -49,6 +52,7 @@ pob.dev/
 │   │   │   └── components/       # Component styles (post-list)
 │   │   └── js/components/        # Lit web components
 │   │       ├── app.js            # Main app shell
+│   │       ├── demo.js           # Live code demo component
 │   │       ├── note.js           # Note component
 │   │       └── tile.js           # Tile/card component
 │   ├── blog/                     # Blog posts
@@ -72,11 +76,16 @@ pob.dev/
 │   ├── feeds.js                  # RSS/Atom/JSON feed generation
 │   ├── feed-aggregator.js        # External feed aggregation
 │   ├── json-html.js              # JSON sanitization filter
+│   ├── syntax-highlight.js       # Per-page syntax highlighting
 │   └── table-of-contents.js      # Auto-generated table of contents
+├── tests/
+│   ├── unit/                     # Node test runner tests for 11ty/ plugins
+│   └── e2e/                      # Playwright browser tests
 ├── .github/workflows/
-│   └── deploy.yml                # CI/CD pipeline
+│   └── ci.yml                    # CI/CD pipeline (build, test, deploy)
 ├── public/                       # Build output (git-ignored)
 ├── eleventy.config.js            # Main Eleventy configuration
+├── playwright.config.js          # Playwright e2e test configuration
 ├── feeds.json                    # External feed sources
 ├── wrangler.jsonc                # Cloudflare Workers config
 └── package.json                  # Dependencies and scripts
@@ -107,7 +116,7 @@ pob.dev/
 - Configured via [feeds.json](../feeds.json)
 - Optional date filtering using Temporal duration strings (e.g., `P90D` for 90 days, `P1Y6M` for 1.5 years)
 - Automatically watches feed configuration file for changes in development mode
-- Refreshed hourly via automated builds
+- Refreshed daily via automated builds
 - See [11ty/feed-aggregator.js](../11ty/feed-aggregator.js)
 
 ### User Experience
@@ -214,7 +223,7 @@ The site uses an import map system for managing external dependencies like Lit, 
 
 **How it works:**
 - The `externals.js` plugin reads package versions from `node_modules`
-- Generates versioned paths for cache busting (e.g., `/assets/external/lit-3.3.1/`)
+- Generates versioned paths for cache busting (e.g., `/assets/external/lit-{version}/`)
 - Creates an import map that the browser uses to resolve bare module specifiers
 - Dependencies are copied to the output directory with version-stamped paths
 
