@@ -42,8 +42,9 @@
 			import('syntax-highlight-element');
 			{% endif %}
 
-			// Register service worker for offline support
-			if ('serviceWorker' in navigator) {
+			// Register service worker for offline support (production only, so local dev
+			// never serves stale cached assets via stale-while-revalidate)
+			if ('serviceWorker' in navigator && location.origin === '{{ metadata.host }}') {
 				navigator.serviceWorker.register('/sw.js');
 			}
     </script>
