@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install Dependencies
@@ -42,7 +42,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install Dependencies
@@ -55,7 +55,7 @@ jobs:
     name: E2E Tests
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.49.1-jammy
+      image: mcr.microsoft.com/playwright:v1.61.1-jammy
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install Dependencies
@@ -97,7 +97,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
 
       - name: Install Dependencies
