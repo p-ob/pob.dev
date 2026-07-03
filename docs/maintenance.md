@@ -17,7 +17,7 @@ Review outdated packages and plan updates.
 #### Review Automated Builds
 
 1. Go to **GitHub Actions**
-2. Check hourly cron builds are succeeding
+2. Check daily cron builds are succeeding
 3. Review any errors in recent workflows
 
 #### Monitor Site Performance
@@ -50,6 +50,7 @@ npm start
 **After updating:**
 - Test locally thoroughly
 - Run `npm run lint`
+- Run `npm run test:unit` and `npm test`
 - Commit changes with clear message
 - Monitor first deployment closely
 
@@ -95,12 +96,13 @@ npm outdated
 4. Update code if needed
 5. Deploy to production
 
-**Key dependencies to watch:**
+**Key dependencies to watch** (see [package.json](../package.json) for current versions):
 
-- **Eleventy** - Static site generator (currently 3.1.2)
-- **Lit** - Web components library (currently 3.3.1)
-- **PageFind** - Search functionality (currently 1.4.0)
-- **Wrangler** - Cloudflare deployment (currently 4.53.0)
+- **Eleventy** - Static site generator
+- **Lit** - Web components library
+- **PageFind** - Search functionality
+- **Wrangler** - Cloudflare deployment
+- **Playwright** - E2E testing (keep in sync with the container image tag in [ci.yml](../.github/workflows/ci.yml))
 
 #### Security Audit
 
@@ -130,12 +132,12 @@ Check if Node.js has new LTS versions:
 node --version
 ```
 
-Current requirement: **Node.js 22+** (CI uses Node.js 24)
+Current requirement: **Node.js 22+** (CI uses Node.js 22)
 
 **Update if needed:**
 
 1. Update [package.json](../package.json) engines field
-2. Update [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) node-version
+2. Update [.github/workflows/ci.yml](../.github/workflows/ci.yml) node-version (all jobs)
 3. Test locally with new version
 4. Deploy and monitor
 
@@ -471,7 +473,7 @@ git clone https://github.com/p-ob/pob.dev.git backup-$(date +%Y%m%d)
 - `wrangler.jsonc`
 - `feeds.json`
 - `package.json`
-- `.github/workflows/deploy.yml`
+- `.github/workflows/ci.yml`
 - All files in `src/_data/`
 
 **These are backed up in Git** - no additional action needed.
@@ -616,7 +618,7 @@ git filter-branch --tree-filter 'rm -f path/to/large/file' HEAD
 1. **Update local Node.js**
 
 ```bash
-# Using nvm (recommended)
+# Using nvm (recommended) - replace 24 with the target version
 nvm install 24
 nvm use 24
 
@@ -638,10 +640,10 @@ Note: The `engines` field specifies minimum supported version. CI may use a newe
 
 3. **Update GitHub Actions**
 
-Edit [.github/workflows/deploy.yml](../.github/workflows/deploy.yml):
+Edit [.github/workflows/ci.yml](../.github/workflows/ci.yml) and update `node-version` in **every job** (build, unit-tests, e2e-tests, deploy):
 
 ```yaml
-- name: Set up Node.js
+- name: Setup Node
   uses: actions/setup-node@v4
   with:
     node-version: '24'
@@ -652,6 +654,8 @@ Edit [.github/workflows/deploy.yml](../.github/workflows/deploy.yml):
 ```bash
 npm ci
 npm run build
+npm run test:unit
+npm test
 npm start
 ```
 

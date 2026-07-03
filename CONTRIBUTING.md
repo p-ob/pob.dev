@@ -99,6 +99,12 @@ See [Development Guide](docs/development.md) for detailed development instructio
 # Start development server
 npm start
 
+# Run unit tests
+npm run test:unit
+
+# Run e2e tests (Playwright)
+npm test
+
 # Build production version
 npm run build
 
@@ -357,13 +363,15 @@ Continue with...
 **Before submitting a PR:**
 
 1. Test locally with `npm start`
-2. Build production version: `npm run build`
-3. Test production build: `npm run dev`
-4. Test in multiple browsers (Chrome, Firefox, Safari)
-5. Test responsive design (mobile, tablet, desktop)
-6. Test dark mode
-7. Verify search works (if applicable)
-8. Check browser console for errors
+2. Run unit tests: `npm run test:unit`
+3. Run e2e tests: `npm test` (CI runs both suites and blocks deploys on failure)
+4. Build production version: `npm run build`
+5. Test production build: `npm run dev`
+6. Test in multiple browsers (Chrome, Firefox, Safari)
+7. Test responsive design (mobile, tablet, desktop)
+8. Test dark mode
+9. Verify search works (if applicable)
+10. Check browser console for errors
 
 **For UI changes:**
 
@@ -418,7 +426,7 @@ PRs are reviewed for:
 
 - Code quality and style
 - Adherence to project conventions
-- Test coverage (manual testing)
+- Test coverage (unit + e2e tests, plus manual checks)
 - Documentation updates
 - Performance impact
 - Breaking changes

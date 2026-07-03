@@ -1,224 +1,82 @@
-# Claude Code Instructions
+# CLAUDE.md
 
-This file contains instructions to help Claude Code work more efficiently with the pob.dev codebase.
+pob.dev is a statically generated personal blog: Eleventy (templates/content) + Lit (SSR web components) + PageFind (client-side search), deployed to Cloudflare Workers. Node.js 22+ required. Exact dependency versions live in `package.json` — do not trust version numbers written in prose anywhere.
 
-## Project Overview
+## Rules
 
-pob.dev is a statically-generated personal website and blog built with:
-- **Eleventy 3.1.2** (static site generator)
-- **Lit 3.3.1** (web components with SSR)
-- **PageFind 1.3.0** (client-side search)
-- **Cloudflare Workers** (hosting platform)
+1. Read a file before editing it. Follow the patterns already in the file you are changing.
+2. Indent with tabs (width 2). Always use braces, even for single-line `if` statements. Prettier enforces formatting — run `npm run format` after editing and `npm run lint` before committing.
+3. Never edit anything in `public/` — it is generated build output and git-ignored.
+4. Pushing to `main` deploys to production via GitHub Actions, so verify changes before committing.
+5. Use commit prefixes: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `test:`, `chore:`.
+6. When you change or add a custom plugin in `11ty/`, update or add its unit test in `tests/unit/`.
+7. Do not add bundlers, frameworks, or new runtime dependencies without being asked. This site deliberately uses plain web platform features (ES modules, import maps, CSS layers).
 
-## Essential Documentation
-
-Before making changes or answering questions about the project, refer to these docs:
-
-- [docs/architecture.md](docs/architecture.md) - Technical architecture, tech stack, data flow, and key features
-- [docs/development.md](docs/development.md) - Development setup, available scripts, project structure, and content creation
-- [docs/deployment.md](docs/deployment.md) - CI/CD pipeline, deployment methods, and troubleshooting
-- [docs/maintenance.md](docs/maintenance.md) - Maintenance tasks, dependency management, and common issues
-
-## Quick Reference
-
-### Key Directories
-
-- `src/` - All source content and templates
-  - `src/blog/YYYY/MM/` - Blog posts organized by date
-  - `src/_includes/` - Layouts and components
-  - `src/assets/` - CSS, JS, fonts
-  - `src/_data/` - Global data files
-- `11ty/` - Custom Eleventy plugins
-- `public/` - Build output (git-ignored)
-- `docs/` - Project documentation
-
-### Common Commands
+## Commands
 
 ```bash
-npm start              # Development server with hot reload (localhost:8080)
-npm run build          # Full production build (Eleventy + PageFind)
-npm run build:11ty     # Build static site only (faster for testing)
-npm run build:index    # Generate PageFind search index only
-npm run lint           # Check code formatting
-npm run format         # Auto-format all source files
-npm run clean          # Remove build artifacts
-npm run dev            # Local Cloudflare Workers environment (localhost:8787)
-npm run deploy         # Deploy to Cloudflare Workers
+npm start              # Dev server, hot reload, drafts visible (localhost:8080)
+npm run build          # Production build: Eleventy then PageFind index → public/
+npm run build:11ty     # Eleventy only (faster; skips search index)
+npm run build:index    # PageFind search index only (requires prior build:11ty)
+npm run test:unit      # Node test runner unit tests (tests/unit/)
+npm test               # Playwright e2e tests (tests/e2e/; starts dev server itself)
+npm run lint           # Prettier check
+npm run format         # Prettier write
+npm run clean          # Delete build artifacts (keeps .env)
+npm run dev            # Serve public/ via local Cloudflare Workers (localhost:8787; run build first)
+npm run deploy         # Manual deploy to Cloudflare (CI normally does this)
 ```
 
-### Project Conventions
+## Verify your changes
 
-**Blog Posts:**
-- Location: `src/blog/YYYY/MM/post-name.md`
-- Requires frontmatter: `title`, `description`, `date`
-- Optional: `tags`, `draft: true`, `updatedDate`
-- Drafts visible in dev, hidden in production
-- Use `updatedDate` when updating a post (displays as "(Updated ...)")
+- Minimum for any code change: `npm run lint` and `npm run test:unit`.
+- For template/content/CSS changes, also view the result with `npm start`.
+- Before claiming a change complete: `npm run build` succeeds, and `npm test` passes if page structure or behavior changed. If content changed, confirm search works after a full `npm run build`.
+- Check both light and dark mode (dark mode follows `prefers-color-scheme`; there is no toggle) and mobile/desktop widths.
+- When using Playwright MCP to drive the site manually, save any screenshots into `.playwright-mcp/` (already git-ignored) rather than the repo root.
 
-**CSS:**
-- Layer order: `reset, config, base, utility, layout`
-- Use CSS custom properties in `src/assets/css/partials/_vars.css`
-- Dark mode via `prefers-color-scheme`
-- BEM-like naming for components
-- Breakpoints (mobile-first):
-  - `768px` - tablet (2 columns, 18px font)
-  - `1024px` - desktop (3 columns)
-- Use modern media query syntax: `@media (width >= 768px)`
+## Where things live
 
-**Web Components:**
-- Located in `src/assets/js/components/`
-- Built with Lit
-- Server-side rendered at build time
-- Examples: `<pob-app>`, `<pob-note>`, `<pob-demo>`
+| Path | Contents |
+|------|----------|
+| `src/blog/YYYY/MM/*.md` | Blog posts |
+| `src/_includes/` | Nunjucks layouts and partials |
+| `src/_data/` | Global data (author, metadata) |
+| `src/assets/css/` | Stylesheets (`global.css` + `partials/` + `components/`) |
+| `src/assets/js/components/` | Lit components: `app.js`, `demo.js`, `note.js`, `tile.js` |
+| `11ty/` | Custom Eleventy plugins (drafts, feeds, TOC, syntax highlighting, externals) |
+| `tests/unit/`, `tests/e2e/` | Node unit tests for plugins; Playwright browser tests |
+| `eleventy.config.js` | Main Eleventy configuration |
+| `feeds.json` | External RSS feeds for the Reading page |
+| `.github/workflows/ci.yml` | CI/CD: build + unit tests + e2e tests, then deploy on `main` |
+| `docs/` | Detailed documentation (see below) |
 
-**Live Code Demos:**
-- Use ` ```html live ` to create interactive HTML demos
-- Renders code block with a "Run" button
-- Clicking "Run" shows the output in a sandboxed iframe
-- Supports inline CSS and JavaScript
+## Conventions
 
-**External Feeds:**
-- Configure in `feeds.json`
-- Date filtering uses ISO 8601 durations (e.g., `P90D` for 90 days)
-- Automatically watched in development mode
+**Blog posts** — file at `src/blog/YYYY/MM/post-name.md`. Frontmatter requires `title`, `description`, `date`. Optional: `tags` (list), `draft: true` (visible in dev only, excluded from production and feeds), `updatedDate` (add when significantly revising a published post). TOC is auto-generated from headings; external links auto-open in new tabs.
 
-### Code Style
+**Markdown extras** — note boxes via `> [!note]` / `[!info]` / `[!success]` / `[!warning]` / `[!error]` (rendered as `<pob-note>`); footnotes; ` ```html live ` makes an HTML code block runnable in a sandboxed iframe.
 
-- **Indentation:** Tabs (size 2)
-- **Line width:** 120 characters (200 for Markdown/SCSS)
-- **Braces:** Always required, even for single-line statements
-- **Formatting:** Enforced via Prettier
-- Always run `npm run lint` before committing
+**CSS** — layer order is `reset, config, base, utility, interactions, layout` (see `src/assets/css/global.css`). Design tokens are `@property` custom properties in `partials/_vars.css`; dark mode overrides them under `@media (prefers-color-scheme: dark)`. BEM-like class names. Mobile-first with modern range syntax: `@media (width >= 768px)` (tablet), `@media (width >= 1024px)` (desktop).
 
-```javascript
-// ✅ Good - always use braces
-if (condition) {
-	return null;
-}
+**Web components** — Lit, server-side rendered at build time by `@lit-labs/eleventy-plugin-lit`; keep them progressive-enhancement only. Add new components in `src/assets/js/components/` and follow `note.js` as the template.
 
-// ❌ Bad - no braces
-if (condition) return null;
-```
+## When things break
 
-## Working with Claude Code
+| Symptom | Fix |
+|---------|-----|
+| Build failing | `npm run clean` then `npm run build` |
+| Search empty/broken | Full `npm run build` (index requires built HTML) |
+| Drafts not showing | Drafts only appear under `npm start`, never in builds |
+| CSS not applying | Check layer order and that the file is imported in `global.css` |
+| Hot reload broken | Free port 8080, restart `npm start` |
 
-### Before Making Changes
+## Detailed docs
 
-1. **Read relevant files first** - Always use the Read tool before suggesting modifications
-2. **Check documentation** - Refer to docs/ folder for context
-3. **Understand existing patterns** - Follow established conventions in the codebase
+Read these only when the task needs them:
 
-### When Troubleshooting
-
-1. Check [docs/development.md](docs/development.md) debugging section
-2. Check [docs/maintenance.md](docs/maintenance.md) troubleshooting section
-3. Verify Node.js version: 22+
-4. Try `npm run clean` before rebuilding
-
-### Common Tasks
-
-**Adding a blog post:**
-1. Create `src/blog/YYYY/MM/post-name.md`
-2. Add required frontmatter (title, description, date)
-3. Optional: Set `draft: true` to hide from production
-4. Build and test with `npm start`
-
-**Modifying styles:**
-1. Check existing patterns in `src/assets/css/`
-2. Use CSS layers appropriately
-3. Test in both light and dark modes
-4. Ensure responsive design
-
-**Updating dependencies:**
-1. Read [docs/maintenance.md](docs/maintenance.md) dependency management section
-2. Check release notes for breaking changes
-3. Test locally before deploying
-4. Monitor first deployment
-
-**Creating/modifying web components:**
-1. Follow Lit patterns in `src/assets/js/components/`
-2. Remember components are SSR at build time
-3. Import in `app.js` or create new component file
-
-### Git Workflow
-
-- **Main branch:** Production (auto-deploys to Cloudflare)
-- **Commit prefixes:** `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `test:`, `chore:`
-- **Before committing:** Run `npm run lint` and `npm run format`
-
-### Testing Checklist
-
-Before suggesting changes are complete:
-
-- [ ] Test locally with `npm start`
-- [ ] Run production build: `npm run build`
-- [ ] Test production build: `npm run dev`
-- [ ] Run `npm run lint`
-- [ ] Verify search works (if content changed)
-- [ ] Check both light and dark modes
-- [ ] Test responsive design
-
-## Build Pipeline
-
-### Development
-- Incremental builds with hot reload
-- Drafts visible
-- Serves on `http://localhost:8080`
-
-### Production
-1. Eleventy processes templates → static HTML
-2. Lit components server-side rendered
-3. CSS minified via clean-css
-4. Images optimized
-5. PageFind generates search index
-6. Outputs to `public/`
-7. Deployed to Cloudflare Workers
-
-### Deployment
-- **Automatic:** Push to `main` branch
-- **Hourly:** Cron job refreshes external RSS feeds
-- **Manual:** GitHub Actions workflow dispatch
-- **Duration:** Typically 2-3 minutes
-
-## Performance Considerations
-
-- Static generation for instant loads
-- Minimal JavaScript (web components only)
-- CSS minification automatic
-- Images optimized via `@11ty/eleventy-img`
-- Client-side search (no backend)
-- Edge deployment via Cloudflare Workers
-
-## Project Philosophy
-
-1. **Performance** - Static generation, minimal JavaScript
-2. **Simplicity** - No complex frameworks or build tools
-3. **Standards** - Modern web platform features
-4. **Maintainability** - Clear structure, minimal dependencies
-5. **Accessibility** - Semantic HTML, keyboard navigation
-6. **Developer Experience** - Fast builds, hot reload, clear code
-
-## Important Notes
-
-- Node.js version: **22+** required
-- Build artifacts in `public/` are git-ignored
-- Search requires full build: `npm run build`
-- External links automatically open in new tabs
-- Feeds available at `/feed.rss`, `/feed.atom`, `/feed.json`
-- Dark mode uses system preference (no toggle)
-- TOC auto-generated from headings in post layout
-
-## When Things Break
-
-1. **Build failing:** Run `npm run clean`, then `npm run build`
-2. **Search not working:** Run `npm run build:index`
-3. **CSS not applying:** Check layer order, clear browser cache
-4. **Drafts not showing:** Only visible in dev mode (`npm start`)
-5. **Hot reload broken:** Ensure port 8080 is free, restart dev server
-
-## Additional Resources
-
-- [Eleventy Documentation](https://www.11ty.dev/docs/)
-- [Lit Documentation](https://lit.dev/docs/)
-- [PageFind Documentation](https://pagefind.app/docs/)
-- [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
+- [docs/architecture.md](docs/architecture.md) — how SSR, search, feeds, service worker, and import maps work
+- [docs/development.md](docs/development.md) — setup, content authoring, markdown features, styling
+- [docs/deployment.md](docs/deployment.md) — CI/CD pipeline, Cloudflare setup, rollback
+- [docs/maintenance.md](docs/maintenance.md) — dependency updates, troubleshooting

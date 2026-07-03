@@ -7,8 +7,10 @@ This guide covers how pob.dev is deployed and how to set up your own deployment.
 pob.dev is deployed to **Cloudflare Workers** with automatic deployments triggered by:
 
 1. **Pushes to `main` branch** - Production deployments
-2. **Hourly cron schedule** - Refreshes external RSS feeds
+2. **Daily cron schedule** (midnight UTC) - Refreshes external RSS feeds
 3. **Manual workflow dispatch** - On-demand deployments
+
+Pull requests run the same build and test jobs but do not deploy.
 
 ## Platform: Cloudflare Workers
 
@@ -38,7 +40,7 @@ pob.dev is deployed to **Cloudflare Workers** with automatic deployments trigger
 
 ### GitHub Actions Workflow
 
-**File:** [.github/workflows/deploy.yml](../.github/workflows/deploy.yml)
+**File:** [.github/workflows/ci.yml](../.github/workflows/ci.yml)
 
 **Triggers:**
 
@@ -47,24 +49,24 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
   schedule:
-    - cron: '0 * * * *'  # Every hour at :00
+    - cron: '0 0 * * *'  # Daily at midnight UTC
   workflow_dispatch:     # Manual trigger
 ```
 
-**Workflow Steps:**
+**Jobs** (all use Node.js 22):
 
-1. **Checkout repository** - Clones the repo
-2. **Setup Node.js** - Installs Node.js 24
-3. **Install dependencies** - Runs `npm ci`
-4. **Build site** - Runs `npm run build`
-5. **Publish to Cloudflare** - Deploys via Wrangler
+1. **Build** - `npm ci` + `npm run build`
+2. **Unit Tests** - `npm run test:unit`
+3. **E2E Tests** - Playwright tests via `npm test` (report uploaded as an artifact)
+4. **Deploy** - Runs only on `main`, only after the three jobs above pass; deploys via `cloudflare/wrangler-action`
 
-**Duration:** Typically 2-3 minutes
+### Why Daily Builds?
 
-### Why Hourly Builds?
-
-The hourly cron schedule refreshes the "Reading" page with the latest items from external RSS feeds. This keeps aggregated content current without requiring manual rebuilds.
+The daily cron schedule refreshes the "Reading" page with the latest items from external RSS feeds. This keeps aggregated content current without requiring manual rebuilds.
 
 ## Prerequisites for Deployment
 
@@ -247,7 +249,7 @@ export default {
 Add a status badge to show build status:
 
 ```markdown
-![Deploy Status](https://github.com/p-ob/pob.dev/actions/workflows/deploy.yml/badge.svg)
+![Deploy Status](https://github.com/p-ob/pob.dev/actions/workflows/ci.yml/badge.svg)
 ```
 
 ### Cloudflare Dashboard
@@ -310,15 +312,18 @@ git checkout main
 **Common issues:**
 
 - **Build errors** - Fix syntax errors, missing dependencies
+- **Test failures** - The deploy job only runs after unit and e2e tests pass; check test job logs
 - **Missing secrets** - Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
-- **Node version mismatch** - Ensure Node 24+ in workflow
+- **Node version mismatch** - Ensure Node 22+ in workflow
 
 **Fix and retry:**
 
 ```bash
-git commit --amend
-git push --force origin main
+git commit -m "fix: resolve deployment issue"
+git push origin main
 ```
+
+(Avoid force-pushing to `main`; a new commit re-triggers the pipeline just as well.)
 
 ### Site Not Updating
 
@@ -395,6 +400,8 @@ Should contain:
 Before deploying major changes:
 
 - [ ] Test locally with `npm start`
+- [ ] Run unit tests: `npm run test:unit`
+- [ ] Run e2e tests: `npm test`
 - [ ] Run production build: `npm run build`
 - [ ] Test production build locally: `npm run dev`
 - [ ] Lint code: `npm run lint`
@@ -451,7 +458,7 @@ For a personal blog with moderate traffic, the free tier should be sufficient.
 
 - Upgrade to paid plan ($5/month for 10M requests)
 - Optimize build frequency
-- Consider reducing hourly cron to less frequent
+- Consider reducing the daily cron to less frequent
 
 ## Alternative Deployment Options
 
