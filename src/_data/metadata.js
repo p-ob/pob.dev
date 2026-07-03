@@ -12,6 +12,8 @@ try {
 export default {
 	currentYear: now.getFullYear(),
 	host: "https://pob.dev",
+	description:
+		"Personal site of Patrick O'Brien, a software engineer and engineering manager writing about the web ecosystem and engineering leadership.",
 	buildDate: now.toISOString(),
 	commitSha,
 };
