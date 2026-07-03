@@ -7,7 +7,7 @@ pob.dev is a statically generated personal blog: Eleventy (templates/content) + 
 1. Read a file before editing it. Follow the patterns already in the file you are changing.
 2. Indent with tabs (width 2). Always use braces, even for single-line `if` statements. Prettier enforces formatting — run `npm run format` after editing and `npm run lint` before committing.
 3. Never edit anything in `public/` — it is generated build output and git-ignored.
-4. Pushing to `main` deploys to production via GitHub Actions, so verify changes before committing.
+4. Pushing to `main` deploys to production via GitHub Actions, so verify changes before committing. Never push directly to `main` — always work on a branch and open a pull request.
 5. Use commit prefixes: `feat:`, `fix:`, `docs:`, `style:`, `refactor:`, `test:`, `chore:`.
 6. When you change or add a custom plugin in `11ty/`, update or add its unit test in `tests/unit/`.
 7. Do not add bundlers, frameworks, or new runtime dependencies without being asked. This site deliberately uses plain web platform features (ES modules, import maps, CSS layers).

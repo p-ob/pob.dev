@@ -108,15 +108,17 @@ Add secrets to your GitHub repository:
 
 ### 1. Automatic Deployment (Recommended)
 
-**Push to main branch:**
+**Never push directly to `main`.** Work on a branch and open a pull request:
 
 ```bash
+git checkout -b fix/my-change
 git add .
 git commit -m "feat: new feature"
-git push origin main
+git push origin fix/my-change
+gh pr create
 ```
 
-GitHub Actions automatically:
+Pull requests run the build and test jobs but do not deploy. Once the PR is reviewed and merged into `main`, GitHub Actions automatically:
 - Builds the site
 - Deploys to Cloudflare Workers
 - Makes it live at your domain
@@ -320,10 +322,10 @@ git checkout main
 
 ```bash
 git commit -m "fix: resolve deployment issue"
-git push origin main
+git push origin fix/my-branch
 ```
 
-(Avoid force-pushing to `main`; a new commit re-triggers the pipeline just as well.)
+Push a new commit to the open PR's branch; once merged to `main` it re-triggers the pipeline. (Avoid force-pushing to `main`.)
 
 ### Site Not Updating
 
@@ -412,7 +414,8 @@ Before deploying major changes:
 - [ ] Check external links
 - [ ] Review console for errors
 - [ ] Commit with clear message
-- [ ] Push to `main` branch
+- [ ] Push branch and open a pull request against `main`
+- [ ] Merge the pull request once checks pass and it's reviewed
 - [ ] Monitor GitHub Actions
 - [ ] Verify deployment on live site
 - [ ] Test live site functionality
