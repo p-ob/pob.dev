@@ -44,6 +44,8 @@ export class AppElement extends LitElement {
 		};
 	}
 
+	#mobileBreakpoint;
+
 	constructor() {
 		super();
 		this.currentYear = new Date().getFullYear();
@@ -52,8 +54,8 @@ export class AppElement extends LitElement {
 
 	#openMobileNav() {
 		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
-		dialog?.showModal();
 		document.body.style.overflow = "hidden";
+		dialog?.showModal();
 	}
 
 	#closeMobileNav() {
@@ -65,7 +67,19 @@ export class AppElement extends LitElement {
 		document.body.style.overflow = "";
 	}
 
+	// Sets the scroll lock when a `show-modal` command is invoked natively; the
+	// browser runs its default action (opening the dialog) after this fires.
+	#onDialogCommand(event) {
+		if (event.command === "show-modal") {
+			document.body.style.overflow = "hidden";
+		}
+	}
+
 	#handleDialogClick(event) {
+		// `closedby="any"` handles light-dismiss natively where supported.
+		if ("closedBy" in HTMLDialogElement.prototype) {
+			return;
+		}
 		const dialog = event.target;
 		const rect = dialog.getBoundingClientRect();
 		const isInDialog =
@@ -80,11 +94,40 @@ export class AppElement extends LitElement {
 
 	connectedCallback() {
 		super.connectedCallback();
-		window.addEventListener("resize", this.#handleResize.bind(this));
+		this.#mobileBreakpoint = window.matchMedia("(width <= 768px)");
+		this.#mobileBreakpoint.addEventListener("change", this.#handleBreakpointChange);
+		if (!("commandForElement" in HTMLButtonElement.prototype)) {
+			this.#installCommandFallback();
+		}
 	}
 
-	#handleResize() {
+	disconnectedCallback() {
+		super.disconnectedCallback();
+		this.#mobileBreakpoint?.removeEventListener("change", this.#handleBreakpointChange);
+	}
+
+	#handleBreakpointChange = () => {
 		this.#closeMobileNav();
+	};
+
+	// Fallback for browsers without the Invoker Commands API (e.g. Safari < 26.2):
+	// the `command`/`commandfor` attributes on the nav buttons are otherwise inert.
+	#installCommandFallback() {
+		this.shadowRoot.addEventListener("click", (event) => {
+			const invoker = event.composedPath().find((el) => el instanceof HTMLElement && el.hasAttribute("commandfor"));
+			if (!invoker) {
+				return;
+			}
+			const target = this.shadowRoot.getElementById(invoker.getAttribute("commandfor"));
+			if (!(target instanceof HTMLDialogElement)) {
+				return;
+			}
+			if (invoker.getAttribute("command") === "show-modal") {
+				this.#openMobileNav();
+			} else if (invoker.getAttribute("command") === "close") {
+				this.#closeMobileNav();
+			}
+		});
 	}
 
 	#renderNavItems() {
@@ -106,7 +149,13 @@ export class AppElement extends LitElement {
 		return html` <div class="site-root">
 			<header>
 				<!-- Hamburger menu button (mobile only) -->
-				<button type="button" class="hamburger-menu" @click="${this.#openMobileNav}" aria-label="Open menu">
+				<button
+					type="button"
+					class="hamburger-menu"
+					command="show-modal"
+					commandfor="mobile-nav-dialog"
+					aria-label="Open menu"
+				>
 					${hamburgerIcon}
 				</button>
 
@@ -119,9 +168,23 @@ export class AppElement extends LitElement {
 			</header>
 
 			<!-- Mobile navigation dialog -->
-			<dialog id="mobile-nav-dialog" @click="${this.#handleDialogClick}" @close="${this.#onDialogClose}">
+			<dialog
+				id="mobile-nav-dialog"
+				closedby="any"
+				@command="${this.#onDialogCommand}"
+				@click="${this.#handleDialogClick}"
+				@close="${this.#onDialogClose}"
+			>
 				<div class="mobile-nav-content">
-					<button type="button" class="close-button" @click="${this.#closeMobileNav}" aria-label="Close menu">×</button>
+					<button
+						type="button"
+						class="close-button"
+						command="close"
+						commandfor="mobile-nav-dialog"
+						aria-label="Close menu"
+					>
+						×
+					</button>
 					<nav class="mobile-nav">
 						<div class="mobile-nav-main">${this.#renderNavItems()} ${this.#renderContactButton()}</div>
 						<div class="mobile-nav-footer">
