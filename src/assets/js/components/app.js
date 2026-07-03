@@ -587,8 +587,8 @@ export class AppElement extends LitElement {
 				display: none;
 			}
 
-			/* Show mobile dialog on mobile */
-			#mobile-nav-dialog {
+			/* Show mobile dialog on mobile, but only once opened */
+			#mobile-nav-dialog[open] {
 				display: block;
 			}
 
