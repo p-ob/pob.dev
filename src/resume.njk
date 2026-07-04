@@ -72,7 +72,7 @@ styles:
 			{%- for job in org_entry.roles %}
 			<div class="entry">
 				<div class="entry-head">
-					<h4 class="role">{{ job.role }}</h4>
+					<h3 class="role">{{ job.role }}</h3>
 					{%- if job.dates %}
 					<span class="dates">{{ job.dates | dateRange }}</span>
 					{%- endif %}

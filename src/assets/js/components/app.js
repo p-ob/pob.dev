@@ -57,7 +57,6 @@ const NAV_ITEMS = [
 	{ text: "Blog", href: "/blog" },
 	{ text: "Reading", href: "/reading" },
 	{ text: "About", href: "/about" },
-	{ text: "Resume", href: "/resume" },
 ];
 
 export class AppElement extends LitElement {

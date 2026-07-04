@@ -62,19 +62,27 @@
 			margin: 0;
 			padding: 0;
 			list-style: none;
-			display: flex;
-			flex-direction: column;
-			gap: 0.15rem;
+			display: grid;
+			grid-template-columns: auto auto;
+			gap: 0.15rem 0.5rem;
 			font-size: 0.9rem;
-			text-align: right;
+			justify-content: end;
+			align-items: baseline;
+		}
+
+		.contact-item {
+			display: contents;
 		}
 
 		.contact-label {
+			grid-column: 1;
+			text-align: right;
 			color: var(--resume-muted);
-			margin-right: 0.4rem;
 		}
 
 		.contact-value {
+			grid-column: 2;
+			text-align: left;
 			color: inherit;
 		}
 
@@ -238,8 +246,12 @@
 		/* Narrow screens ------------------------------------------------------- */
 		@media (width < 640px) {
 			.contact {
-				text-align: left;
+				justify-content: start;
 				flex-basis: 100%;
+			}
+
+			.contact-label {
+				text-align: left;
 			}
 
 			.name {
