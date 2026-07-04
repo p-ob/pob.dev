@@ -166,7 +166,7 @@ Example: `src/blog/2024/11/new-feature.md`
 ---
 title: Your Post Title
 description: A brief description of your post
-date: 2024-11-30
+date: 2024-11-30 10:00:00 -06:00
 tags:
   - tag1
   - tag2
@@ -178,12 +178,22 @@ Your content here...
 3. **Required frontmatter fields**
    - `title` - Post title
    - `description` - Brief description (used in lists and feeds)
-   - `date` - Publication date (YYYY-MM-DD)
+   - `date` - Publication date, **always with an explicit time and UTC offset** (see "Dates and time zones" below) — a bare `YYYY-MM-DD` is parsed as UTC midnight and can render as the previous day once formatted in a non-UTC time zone
 
 4. **Optional frontmatter fields**
    - `tags` - Array of tags for categorization
    - `draft` - Set to `true` to mark as draft (visible in dev only)
    - `updatedDate` - Last modification date (displays alongside publish date)
+
+### Dates and Time Zones
+
+`readableDate` formats dates with `Intl.DateTimeFormat` without a fixed `timeZone`, so it renders in whatever time zone the build/dev machine is running in. A bare `date: 2024-11-30` is parsed as `2024-11-30T00:00:00.000Z` (UTC midnight) — format that in any time zone behind UTC (e.g. `npm start` on a laptop set to America/Chicago) and it displays as **November 29**, one day early.
+
+Always give `date` (and `updatedDate`) an explicit time and UTC offset, e.g. `2024-11-30 10:00:00 -06:00`. A mid-morning local time keeps the calendar date stable regardless of which time zone the renderer uses. This applies to every content type with a `date` field (blog posts under `src/blog/`, talks under `src/talks/`), not just blog posts.
+
+This site is authored from Milwaukee, WI (America/Chicago). Pick the offset based on whether the date falls in Daylight Saving Time:
+- **`-05:00` (CDT)** — mid-March through early November
+- **`-06:00` (CST)** — early November through mid-March
 
 ### Updated Posts
 
@@ -193,8 +203,8 @@ When you update a post significantly, add the `updatedDate` field:
 ---
 title: My Post
 description: A post that was updated
-date: 2024-11-30
-updatedDate: 2025-01-15
+date: 2024-11-30 10:00:00 -06:00
+updatedDate: 2025-01-15 10:00:00 -06:00
 ---
 ```
 
@@ -211,7 +221,7 @@ To work on a post without publishing:
 ---
 title: Work in Progress
 description: Still writing this
-date: 2024-11-30
+date: 2024-11-30 10:00:00 -06:00
 draft: true
 ---
 ```

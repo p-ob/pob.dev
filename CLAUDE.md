@@ -41,6 +41,7 @@ npm run deploy         # Manual deploy to Cloudflare (CI normally does this)
 | Path | Contents |
 |------|----------|
 | `src/blog/YYYY/MM/*.md` | Blog posts |
+| `src/talks/YYYY/MM/*.md` | Conference talks |
 | `src/_includes/` | Nunjucks layouts and partials |
 | `src/_data/` | Global data (author, metadata) |
 | `src/assets/css/` | Stylesheets (`global.css` + `partials/` + `components/`) |
@@ -54,7 +55,11 @@ npm run deploy         # Manual deploy to Cloudflare (CI normally does this)
 
 ## Conventions
 
-**Blog posts** — file at `src/blog/YYYY/MM/post-name.md`. Frontmatter requires `title`, `description`, `date`. Optional: `tags` (list), `draft: true` (visible in dev only, excluded from production and feeds), `updatedDate` (add when significantly revising a published post). TOC is auto-generated from headings; external links auto-open in new tabs.
+**Blog posts** — file at `src/blog/YYYY/MM/post-name.md`, publishes at bare `/YYYY/MM/post-name/` (the `/blog` directory prefix is stripped by a computed permalink; `/blog/` itself still serves the listing index). Frontmatter requires `title`, `description`, `date`. Optional: `tags` (list), `draft: true` (visible in dev only, excluded from production and feeds), `updatedDate` (add when significantly revising a published post). TOC is auto-generated from headings; external links auto-open in new tabs.
+
+**Talks** — file at `src/talks/YYYY/MM/talk-name.md`, publishes at bare `/YYYY/MM/talk-name/` (same prefix-stripping convention as blog posts, via the shared `11ty/strip-prefix-permalink.js` helper). Frontmatter: `title`, `description`, `date`, `venue`, `coPresenters` (list, optional), `slides` (path to a PDF under `src/assets/pdf/`, optional).
+
+**Dates in frontmatter** — always include an explicit time and UTC offset (e.g. `date: 2024-11-30 10:00:00 -06:00`), never a bare `YYYY-MM-DD`. `readableDate` formats with the build machine's local time zone, so a bare date (parsed as UTC midnight) can render as the previous day. This site is authored from Milwaukee, WI (America/Chicago): use `-05:00` (CDT) mid-March through early November, `-06:00` (CST) the rest of the year. See `docs/development.md` for details.
 
 **Markdown extras** — note boxes via `> [!note]` / `[!info]` / `[!success]` / `[!warning]` / `[!error]` (rendered as `<pob-note>`); footnotes; ` ```html live ` makes an HTML code block runnable in a sandboxed iframe.
 

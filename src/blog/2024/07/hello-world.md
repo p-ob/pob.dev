@@ -1,5 +1,5 @@
 ---
-date: 2024-07-26 17:00:00 +05:00
+date: 2024-07-26 17:00:00 -05:00
 title: Hello, World!
 tags: [meta]
 description: A brief (re)introduction to my personal website, and what to expect from it.

@@ -2,8 +2,8 @@
 title: "Lorem Ipsum"
 layout: post
 excludeFromSearch: true
-date: 1916-04-24 10:00:00 +05:00
-updatedDate: 2025-12-20 12:00:00 +05:00
+date: 1916-04-24 10:00:00 -05:00
+updatedDate: 2025-12-20 12:00:00 -06:00
 tags: ["lorem", "ipsum"]
 eleventyExcludeFromCollections: true
 ---

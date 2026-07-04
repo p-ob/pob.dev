@@ -25,12 +25,7 @@ When I'm not working, I'm usually playing some video game or another. My guilty 
 
 ## Speaking
 
-In 2019, I co-presented ["Empowering UX with Web Components"](https://bit.ly/ccc-wc) with Julie Xiong at Cream City Code, on using web components to bridge the gap between designers and developers.
-
-<figure class="talk-embed">
-	<iframe src="/assets/pdf/empowering-ux-with-web-components.pdf" title="Empowering UX with Web Components slides" loading="lazy"></iframe>
-	<figcaption><a href="/assets/pdf/empowering-ux-with-web-components.pdf">Download the slides (PDF)</a></figcaption>
-</figure>
+I also enjoy speaking at conferences. In 2019, I co-presented [Empowering UX with Web Components](/2019/10/cream-city-code/) with Julie Xiong at Cream City Code. I'm open to speaking at future events too.
 
 ## Contact
 
