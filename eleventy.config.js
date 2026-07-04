@@ -1,4 +1,5 @@
 import litPlugin from "@lit-labs/eleventy-plugin-lit";
+import { load as loadYaml } from "js-yaml";
 import { eleventyImageTransformPlugin } from "@11ty/eleventy-img";
 import { EleventyRenderPlugin } from "@11ty/eleventy";
 import { JsonHtmlPlugin } from "./11ty/json-html.js";
@@ -16,9 +17,16 @@ function getLitComponents(...components) {
 	const root = "src/assets/js/components/";
 	return components.map((x) => `${root}${x}.js`);
 }
-const LIT_COMPONENTS = getLitComponents("app", "note", "tile");
+const LIT_COMPONENTS = getLitComponents("app", "note", "tile", "print-button");
 
 export default async function (eleventyConfig) {
+	// Captured from amendLibrary below so filters can reuse the exact configured
+	// markdown-it instance (footnotes, containers, external-link rules).
+	let markdownLibrary;
+
+	/* data formats */
+	eleventyConfig.addDataExtension("yaml", (contents) => loadYaml(contents));
+
 	/* passthrough copies */
 	eleventyConfig.addPassthroughCopy("src/favicon.ico");
 	eleventyConfig.addPassthroughCopy("src/assets");
@@ -84,6 +92,31 @@ export default async function (eleventyConfig) {
 	});
 
 	/* filters */
+	// Render a string of inline markdown (no wrapping <p>). Used for résumé prose
+	// fields (summary, bullets) so they can carry links and emphasis.
+	eleventyConfig.addFilter("mdInline", (content) => {
+		if (!content) {
+			return "";
+		}
+		return markdownLibrary.renderInline(content);
+	});
+
+	// Format a résumé { start, end } date range. A null/absent `end` means the
+	// role is ongoing ("Present"); a matching start and end collapse to one value.
+	eleventyConfig.addFilter("dateRange", (dates) => {
+		if (!dates) {
+			return "";
+		}
+		const { start, end } = dates;
+		if (end === null || end === undefined || end === "") {
+			return `${start} – Present`;
+		}
+		if (String(start) === String(end)) {
+			return `${start}`;
+		}
+		return `${start} – ${end}`;
+	});
+
 	eleventyConfig.addFilter("toDate", (dateString) => {
 		return new Date(dateString);
 	});
@@ -259,6 +292,7 @@ export default async function (eleventyConfig) {
 			return defaultRender(tokens, idx, options, env, self);
 		};
 
+		markdownLibrary = mdLib;
 		return mdLib;
 	});
 }

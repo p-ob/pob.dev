@@ -19,6 +19,9 @@
 	<meta name="tdm-reservation" content="1">
 	<link rel="expect" href="#app" blocking="render">
 	<link rel="stylesheet" href="/assets/css/global.css">
+	{%- for style in styles %}
+	<link rel="stylesheet" href="{{ style.href or style }}"{% if style.media %} media="{{ style.media }}"{% endif %}>
+	{%- endfor %}
 	<link rel="alternate" type="application/rss+xml" title="{{ author.name }} RSS Feed" href="/feed.rss">
 	<link rel="alternate" type="application/atom+xml" title="{{ author.name }} Atom Feed" href="/feed.atom">
 	<link rel="alternate" type="application/feed+json" title="{{ author.name }} JSON Feed" href="/feed.json">
@@ -34,6 +37,9 @@
 	<meta property="article:published_time" content="{{ page.date | machineDate }}">
 	{%- if updatedDate %}
 	<meta property="article:modified_time" content="{{ updatedDate | machineDate }}">
+	{%- endif %}
+	{%- if standardSite.documents[page.url] %}
+	<link rel="site.standard.document" href="{{ standardSite.documents[page.url] }}">
 	{%- endif %}
 	{% endif %}
 	<script type="application/ld+json">

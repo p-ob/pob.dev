@@ -13,9 +13,11 @@
 		"@11ty/eleventy-img": "^6.0.4",
 		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^3.0.0",
+		"@atproto/api": "^0.20.25",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.6",
 		"@playwright/test": "^1.61.1",
 		"clean-css": "^5.3.3",
+		"js-yaml": "^5.2.1",
 		"linkedom": "^0.18.12",
 		"lit": "^3.3.3",
 		"markdown-it-container": "^4.0.0",
@@ -40,6 +42,7 @@
 		"deploy": "wrangler deploy",
 		"test": "playwright test",
 		"test:unit": "node --experimental-test-module-mocks --test tests/unit/**/*.test.js",
-		"test:ui": "playwright test --ui"
+		"test:ui": "playwright test --ui",
+		"publish:standard": "node scripts/publish-standard-site.mjs"
 	}
 }
