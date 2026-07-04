@@ -7,8 +7,8 @@
 headline: Software Architect & Engineering Manager
 summary: >-
   Over a decade of engineering leadership with a deep SaaS background. A vocal champion of
-  modern web-platform development, backed by a strong .NET
-  foundation spanning .NET Framework 4.8 through .NET 10. Focused on building reusable systems
+  modern web-platform development, with deep expertise in modern .NET (.NET 10) and experience
+  maintaining systems back through .NET Framework 4.8. Focused on building reusable systems
   adopted org-wide.
 
 contact:
@@ -39,10 +39,11 @@ experience:
           start: 2026
           end: null
         bullets:
-          - Own the internal .NET library suite underpinning secure, high-performance systems.
+          - Core maintainer of the internal .NET library suite underpinning secure, high-performance systems.
           - Lead the web-component design system adopted by 40 web applications and ~100 engineers.
           - Build and support enterprise-grade, secured MCP (Model Context Protocol) servers.
           - Drive adoption of modern OAuth 2.0 / 2.1 and OIDC standards across internal engineering teams.
+          - Author architecture decision records (ADRs) to guide engineering teams on large-scale technical decisions.
       - role: Director, Engineering
         dates:
           start: 2022
@@ -70,7 +71,7 @@ skills:
   - name: Languages
     items: [JavaScript/TypeScript, C#, HTML, CSS]
   - name: Platforms
-    items: [Web Components, .NET (.NET 10 / Framework 4.8), Cloudflare Workers, MCP]
+    items: [Web Components, Modern .NET (.NET 10), MCP]
   - name: Infrastructure
     items: [Terraform / IaC, AWS, Azure, OpenTelemetry, Elasticsearch, Kibana]
   - name: Data & Messaging
