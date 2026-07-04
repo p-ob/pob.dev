@@ -23,6 +23,34 @@ const hamburgerIcon = svg`<svg
   <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
 </svg>`;
 
+const mailIcon = svg`<svg
+  viewBox="0 0 20 20"
+  aria-hidden="true"
+  style="width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+>
+  <rect x="2" y="4" width="16" height="12" rx="2"></rect>
+  <path d="m3 5.5 7 5 7-5"></path>
+</svg>`;
+
+const externalLinkIcon = svg`<svg
+  viewBox="0 0 20 20"
+  aria-hidden="true"
+  style="width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;"
+>
+  <path d="M8 4H4v12h12v-4"></path>
+  <path d="M11 3h6v6"></path>
+  <path d="M9.5 10.5 17 3"></path>
+</svg>`;
+
+// Points left; flipped with `transform: scaleX(-1)` where a right-pointing chevron is needed.
+const chevronIcon = svg`<svg
+  viewBox="0 0 20 20"
+  aria-hidden="true"
+  style="width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;"
+>
+  <path d="M12.5 4.5 6 10l6.5 5.5"></path>
+</svg>`;
+
 // Navigation items configuration
 const NAV_ITEMS = [
 	{ text: "Home", href: "/" },
@@ -45,6 +73,7 @@ export class AppElement extends LitElement {
 	}
 
 	#mobileBreakpoint;
+	#mobileView = "main";
 
 	constructor() {
 		super();
@@ -65,6 +94,26 @@ export class AppElement extends LitElement {
 
 	#onDialogClose() {
 		document.body.style.overflow = "";
+		this.#setMobileView("main");
+	}
+
+	#showMobileContact() {
+		this.#setMobileView("contact");
+	}
+
+	#showMobileMain() {
+		this.#setMobileView("main");
+	}
+
+	// #mobileView is intentionally a true private field, not a Lit reactive
+	// property: it's pure internal UI state, never part of the element's
+	// public attribute API, so re-renders are requested manually here.
+	#setMobileView(view) {
+		if (this.#mobileView === view) {
+			return;
+		}
+		this.#mobileView = view;
+		this.requestUpdate();
 	}
 
 	// Sets the scroll lock when a `show-modal` command is invoked natively; the
@@ -134,15 +183,55 @@ export class AppElement extends LitElement {
 		return NAV_ITEMS.map((item) => html`<a class="nav-item" href="${item.href}">${item.text}</a>`);
 	}
 
+	#renderContactRow(icon, label, href, external) {
+		if (!href) {
+			return nothing;
+		}
+		return html`<a
+			class="contact-detail"
+			href="${href}"
+			target="${external ? "_blank" : nothing}"
+			rel="${external ? "noreferrer" : nothing}"
+			>${icon}<span>${label}</span></a
+		>`;
+	}
+
+	#renderContactList() {
+		return html`
+			<li>
+				${this.#renderContactRow(mailIcon, this.author.email, this.author.email && `mailto:${this.author.email}`)}
+			</li>
+			<li>${this.#renderContactRow(externalLinkIcon, "GitHub", this.author.social.github, true)}</li>
+			<li>${this.#renderContactRow(externalLinkIcon, "Bluesky", this.author.social.bluesky, true)}</li>
+		`;
+	}
+
 	#renderContactButton() {
-		return html`<div class="contact-me-container hide-mobile">
+		return html`<div class="contact-me-container">
 			<button type="button" class="nav-item contact-me" popovertarget="contact-details">Contact</button>
-			<ul id="contact-details" popover="">
-				<li>${this.#renderEmail()}</li>
-				<li>${this.#renderExternalLink("GitHub", this.author.social.github)}</li>
-				<li>${this.#renderExternalLink("Bluesky", this.author.social.bluesky)}</li>
+			<ul id="contact-details" class="contact-details" popover="">
+				${this.#renderContactList()}
 			</ul>
 		</div>`;
+	}
+
+	#renderMobileNavMain() {
+		return html`
+			<div class="mobile-nav-main mobile-nav-panel" data-panel="main">
+				${this.#renderNavItems()}
+				<button type="button" class="nav-item contact-me mobile-drill-trigger" @click="${this.#showMobileContact}">
+					<span>Contact</span>${chevronIcon}
+				</button>
+			</div>
+			<div class="mobile-nav-main mobile-nav-panel" data-panel="contact">
+				<button type="button" class="mobile-nav-back" @click="${this.#showMobileMain}">
+					${chevronIcon}<span>Contact</span>
+				</button>
+				<ul class="contact-details mobile-contact-details">
+					${this.#renderContactList()}
+				</ul>
+			</div>
+		`;
 	}
 
 	render() {
@@ -185,8 +274,8 @@ export class AppElement extends LitElement {
 					>
 						×
 					</button>
-					<nav class="mobile-nav">
-						<div class="mobile-nav-main">${this.#renderNavItems()} ${this.#renderContactButton()}</div>
+					<nav class="mobile-nav" data-view="${this.#mobileView}">
+						${this.#renderMobileNavMain()}
 						<div class="mobile-nav-footer">
 							<hr class="nav-divider" />
 							<a class="nav-item" href="/search">Search</a>
@@ -305,6 +394,7 @@ export class AppElement extends LitElement {
 			z-index: 999;
 			background: var(--page-background-color);
 			border-bottom: 1px solid var(--font-color);
+			anchor-name: --site-header;
 		}
 
 		main {
@@ -364,6 +454,12 @@ export class AppElement extends LitElement {
 			margin: 0;
 			font-size: inherit;
 			transition: opacity 0.2s ease;
+		}
+
+		/* Scoped to the desktop nav only: the mobile drill-in button shares
+		   .contact-me for typography but must not share this anchor-name,
+		   or anchor positioning could resolve to whichever is last in tree order. */
+		.top-nav .contact-me {
 			anchor-name: --contact-button;
 		}
 
@@ -382,30 +478,43 @@ export class AppElement extends LitElement {
 		[popover] {
 			background-color: var(--page-background-color);
 			color: inherit;
-			border: 1px solid var(--faded-color);
-			border-radius: 0.5rem;
-			padding: 0.5rem 0;
+			border: 1px solid var(--faded-color, hsl(0, 0%, 70%));
+			border-radius: 0.375rem;
+			padding: 0.375rem;
 			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 		}
 
-		#contact-details {
+		.contact-details {
 			list-style: none;
 			margin: 0;
+			min-width: 12rem;
 		}
 
-		#contact-details li {
-			padding: 0.375rem 1rem;
+		.contact-details li {
+			padding: 0;
 		}
 
-		#contact-details a {
+		.contact-detail {
+			display: flex;
+			align-items: center;
+			gap: 0.625rem;
+			padding: 0.5rem 0.625rem;
+			border-radius: 0.25rem;
 			font-weight: normal;
 			font-size: 1rem;
 			text-decoration: none;
+			transition: background-color 0.15s ease;
 		}
 
-		#contact-details a:hover {
+		.contact-detail svg {
+			flex-shrink: 0;
+			opacity: 0.6;
+		}
+
+		.contact-detail:hover,
+		.contact-detail:focus-visible {
 			opacity: 1;
-			text-decoration: underline;
+			background-color: color-mix(in srgb, currentColor 8%, transparent);
 		}
 
 		.contact-me-container {
@@ -418,12 +527,41 @@ export class AppElement extends LitElement {
 			font-size: 1.25rem;
 		}
 
-		#contact-details:popover-open {
+		/* Flush with the header's bottom border rather than floating below it;
+		   the top corners are squared off and the top border dropped so the
+		   popover reads as an extension of the header, not a detached tooltip. */
+		.contact-details:popover-open {
+			display: flex;
+			flex-direction: column;
+			gap: 0.125rem;
+			position: fixed;
 			inset: unset;
 			margin: 0;
-			position-anchor: --contact-button;
-			position-area: bottom span-right;
-			margin-top: 0.5rem;
+			top: anchor(--site-header bottom);
+			left: anchor(--contact-button left);
+			border-top: none;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			[popover] {
+				transition:
+					opacity 0.15s ease,
+					overlay 0.15s ease allow-discrete,
+					display 0.15s ease allow-discrete;
+				opacity: 0;
+			}
+
+			[popover]:popover-open {
+				opacity: 1;
+			}
+
+			@starting-style {
+				[popover]:popover-open {
+					opacity: 0;
+				}
+			}
 		}
 
 		/* Mobile navigation dialog */
@@ -504,7 +642,6 @@ export class AppElement extends LitElement {
 		}
 
 		.mobile-nav-main {
-			display: flex;
 			flex-direction: column;
 			gap: 1.5rem;
 			flex: 0 0 auto;
@@ -515,8 +652,85 @@ export class AppElement extends LitElement {
 			font-size: 1.25rem;
 		}
 
-		.mobile-nav .contact-me-container {
-			position: relative;
+		/* Both drawer panels always exist in the DOM; only the one matching
+		   the nav's data-view is shown, so the swap can be an ordinary CSS
+		   transition (including animating display) instead of hand-rolled JS. */
+		.mobile-nav-panel {
+			display: none;
+		}
+
+		.mobile-nav[data-view="main"] .mobile-nav-panel[data-panel="main"],
+		.mobile-nav[data-view="contact"] .mobile-nav-panel[data-panel="contact"] {
+			display: flex;
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			.mobile-nav-panel {
+				transition:
+					opacity 0.15s ease,
+					transform 0.15s ease,
+					display 0.15s ease allow-discrete,
+					overlay 0.15s ease allow-discrete;
+				opacity: 0;
+				transform: translateX(0.75rem);
+			}
+
+			.mobile-nav[data-view="main"] .mobile-nav-panel[data-panel="main"],
+			.mobile-nav[data-view="contact"] .mobile-nav-panel[data-panel="contact"] {
+				opacity: 1;
+				transform: translateX(0);
+			}
+
+			@starting-style {
+				.mobile-nav[data-view="main"] .mobile-nav-panel[data-panel="main"],
+				.mobile-nav[data-view="contact"] .mobile-nav-panel[data-panel="contact"] {
+					opacity: 0;
+					transform: translateX(0.75rem);
+				}
+			}
+		}
+
+		.mobile-drill-trigger {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		.mobile-drill-trigger svg {
+			opacity: 0.5;
+			transform: scaleX(-1);
+		}
+
+		.mobile-nav-back {
+			display: flex;
+			align-items: center;
+			gap: 0.5rem;
+			background: none;
+			border: none;
+			cursor: pointer;
+			color: inherit;
+			padding: 0;
+			margin: 0 0 0.5rem;
+			font-family: inherit;
+			font-weight: bold;
+			font-size: 1.25rem;
+			transition: opacity 0.2s ease;
+		}
+
+		.mobile-nav-back:hover {
+			opacity: 0.7;
+		}
+
+		.mobile-nav-back svg {
+			opacity: 0.6;
+		}
+
+		.mobile-contact-details {
+			display: flex;
+			flex-direction: column;
+			gap: 0.25rem;
+			min-width: 0;
 		}
 
 		.mobile-nav-footer {
@@ -545,7 +759,8 @@ export class AppElement extends LitElement {
 			button,
 			.hamburger-menu,
 			.close-button,
-			.contact-me {
+			.contact-me,
+			[popover] {
 				transition: none !important;
 			}
 		}
@@ -557,10 +772,6 @@ export class AppElement extends LitElement {
 		}
 
 		@media (width <= 768px) {
-			.hide-mobile {
-				display: none;
-			}
-
 			.site-root {
 				grid-template-areas:
 					"header header header"
