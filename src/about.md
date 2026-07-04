@@ -23,6 +23,15 @@ As I mentioned earlier, I currently reside in the Milwaukee area. I'm a huge Tol
 
 When I'm not working, I'm usually playing some video game or another. My guilty pleasure is League of Legends, but I play all sorts, primarily sandbox/survival games.
 
+## Speaking
+
+In 2019, I co-presented ["Empowering UX with Web Components"](https://bit.ly/ccc-wc) with Julie Xiong at Cream City Code, on using web components to bridge the gap between designers and developers.
+
+<figure class="talk-embed">
+	<iframe src="/assets/pdf/empowering-ux-with-web-components.pdf" title="Empowering UX with Web Components slides" loading="lazy"></iframe>
+	<figcaption><a href="/assets/pdf/empowering-ux-with-web-components.pdf">Download the slides (PDF)</a></figcaption>
+</figure>
+
 ## Contact
 
 If you'd like to reach out to me about anything, feel free to use my contact links found in the header of this site. You can also view my [full resume](/resume/) here.
