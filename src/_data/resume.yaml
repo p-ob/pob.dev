@@ -62,7 +62,8 @@ experience:
           start: 2015
           end: 2019
         bullets:
-          - Progressed from intern to project lead across analytics, employee benefits administration, and employer compliance platforms, culminating in leading the build-out of a new compliance and client portal suite.
+          - Contributed across the analytics, employee benefits administration, and employer compliance products while advancing from engineering intern to project lead.
+          - Led the build-out of a new employer compliance and client portal software suite.
 
 # Skill groups: `name` is the label, `items` the list.
 skills:
@@ -72,6 +73,8 @@ skills:
     items: [Web Components, .NET (.NET 10 / Framework 4.8), Cloudflare Workers, MCP]
   - name: Infrastructure
     items: [Terraform / IaC, AWS, Azure, OpenTelemetry, Elasticsearch, Kibana]
+  - name: Data & Messaging
+    items: [PostgreSQL, MSSQL, Redis, RabbitMQ, Kafka]
   - name: AI Tooling
     items: [Claude Code, GitHub Copilot, Google Antigravity]
   - name: Leadership
