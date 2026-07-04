@@ -637,8 +637,14 @@ export class AppElement extends LitElement {
 			display: flex;
 			flex-direction: column;
 			flex: 1;
+			/* Clip the x-axis: the panel slide animates translateX, which would
+			   otherwise briefly show a horizontal scrollbar. overflow-y: auto with
+			   an unset overflow-x computes overflow-x to auto, so set it explicitly. */
+			overflow-x: hidden;
 			overflow-y: auto;
 			min-height: 0;
+			scrollbar-width: thin;
+			scrollbar-color: color-mix(in srgb, currentColor 30%, transparent) transparent;
 		}
 
 		.mobile-nav-main {
@@ -817,6 +823,30 @@ export class AppElement extends LitElement {
 				.footer-contact-me {
 					display: none;
 				}
+			}
+		}
+
+		/* When printing, drop the site chrome (header, sidebar, footer) so only
+		   the page content reaches paper. The shell lives in this shadow root, so
+		   a light-DOM print stylesheet can't reach it — it has to be handled here. */
+		@media print {
+			.site-root {
+				display: block;
+				min-height: 0;
+			}
+
+			header,
+			aside,
+			footer {
+				display: none;
+			}
+
+			main {
+				margin: 0;
+			}
+
+			:host([page-type="article"]) ::slotted(*:not([slot])) {
+				max-width: none;
 			}
 		}
 	`;

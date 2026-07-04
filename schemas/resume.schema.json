@@ -1,0 +1,152 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://pob.dev/schemas/resume.schema.json",
+	"title": "pob.dev résumé",
+	"description": "Content model for src/_data/resume.yaml, rendered by src/resume.njk.",
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["headline", "summary", "contact", "experience"],
+	"properties": {
+		"headline": {
+			"type": "string",
+			"description": "Role/title shown under the name. Supports inline markdown."
+		},
+		"summary": {
+			"type": "string",
+			"description": "Short professional summary. Supports inline markdown."
+		},
+		"contact": {
+			"type": "array",
+			"description": "Masthead contact rows, rendered in order.",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": ["label", "value"],
+				"properties": {
+					"label": {
+						"type": "string",
+						"description": "Row label, e.g. Email."
+					},
+					"value": {
+						"type": "string",
+						"description": "Displayed text."
+					},
+					"href": {
+						"type": "string",
+						"description": "Optional link target; omit for plain text."
+					},
+					"external": {
+						"type": "boolean",
+						"description": "When true, opens in a new tab with rel=noreferrer."
+					}
+				}
+			}
+		},
+		"experience": {
+			"type": "array",
+			"description": "Work history, most recent first.",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": ["org", "place", "roles"],
+				"properties": {
+					"org": {
+						"type": "string",
+						"description": "Employer / organization."
+					},
+					"place": {
+						"type": "string",
+						"description": "Location or Remote."
+					},
+					"roles": {
+						"type": "array",
+						"description": "Roles held within this organization.",
+						"items": {
+							"type": "object",
+							"additionalProperties": false,
+							"required": ["role", "dates"],
+							"properties": {
+								"role": {
+									"type": "string",
+									"description": "Job title."
+								},
+								"dates": {
+									"type": "object",
+									"description": "Employment range. A null/omitted `end` renders as 'Present'; a matching start and end render as a single value.",
+									"additionalProperties": false,
+									"required": ["start"],
+									"properties": {
+										"start": {
+											"type": ["number", "string"],
+											"description": "Start year (or label, e.g. 'Jan 2020')."
+										},
+										"end": {
+											"type": ["number", "string", "null"],
+											"description": "End year/label, or null for an ongoing role."
+										}
+									}
+								},
+								"bullets": {
+									"type": "array",
+									"description": "Accomplishments. Each supports inline markdown.",
+									"items": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"skills": {
+			"type": "array",
+			"description": "Grouped skills.",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": ["name", "items"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "Group label, e.g. Languages."
+					},
+					"items": {
+						"type": "array",
+						"description": "Skills in this group.",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"education": {
+			"type": "array",
+			"description": "Education history.",
+			"items": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": ["credential"],
+				"properties": {
+					"credential": {
+						"type": "string",
+						"description": "Degree / certification."
+					},
+					"org": {
+						"type": "string",
+						"description": "Institution."
+					},
+					"place": {
+						"type": "string",
+						"description": "Location."
+					},
+					"dates": {
+						"type": "string",
+						"description": "Year or range."
+					}
+				}
+			}
+		}
+	}
+}

@@ -25,4 +25,4 @@ When I'm not working, I'm usually playing some video game or another. My guilty 
 
 ## Contact
 
-If you'd like to reach out to me about anything, feel free to use my contact links found in the header of this site.
+If you'd like to reach out to me about anything, feel free to use my contact links found in the header of this site. You can also view my [full resume](/resume/) here.

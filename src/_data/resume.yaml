@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=../../schemas/resume.schema.json
+# Résumé content. Rendered by src/resume.njk → /resume/
+# Everything here is placeholder scaffolding — replace the TODO values with real data.
+# Prose fields (headline, summary, bullets) support inline markdown.
+
+# Masthead / identity. Contact rows render in the order listed; drop any you don't want.
+headline: Software Architect & Engineering Manager
+summary: >-
+  Over a decade of engineering leadership with a deep SaaS background. A vocal champion of
+  modern web-platform development, backed by a strong .NET
+  foundation spanning .NET Framework 4.8 through .NET 10. Focused on building reusable systems
+  and driving cross-team collaboration and support.
+
+contact:
+  - label: Location
+    value: Milwaukee, WI
+  - label: Email
+    value: public@pob.dev
+    href: mailto:public@pob.dev
+  - label: Web
+    value: pob.dev
+    href: https://pob.dev
+  - label: GitHub
+    value: github.com/p-ob
+    href: https://github.com/p-ob
+    external: true
+  - label: Bluesky
+    value: "@pob.dev"
+    href: https://bsky.app/profile/pob.dev
+    external: true
+
+# Each entry is one organization stint, most recent first.
+experience:
+  - org: Zywave, Inc.
+    place: Milwaukee, WI
+    roles:
+      - role: Director, Software Architecture
+        dates:
+          start: 2026
+          end: null
+        bullets:
+          - Maintain suite of internal .NET libraries underpinning secure, high-performance systems.
+          - Maintain web-component–based design system adopted by 40 web applications and ~100 engineers.
+          - Build and support enterprise-grade, secured MCP (Model Context Protocol) servers.
+          - Partner with internal engineering teams to secure systems utilizing modern OAuth 2.0 / 2.1 and OIDC standards.
+      - role: Director, Engineering
+        dates:
+          start: 2022
+          end: 2026
+        bullets:
+          - Led platform teams owning authentication, authorization, licensing, mail, the design system, and integrations.
+          - Directed the cloud migration of platform services from on-premises/legacy hosting to AWS, establishing initial Infrastructure as Code (IaC) engineering patterns with Terraform.
+      - role: Technical Lead
+        dates:
+          start: 2020
+          end: 2022
+        bullets:
+          - Led the SDK team delivering shared capabilities for mail, design systems, integrations, and job processing.
+      - role: Technical Lead
+        dates:
+          start: 2019
+          end: 2020
+        bullets:
+          - Led development of employer compliance software.
+      - role: Project Lead
+        dates:
+          start: 2018
+          end: 2019
+        bullets:
+          - Led the build-out of a new suite of employer compliance and client portal software.
+      - role: Software Engineer
+        dates:
+          start: 2016
+          end: 2018
+        bullets:
+          - Built features across an email marketing engine, content library ecosystem, and an employee benefits administration and communication portal.
+      - role: Software Engineering Intern
+        dates:
+          start: 2015
+          end: 2015
+        bullets:
+          - Contributed to analytics software.
+
+# Skill groups: `name` is the label, `items` the list.
+skills:
+  - name: Languages
+    items: [JavaScript/TypeScript, C#, HTML, CSS]
+  - name: Platforms
+    items: [Web Components, .NET (.NET 10 / Framework 4.8), Cloudflare Workers, MCP]
+  - name: Infrastructure
+    items: [Terraform / IaC, AWS, Azure, OpenTelemetry, Elasticsearch, Kibana]
+  - name: AI Tooling
+    items: [Claude Code, GitHub Copilot, Google Antigravity]
+  - name: Leadership
+    items: [Architecture, Team leadership, Mentorship, Cross-team enablement]
+
+education:
+  - credential: Coursework toward B.S. in Computer Science
+    org: Northwestern University, McCormick School of Engineering
+    place: Evanston, IL
+    dates: 2010 – 2015

@@ -54,4 +54,23 @@
 			opacity: 0.85;
 		}
 	}
+
+	.home-links {
+		margin-top: 2rem;
+		display: flex;
+		justify-content: center;
+	}
+
+	.home-link {
+		font-size: 1.125rem;
+		font-weight: 600;
+		color: var(--font-color);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		transition: opacity 0.2s ease;
+	}
+
+	.home-link:hover {
+		opacity: 0.7;
+	}
 }
