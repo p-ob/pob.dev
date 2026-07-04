@@ -44,7 +44,7 @@ experience:
           - Build and support enterprise-grade, secured MCP (Model Context Protocol) servers.
           - Drive adoption of modern OAuth 2.0 / 2.1 and OIDC standards across internal engineering teams.
           - Author architecture decision records (ADRs) to guide engineering teams on large-scale technical decisions.
-          - Shipped LLM-powered product features to production with active customer adoption.
+          - Shipped an LLM-powered marketing automation product that surfaces lookalike prospects, generates broker-relevant research, and drafts personalized email campaigns with above-average open and click-through rates.
       - role: Director, Engineering
         dates:
           start: 2022
