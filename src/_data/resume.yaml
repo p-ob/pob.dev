@@ -9,7 +9,7 @@ summary: >-
   Over a decade of engineering leadership with a deep SaaS background. A vocal champion of
   modern web-platform development, backed by a strong .NET
   foundation spanning .NET Framework 4.8 through .NET 10. Focused on building reusable systems
-  and driving cross-team collaboration and support.
+  adopted org-wide.
 
 contact:
   - label: Location
@@ -39,10 +39,10 @@ experience:
           start: 2026
           end: null
         bullets:
-          - Maintain suite of internal .NET libraries underpinning secure, high-performance systems.
-          - Maintain web-component–based design system adopted by 40 web applications and ~100 engineers.
+          - Own the internal .NET library suite underpinning secure, high-performance systems.
+          - Lead the web-component design system adopted by 40 web applications and ~100 engineers.
           - Build and support enterprise-grade, secured MCP (Model Context Protocol) servers.
-          - Partner with internal engineering teams to secure systems utilizing modern OAuth 2.0 / 2.1 and OIDC standards.
+          - Drive adoption of modern OAuth 2.0 / 2.1 and OIDC standards across internal engineering teams.
       - role: Director, Engineering
         dates:
           start: 2022
@@ -52,34 +52,17 @@ experience:
           - Directed the cloud migration of platform services from on-premises/legacy hosting to AWS, establishing initial Infrastructure as Code (IaC) engineering patterns with Terraform.
       - role: Technical Lead
         dates:
-          start: 2020
+          start: 2019
           end: 2022
         bullets:
           - Led the SDK team delivering shared capabilities for mail, design systems, integrations, and job processing.
-      - role: Technical Lead
-        dates:
-          start: 2019
-          end: 2020
-        bullets:
           - Led development of employer compliance software.
-      - role: Project Lead
-        dates:
-          start: 2018
-          end: 2019
-        bullets:
-          - Led the build-out of a new suite of employer compliance and client portal software.
-      - role: Software Engineer
-        dates:
-          start: 2016
-          end: 2018
-        bullets:
-          - Built features across an email marketing engine, content library ecosystem, and an employee benefits administration and communication portal.
-      - role: Software Engineering Intern
+      - role: Software Engineering Intern → Project Lead
         dates:
           start: 2015
-          end: 2015
+          end: 2019
         bullets:
-          - Contributed to analytics software.
+          - Progressed from intern to project lead across analytics, employee benefits administration, and employer compliance platforms, culminating in leading the build-out of a new compliance and client portal suite.
 
 # Skill groups: `name` is the label, `items` the list.
 skills:
