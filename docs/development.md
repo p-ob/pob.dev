@@ -704,9 +704,9 @@ When changing a plugin in `11ty/`, update its corresponding test in `tests/unit/
 
 ### Build Time
 
-- Use `--incremental` flag in development (automatic with `npm start`)
 - Only rebuild search index when content changes
 - Clear cache with `npm run clean` if builds seem stale
+- `npm start` intentionally omits `--incremental`: the Lit SSR plugin (`@lit-labs/eleventy-plugin-lit`, `mode: "worker"`) only imports component modules once per worker thread, so incremental rebuilds can silently keep serving stale component code after editing `src/assets/js/components/`. A full rebuild spawns a fresh worker every time, so component changes are always picked up without restarting the dev server.
 
 ### Output Size
 

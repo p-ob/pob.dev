@@ -385,11 +385,7 @@ git push origin main
 
 **Solution:**
 
-1. Use incremental builds in development:
-
-```bash
-npm start  # Uses --incremental flag
-```
+1. `npm start` already runs a Watch server; add `npm run build:11ty` alone for one-off rebuilds instead of the full `npm run build` when you don't need a fresh search index.
 
 2. Clean build artifacts:
 
