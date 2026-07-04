@@ -6,35 +6,37 @@
  * to match (8.5in wide, 0.6in inset) so what you see mirrors what prints.
  */
 @layer layout {
-	.resume {
-		/* Letter width; padding matches the printed page's @page margin. */
-		--resume-measure: 8.5in;
-		--resume-sheet: #fff;
-		--resume-sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.12);
+	@scope (.resume) {
+		:scope {
+			/* Letter width; padding matches the printed page's @page margin. */
+			--resume-measure: 8.5in;
+			--resume-sheet: #fff;
+			--resume-sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.12);
 
-		/* Ink-relative so muted/rule tones stay correct against the white sheet. */
-		--resume-muted: color-mix(in srgb, currentColor, transparent 35%);
-		--resume-rule: color-mix(in srgb, currentColor, transparent 82%);
+			/* Ink-relative so muted/rule tones stay correct against the white sheet. */
+			--resume-muted: color-mix(in srgb, currentColor, transparent 35%);
+			--resume-rule: color-mix(in srgb, currentColor, transparent 82%);
 
-		box-sizing: border-box;
-		margin-block: 2.5rem;
-		padding: 0.6in;
-		color: hsl(0, 0%, 20%);
-		border-radius: 3px;
-		box-shadow: var(--resume-sheet-shadow);
-		background-color: var(--resume-sheet);
-	}
+			box-sizing: border-box;
+			margin-block: 2.5rem;
+			padding: 0.6in;
+			color: hsl(0, 0%, 20%);
+			border-radius: 3px;
+			box-shadow: var(--resume-sheet-shadow);
+			background-color: var(--resume-sheet);
+		}
 
-	.resume a {
-		color: inherit;
-	}
+		a {
+			color: inherit;
+		}
 
-	@media (prefers-color-scheme: dark) {
-		.resume {
-			/* A raised panel rather than stark white, so it doesn't glare in dark mode. */
-			--resume-sheet: color-mix(in srgb, var(--page-background-color), white 6%);
-			--resume-sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.55);
-			color: hsl(0, 0%, 88%);
+		@media (prefers-color-scheme: dark) {
+			:scope {
+				/* A raised panel rather than stark white, so it doesn't glare in dark mode. */
+				--resume-sheet: color-mix(in srgb, var(--page-background-color), white 6%);
+				--resume-sheet-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.55);
+				color: hsl(0, 0%, 88%);
+			}
 		}
 	}
 }

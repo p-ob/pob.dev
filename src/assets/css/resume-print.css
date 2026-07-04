@@ -23,63 +23,65 @@ body {
 	color: #000;
 }
 
-.resume {
-	--resume-muted: #444;
-	--resume-rule: #bbb;
-	--resume-gap: 1.25rem;
-	max-width: none;
-	/* @page provides the page inset; the article itself needs no box spacing. */
-	margin: 0;
-	padding: 0;
-	color: #000;
-	/* Physical print units keep the layout stable across browsers/printers. */
-	font-size: 10.5pt;
-	line-height: 1.4;
-}
+@scope (.resume) {
+	:scope {
+		--resume-muted: #444;
+		--resume-rule: #bbb;
+		--resume-gap: 1.25rem;
+		max-width: none;
+		/* @page provides the page inset; the article itself needs no box spacing. */
+		margin: 0;
+		padding: 0;
+		color: #000;
+		/* Physical print units keep the layout stable across browsers/printers. */
+		font-size: 10.5pt;
+		line-height: 1.4;
+	}
 
-.resume a {
-	color: #000;
-	text-decoration: none;
-}
+	a {
+		color: #000;
+		text-decoration: none;
+	}
 
-.resume__name {
-	font-size: 20pt;
-}
+	.name {
+		font-size: 20pt;
+	}
 
-.resume__headline {
-	font-size: 12pt;
-	color: #333;
-}
+	.headline {
+		font-size: 12pt;
+		color: #333;
+	}
 
-.resume__contact {
-	font-size: 9pt;
-}
+	.contact {
+		font-size: 9pt;
+	}
 
-.resume__section-title {
-	font-size: 8.5pt;
-	color: #333;
-}
+	.section-title {
+		font-size: 8.5pt;
+		color: #333;
+	}
 
-.resume__role {
-	font-size: 11.5pt;
-}
+	.role {
+		font-size: 11.5pt;
+	}
 
-/* Keep each individual entry from splitting across a page boundary, but NOT
-   whole sections — a section taller than one page (e.g. Experience) can't honor
-   break-inside:avoid, so the browser bumps the entire block to the next page and
-   leaves the previous one half-empty. Sections must be free to flow and break. */
-.resume__entry {
-	break-inside: avoid;
-}
+	/* Keep each individual entry from splitting across a page boundary, but NOT
+	   whole sections — a section taller than one page (e.g. Experience) can't honor
+	   break-inside:avoid, so the browser bumps the entire block to the next page and
+	   leaves the previous one half-empty. Sections must be free to flow and break. */
+	.entry {
+		break-inside: avoid;
+	}
 
-/* Don't strand a heading at the bottom of a page, away from its content. */
-.resume__section-title,
-.resume__role {
-	break-after: avoid;
-}
+	/* Don't strand a heading at the bottom of a page, away from its content. */
+	.section-title,
+	.role {
+		break-after: avoid;
+	}
 
-/* Trim interactive-only affordances that add nothing on paper. */
-.resume__bullets a,
-.resume a.resume__contact-value {
-	text-decoration: none;
+	/* Trim interactive-only affordances that add nothing on paper. */
+	.bullets a,
+	a.contact-value {
+		text-decoration: none;
+	}
 }

@@ -236,10 +236,10 @@ export default async function (eleventyConfig) {
 								const type = match[1].toLowerCase();
 								const customLabel = match[2]?.trim(); // Custom label if provided
 								const markerText = match[0]; // Full matched text to remove
-								
+
 								// Remove the alert marker from the content
 								contentToken.content = contentToken.content.replace(markerText, "").trim();
-								
+
 								// Also update children if they exist
 								if (contentToken.children?.length > 0) {
 									const firstChild = contentToken.children[0];

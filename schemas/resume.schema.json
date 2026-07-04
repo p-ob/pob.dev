@@ -23,9 +23,18 @@
 				"additionalProperties": false,
 				"required": ["label", "value"],
 				"properties": {
-					"label": { "type": "string", "description": "Row label, e.g. Email." },
-					"value": { "type": "string", "description": "Displayed text." },
-					"href": { "type": "string", "description": "Optional link target; omit for plain text." },
+					"label": {
+						"type": "string",
+						"description": "Row label, e.g. Email."
+					},
+					"value": {
+						"type": "string",
+						"description": "Displayed text."
+					},
+					"href": {
+						"type": "string",
+						"description": "Optional link target; omit for plain text."
+					},
 					"external": {
 						"type": "boolean",
 						"description": "When true, opens in a new tab with rel=noreferrer."
@@ -39,31 +48,53 @@
 			"items": {
 				"type": "object",
 				"additionalProperties": false,
-				"required": ["role"],
+				"required": ["org", "place", "roles"],
 				"properties": {
-					"role": { "type": "string", "description": "Job title." },
-					"org": { "type": "string", "description": "Employer / organization." },
-					"place": { "type": "string", "description": "Location or Remote." },
-					"dates": {
-						"type": "object",
-						"description": "Employment range. A null/omitted `end` renders as 'Present'; a matching start and end render as a single value.",
-						"additionalProperties": false,
-						"required": ["start"],
-						"properties": {
-							"start": {
-								"type": ["number", "string"],
-								"description": "Start year (or label, e.g. 'Jan 2020')."
-							},
-							"end": {
-								"type": ["number", "string", "null"],
-								"description": "End year/label, or null for an ongoing role."
+					"org": {
+						"type": "string",
+						"description": "Employer / organization."
+					},
+					"place": {
+						"type": "string",
+						"description": "Location or Remote."
+					},
+					"roles": {
+						"type": "array",
+						"description": "Roles held within this organization.",
+						"items": {
+							"type": "object",
+							"additionalProperties": false,
+							"required": ["role", "dates"],
+							"properties": {
+								"role": {
+									"type": "string",
+									"description": "Job title."
+								},
+								"dates": {
+									"type": "object",
+									"description": "Employment range. A null/omitted `end` renders as 'Present'; a matching start and end render as a single value.",
+									"additionalProperties": false,
+									"required": ["start"],
+									"properties": {
+										"start": {
+											"type": ["number", "string"],
+											"description": "Start year (or label, e.g. 'Jan 2020')."
+										},
+										"end": {
+											"type": ["number", "string", "null"],
+											"description": "End year/label, or null for an ongoing role."
+										}
+									}
+								},
+								"bullets": {
+									"type": "array",
+									"description": "Accomplishments. Each supports inline markdown.",
+									"items": {
+										"type": "string"
+									}
+								}
 							}
 						}
-					},
-					"bullets": {
-						"type": "array",
-						"description": "Accomplishments. Each supports inline markdown.",
-						"items": { "type": "string" }
 					}
 				}
 			}
@@ -76,11 +107,16 @@
 				"additionalProperties": false,
 				"required": ["name", "items"],
 				"properties": {
-					"name": { "type": "string", "description": "Group label, e.g. Languages." },
+					"name": {
+						"type": "string",
+						"description": "Group label, e.g. Languages."
+					},
 					"items": {
 						"type": "array",
 						"description": "Skills in this group.",
-						"items": { "type": "string" }
+						"items": {
+							"type": "string"
+						}
 					}
 				}
 			}
@@ -93,10 +129,22 @@
 				"additionalProperties": false,
 				"required": ["credential"],
 				"properties": {
-					"credential": { "type": "string", "description": "Degree / certification." },
-					"org": { "type": "string", "description": "Institution." },
-					"place": { "type": "string", "description": "Location." },
-					"dates": { "type": "string", "description": "Year or range." }
+					"credential": {
+						"type": "string",
+						"description": "Degree / certification."
+					},
+					"org": {
+						"type": "string",
+						"description": "Institution."
+					},
+					"place": {
+						"type": "string",
+						"description": "Location."
+					},
+					"dates": {
+						"type": "string",
+						"description": "Year or range."
+					}
 				}
 			}
 		}
