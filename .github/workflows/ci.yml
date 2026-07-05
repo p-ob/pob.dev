@@ -60,6 +60,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Fix Git Safe Directory
+        # Running inside a container job leaves the checkout owned by a
+        # different uid than the container's default user, so git refuses
+        # to operate on it (used by src/_data/metadata.js at build time).
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:

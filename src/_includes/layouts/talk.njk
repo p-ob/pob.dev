@@ -20,7 +20,7 @@ pageType: article
 
 {% if slides %}
 <figure class="talk-embed">
-	<iframe src="{{ slides }}" title="{{ title }} slides" loading="lazy"></iframe>
+	<pob-pdf-viewer src="{{ slides }}" label="{{ title }} slides"></pob-pdf-viewer>
 	<figcaption><a href="{{ slides }}">Download the slides (PDF)</a></figcaption>
 </figure>
 {% endif %}

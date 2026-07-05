@@ -45,6 +45,11 @@ export function FeedAggregatorPlugin(eleventyConfig, options = {}) {
 
   // Add global data for aggregated feeds
   eleventyConfig.addGlobalData("aggregatedFeeds", async () => {
+    if (process.env.SKIP_FEED_AGGREGATION) {
+      console.log("[FeedAggregator] SKIP_FEED_AGGREGATION is set; skipping external feed fetches");
+      return [];
+    }
+
     // Return cached data if available
     if (cachedFeeds !== null && cacheConfigFile === configFile) {
       console.log(`[FeedAggregator] Using cached feed data (${cachedFeeds.length} items)`);

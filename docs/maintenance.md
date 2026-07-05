@@ -345,6 +345,7 @@ npm run build
 3. Review build logs for fetch errors
 4. Consider feed might be temporarily down
 5. Add error handling in [11ty/feed-aggregator.js](../11ty/feed-aggregator.js)
+6. In a network-restricted environment (CI sandbox, offline dev), set `SKIP_FEED_AGGREGATION=true` to skip the fetches entirely — the Reading page just renders with no aggregated items
 
 ### Deployment Failures
 
@@ -387,15 +388,17 @@ git push origin main
 
 1. `npm start` already runs a Watch server; add `npm run build:11ty` alone for one-off rebuilds instead of the full `npm run build` when you don't need a fresh search index.
 
-2. Clean build artifacts:
+2. If the build hangs or is slow on the external RSS fetches in [11ty/feed-aggregator.js](../11ty/feed-aggregator.js) (e.g. no network access, feeds blocked by a proxy), set `SKIP_FEED_AGGREGATION=true` to bypass them.
+
+3. Clean build artifacts:
 
 ```bash
 npm run clean
 npm run build
 ```
 
-3. Review large image files for optimization
-4. Consider limiting PageFind index scope
+4. Review large image files for optimization
+5. Consider limiting PageFind index scope
 
 ## Performance Optimization
 

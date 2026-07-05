@@ -23,8 +23,11 @@ mock.module("fs/promises", {
 	},
 });
 
+let parseURLCallCount = 0;
+
 class MockParser {
 	async parseURL() {
+		parseURLCallCount++;
 		if (mockShouldThrow) {
 			throw new Error("Network error");
 		}
@@ -97,5 +100,26 @@ describe("FeedAggregatorPlugin", () => {
 
 		// Should return empty array on failure
 		assert.deepStrictEqual(results, []);
+	});
+
+	it("should skip fetching when SKIP_FEED_AGGREGATION is set", async () => {
+		mockShouldThrow = false;
+		parseURLCallCount = 0;
+		const mockEleventy = new EleventyMock();
+		FeedAggregatorPlugin(mockEleventy, {});
+
+		// Emit event to clear cache (since the plugin caches the result in module scope)
+		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
+
+		process.env.SKIP_FEED_AGGREGATION = "true";
+		try {
+			const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
+			const results = await dataFn();
+
+			assert.deepStrictEqual(results, []);
+			assert.strictEqual(parseURLCallCount, 0, "Should not fetch any feeds");
+		} finally {
+			delete process.env.SKIP_FEED_AGGREGATION;
+		}
 	});
 });

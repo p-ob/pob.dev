@@ -17,7 +17,7 @@ function getLitComponents(...components) {
 	const root = "src/assets/js/components/";
 	return components.map((x) => `${root}${x}.js`);
 }
-const LIT_COMPONENTS = getLitComponents("app", "note", "tile", "print-button");
+const LIT_COMPONENTS = getLitComponents("app", "note", "tile", "print-button", "pdf-viewer");
 
 export default async function (eleventyConfig) {
 	// Captured from amendLibrary below so filters can reuse the exact configured
@@ -41,6 +41,7 @@ export default async function (eleventyConfig) {
 			"@lit-labs/ssr-client",
 			"@lit-labs/ssr-dom-shim",
 			"syntax-highlight-element",
+			"pdfjs-dist",
 		],
 	});
 
