@@ -6,7 +6,8 @@
 		"url": "https://github.com/p-ob/pob.dev/"
 	},
 	"engines": {
-		"node": ">=24"
+		"node": ">=24",
+		"npm": ">=11.16.0"
 	},
 	"devDependencies": {
 		"@11ty/eleventy": "^3.1.6",
@@ -45,5 +46,11 @@
 		"test:unit": "node --experimental-test-module-mocks --test tests/unit/**/*.test.js",
 		"test:ui": "playwright test --ui",
 		"publish:standard": "node scripts/publish-standard-site.mjs"
+	},
+	"allowScripts": {
+		"esbuild": true,
+		"fsevents": true,
+		"sharp": true,
+		"workerd": true
 	}
 }
