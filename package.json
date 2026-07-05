@@ -23,6 +23,7 @@
 		"markdown-it-container": "^4.0.0",
 		"markdown-it-footnote": "^4.0.0",
 		"pagefind": "^1.5.2",
+		"pdfjs-dist": "5.4.624",
 		"prettier": "^3.9.4",
 		"rss-parser": "^3.13.0",
 		"slugify": "^1.6.9",
