@@ -1,0 +1,26 @@
+---
+layout: base.njk
+pageType: article
+---
+
+<link rel="stylesheet" href="/assets/css/talk.css">
+
+<div class="talk-header">
+	<h1 data-pagefind-weight="10" data-pagefind-meta="title">{{ title }}</h1>
+	<p class="talk-meta">
+		<time datetime="{{ page.date | machineDate }}">{{ page.date | readableDate }}</time>
+		{%- if venue %} &middot; {{ venue }}{% endif -%}
+		{%- if coPresenters.length %} &middot; with {{ coPresenters | join(", ") }}{% endif -%}
+	</p>
+</div>
+
+<hr/>
+
+{{ content | safe }}
+
+{% if slides %}
+<figure class="talk-embed">
+	<iframe src="{{ slides }}" title="{{ title }} slides" loading="lazy"></iframe>
+	<figcaption><a href="{{ slides }}">Download the slides (PDF)</a></figcaption>
+</figure>
+{% endif %}

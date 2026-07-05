@@ -23,6 +23,10 @@ As I mentioned earlier, I currently reside in the Milwaukee area. I'm a huge Tol
 
 When I'm not working, I'm usually playing some video game or another. My guilty pleasure is League of Legends, but I play all sorts, primarily sandbox/survival games.
 
+## Speaking
+
+I also enjoy speaking at conferences. In 2019, I co-presented [Empowering UX with Web Components](/2019/10/cream-city-code/) with Julie Xiong at Cream City Code. I'm open to speaking at future events too.
+
 ## Contact
 
 If you'd like to reach out to me about anything, feel free to use my contact links found in the header of this site. You can also view my [full resume](/resume/) here.

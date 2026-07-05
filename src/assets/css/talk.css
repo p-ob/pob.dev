@@ -1,0 +1,14 @@
+@layer layout {
+	.talk-meta {
+		margin-top: 0.5rem;
+		opacity: 0.75;
+	}
+
+	.talk-embed {
+		margin-top: 2rem;
+	}
+
+	.talk-embed figcaption {
+		margin-top: 0.5rem;
+	}
+}

@@ -44,6 +44,7 @@ experience:
           - Build and support enterprise-grade, secured MCP (Model Context Protocol) servers.
           - Drive adoption of modern OAuth 2.0 / 2.1 and OIDC standards across internal engineering teams.
           - Author architecture decision records (ADRs) to guide engineering teams on large-scale technical decisions.
+          - Shipped an LLM-powered marketing automation product that surfaces lookalike prospects, generates broker-relevant research, and drafts personalized email campaigns with above-average open and click-through rates.
       - role: Director, Engineering
         dates:
           start: 2022
@@ -73,13 +74,13 @@ skills:
   - name: Platforms
     items: [Web Components, Modern .NET (.NET 10), MCP]
   - name: Infrastructure
-    items: [Terraform / IaC, AWS, Azure, OpenTelemetry, Elasticsearch, Kibana]
+    items: [Terraform / IaC, AWS, Azure, Kubernetes, OpenTelemetry, Elasticsearch, Kibana]
   - name: Data & Messaging
     items: [PostgreSQL, MSSQL, Redis, RabbitMQ, Kafka]
-  - name: AI Tooling
-    items: [Claude Code, GitHub Copilot, Google Antigravity]
+  - name: AI / LLM
+    items: [LLM Product Integration, Azure OpenAI, AWS Bedrock, Claude Code, GitHub Copilot, Google Antigravity]
   - name: Leadership
-    items: [Architecture, Team leadership, Mentorship, Cross-team enablement]
+    items: [Architecture, Team leadership, Mentorship, Cross-team enablement, Conference speaking (Cream City Code)]
 
 education:
   - credential: Coursework toward B.S. in Computer Science
