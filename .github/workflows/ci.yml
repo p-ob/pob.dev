@@ -23,6 +23,15 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      # CI only ever installs exact versions already pinned (and reviewed)
+      # in package-lock.json, so the cooldown in .npmrc has nothing to
+      # protect here - it only exists to stop *new* installs from grabbing
+      # an unreviewed version. `npm audit signatures` re-resolves each
+      # locked package against the registry and, without this override,
+      # errors out (ETARGET) whenever a pinned dependency happens to have
+      # been published within the cooldown window.
+      NPM_CONFIG_MIN_RELEASE_AGE: '0'
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
