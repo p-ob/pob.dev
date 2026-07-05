@@ -97,7 +97,7 @@ test.describe("Dark Mode", () => {
 		});
 
 		test("should adapt notes to dark mode", async ({ page }) => {
-			await page.goto("/blog/2024/07/hello-world/");
+			await page.goto("/2024/07/hello-world/");
 
 			const note = page.locator("pob-note");
 			await expect(note).toBeVisible();
@@ -108,7 +108,7 @@ test.describe("Dark Mode", () => {
 		});
 
 		test("should maintain readable contrast on blog posts", async ({ page }) => {
-			await page.goto("/blog/2024/07/hello-world/");
+			await page.goto("/2024/07/hello-world/");
 
 			const article = page.locator("article");
 			await expect(article).toBeVisible();

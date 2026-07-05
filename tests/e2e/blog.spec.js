@@ -30,7 +30,9 @@ test.describe("Blog", () => {
 			const firstTile = page.locator("pob-tile").first();
 			const href = await firstTile.getAttribute("href");
 			expect(href).toBeTruthy();
-			expect(href).toContain("/blog/");
+			// Individual posts publish at the bare /YYYY/MM/slug/ path (see 11ty/strip-prefix-permalink.js),
+			// not under /blog/, so just confirm the tile links off the listing page.
+			expect(href).toMatch(/^\/\d{4}\/\d{2}\/[^/]+\/$/);
 		});
 
 		test("should display tag filters when posts have tags", async ({ page }) => {
@@ -48,7 +50,7 @@ test.describe("Blog", () => {
 	test.describe("Individual Blog Post", () => {
 		test.beforeEach(async ({ page }) => {
 			// Navigate to the Hello World post
-			await page.goto("/blog/2024/07/hello-world/");
+			await page.goto("/2024/07/hello-world/");
 		});
 
 		test("should display post title", async ({ page }) => {
@@ -116,7 +118,7 @@ test.describe("Blog", () => {
 		});
 
 		test("should have link back to blog from post", async ({ page }) => {
-			await page.goto("/blog/2024/07/hello-world/");
+			await page.goto("/2024/07/hello-world/");
 
 			// Navigation is inside shadow DOM of pob-app
 			// Use shadow DOM piercing selector to find the Blog nav link
@@ -129,7 +131,7 @@ test.describe("Blog", () => {
 		test("should render syntax-highlighted code blocks", async ({ page }) => {
 			// Navigate to a post that might have code blocks
 			// For now, we'll just check the component exists if present
-			await page.goto("/blog/2024/07/hello-world/");
+			await page.goto("/2024/07/hello-world/");
 
 			// This post may not have code blocks, so we just verify
 			// the page loads correctly even without them
