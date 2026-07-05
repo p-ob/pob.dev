@@ -124,6 +124,16 @@ npm audit fix --force
 
 ⚠️ **Caution:** `--force` may install breaking changes. Test thoroughly.
 
+#### Supply-Chain Hardening
+
+Given the frequency of malicious npm package publishes, this project layers on a few additional protections beyond `npm audit`:
+
+- **Install cooldown** — [.npmrc](../.npmrc) sets `min-release-age=7`, so `npm install`/`npm update` refuses any package version published less than 7 days ago. Most compromised versions get pulled within hours of discovery, so this closes the window attackers rely on. It does not affect `npm ci` (CI installs exactly what's pinned in `package-lock.json`), so it only matters when you're adding or bumping a dependency locally. If you genuinely need a brand-new release before it clears the cooldown, override once with `npm install pkg@version --min-release-age=0`.
+- **Registry signature verification** — CI runs `npm audit signatures` on every build, which verifies every package in the lock file against npm's registry-signing keys. Run it locally too after a big dependency bump.
+- **Install script allowlist** — [package.json](../package.json) has a top-level `allowScripts` map naming the packages allowed to run install/postinstall scripts (currently `esbuild`, `fsevents`, `sharp`, `workerd` — all needed for native binaries used by Wrangler/Miniflare and Eleventy's image processing). This is prep for [npm v12's `allowScripts`-off-by-default change](https://github.blog/changelog/2026-06-09-upcoming-breaking-changes-for-npm-v12/): once a package's scripts aren't on the allowlist, npm silently skips them instead of running them. If a future dependency bump legitimately needs a new package's install script, npm will warn `N packages have install scripts not yet covered by allowScripts` — review the script with `npm view <pkg> scripts`, then approve it with `npm approve-scripts <pkg>` (add `--no-allow-scripts-pin` to allow by name rather than pinning to the exact version, so routine bumps don't need re-approval every time).
+- **Pinned GitHub Actions** — every third-party Action in `.github/workflows/` is pinned to a commit SHA (not a mutable version tag) with a version comment, and Dependabot's `github-actions` ecosystem entry in [dependabot.yml](../.github/dependabot.yml) keeps those SHAs current. `step-security/harden-runner` runs first in every job in `egress-policy: audit` mode, logging any unexpected outbound network calls a compromised dependency's install script might make (check the job summary in the Actions run if you want to look for anomalies).
+- **Careful auto-merge** — [dependabot-auto-merge.yml](../.github/workflows/dependabot-auto-merge.yml) only auto-merges patch/minor Dependabot PRs; major version bumps (of npm packages or Action SHAs) require manual review before merging.
+
 #### Node.js Version
 
 Check if Node.js has new LTS versions:
