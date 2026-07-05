@@ -6,17 +6,26 @@
 
 .talk-embed {
 	width: 100%;
-	height: 70vh;
-
-	@media (width >= 768px) {
-		height: auto;
-		aspect-ratio: 16 / 9;
-	}
 
 	iframe {
-		width: 100%;
-		height: 100%;
-		border: 0;
+		display: none;
+	}
+
+	/*
+	 * Native PDF viewers render inconsistently across browsers (notably iOS
+	 * Safari, which doesn't reliably fit-to-width in a small iframe), so the
+	 * embed is opt-in above tablet width; smaller viewports get just the
+	 * download link.
+	 */
+	@media (width >= 768px) {
+		aspect-ratio: 16 / 9;
+
+		iframe {
+			display: block;
+			width: 100%;
+			height: 100%;
+			border: 0;
+		}
 	}
 }
 
