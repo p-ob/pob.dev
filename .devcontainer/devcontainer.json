@@ -1,0 +1,38 @@
+{
+	"name": "pob.dev",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:24-bookworm",
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+	"forwardPorts": [8080, 8787],
+	"portsAttributes": {
+		"8080": {
+			"label": "Eleventy dev server (npm start)",
+			"onAutoForward": "notify"
+		},
+		"8787": {
+			"label": "Wrangler local preview (npm run dev)",
+			"onAutoForward": "silent"
+		}
+	},
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	"remoteUser": "node",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"anthropic.claude-code",
+				"esbenp.prettier-vscode",
+				"runem.lit-plugin",
+				"ms-playwright.playwright",
+				"GitHub.vscode-pull-request-github",
+				"editorconfig.editorconfig"
+			],
+			"settings": {
+				"editor.defaultFormatter": "esbenp.prettier-vscode",
+				"editor.formatOnSave": true,
+				"editor.insertSpaces": false,
+				"editor.tabSize": 2
+			}
+		}
+	}
+}
