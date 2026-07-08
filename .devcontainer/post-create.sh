@@ -4,6 +4,9 @@ set -euo pipefail
 echo "==> Trusting workspace for git (bind-mounted volumes can be owned by a different uid)"
 git config --global --add safe.directory "${containerWorkspaceFolder:-$(pwd)}"
 
+echo "==> Updating npm to v12 (the base image's bundled npm lags behind package.json's engines requirement)"
+npm install -g npm@12
+
 echo "==> Installing npm dependencies (npm ci)"
 npm ci
 

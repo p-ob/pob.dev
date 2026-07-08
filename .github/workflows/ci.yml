@@ -47,6 +47,10 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Update npm
+        # Node 24's bundled npm lags behind the required v12 (see package.json engines).
+        run: npm install -g npm@12
+
       - name: Install Dependencies
         run: npm ci
 
@@ -76,6 +80,10 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+
+      - name: Update npm
+        # Node 24's bundled npm lags behind the required v12 (see package.json engines).
+        run: npm install -g npm@12
 
       - name: Install Dependencies
         run: npm ci
@@ -108,6 +116,10 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+
+      - name: Update npm
+        # Node 24's bundled npm lags behind the required v12 (see package.json engines).
+        run: npm install -g npm@12
 
       - name: Install Dependencies
         run: npm ci
@@ -147,6 +159,10 @@ jobs:
         with:
           node-version: '24'
           cache: 'npm'
+
+      - name: Update npm
+        # Node 24's bundled npm lags behind the required v12 (see package.json engines).
+        run: npm install -g npm@12
 
       - name: Install Dependencies
         run: npm ci

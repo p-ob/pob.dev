@@ -57,7 +57,7 @@ on:
   workflow_dispatch:     # Manual trigger
 ```
 
-**Jobs** (all use Node.js 22):
+**Jobs** (all use Node.js 24 and update to npm 12 before installing dependencies):
 
 1. **Build** - `npm ci` + `npm run build`
 2. **Unit Tests** - `npm run test:unit`
