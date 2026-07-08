@@ -4,8 +4,8 @@ This guide will help you set up and develop on pob.dev locally.
 
 ## Prerequisites
 
-- **Node.js** - Version 22 or higher (CI uses 22)
-- **npm** - Comes with Node.js
+- **Node.js** - Version 24.15.0 or higher (CI uses 24)
+- **npm** - Version 12.0.0 or higher (Node's bundled npm may lag behind; run `npm install -g npm@12` to update)
 - **Git** - For version control
 
 ## Initial Setup
@@ -610,7 +610,7 @@ Feeds are fetched at build time and cached in the static output.
 **Build failing**
 - Run `npm run clean` to clear build artifacts
 - Delete `node_modules/` and run `npm ci`
-- Check Node.js version: `node --version` (should be 22+)
+- Check Node.js version: `node --version` (should be 24.15.0+) and npm version: `npm --version` (should be 12+)
 
 ### Verbose Output
 
