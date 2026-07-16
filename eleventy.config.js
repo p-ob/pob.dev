@@ -198,6 +198,10 @@ export default async function (eleventyConfig) {
 
 	// additional config
 	eleventyConfig.amendLibrary("md", (mdLib) => {
+		// Enables smart typography: -- / --- become en/em dashes, straight quotes
+		// become curly quotes, (c)/(tm)/(r) become symbols, ... becomes an ellipsis.
+		mdLib.set({ typographer: true });
+
 		mdLib.use(markdownItFootnote);
 
 		// Add container support for note types
