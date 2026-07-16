@@ -51,6 +51,47 @@ test.describe("Pippin easter egg", () => {
 
 		await expect(page.locator("pob-pippin")).toHaveAttribute("data-state", "shown");
 	});
+
+	test("should stay above a simulated on-screen keyboard", async ({ page }) => {
+		// position: fixed anchors to the layout viewport, which most mobile
+		// browsers don't shrink when the keyboard opens -- only the visual
+		// viewport does. Stub visualViewport so we can simulate that shrink
+		// without a real device, since Playwright can't open an actual IME.
+		await page.addInitScript(() => {
+			class FakeViewport extends EventTarget {
+				constructor() {
+					super();
+					this.height = window.innerHeight;
+					this.width = window.innerWidth;
+					this.offsetTop = 0;
+				}
+			}
+			window.__fakeViewport = new FakeViewport();
+			Object.defineProperty(window, "visualViewport", {
+				configurable: true,
+				get: () => window.__fakeViewport,
+			});
+		});
+		await page.goto("/search/");
+		await page.fill("pagefind-input input", "Pippin");
+		await expect(page.locator("pob-pippin")).toHaveAttribute("data-state", "shown");
+		// let the entrance animation settle into its resting position before
+		// measuring, or the fly-in transform makes the box position transient
+		await page.waitForTimeout(1000);
+
+		const keyboardHeight = 300;
+		await page.evaluate((h) => {
+			window.__fakeViewport.height = window.innerHeight - h;
+			window.__fakeViewport.dispatchEvent(new Event("resize"));
+		}, keyboardHeight);
+		await page.waitForTimeout(100);
+
+		const [box, viewportHeight] = await Promise.all([
+			page.locator("pob-pippin").boundingBox(),
+			page.evaluate(() => window.innerHeight),
+		]);
+		expect(box.y + box.height).toBeLessThanOrEqual(viewportHeight - keyboardHeight + 1);
+	});
 });
 
 test.describe("Pippin page", () => {

@@ -22,6 +22,21 @@ export class PippinElement extends LitElement {
 		}
 	};
 
+	// position: fixed anchors to the layout viewport, which most mobile
+	// browsers don't shrink when the on-screen keyboard opens -- only the
+	// visual viewport shrinks. Without this, "bottom: 0" ends up behind the
+	// keyboard instead of just above it. The visualViewport API reports the
+	// actually-visible area, so track how much of the layout viewport it
+	// currently obscures and feed that back in as extra bottom offset.
+	#syncKeyboardInset = () => {
+		const viewport = window.visualViewport;
+		if (!viewport) {
+			return;
+		}
+		const inset = Math.max(0, window.innerHeight - (viewport.height + viewport.offsetTop));
+		this.style.setProperty("--pippin-keyboard-inset", `${inset}px`);
+	};
+
 	constructor() {
 		super();
 		this._state = "shown";
@@ -31,12 +46,21 @@ export class PippinElement extends LitElement {
 		super.connectedCallback();
 		window.addEventListener("keydown", this.#handleKeydown);
 		this.#dismissTimer = setTimeout(() => this.#dismiss(), AUTO_DISMISS_MS);
+		if (window.visualViewport) {
+			window.visualViewport.addEventListener("resize", this.#syncKeyboardInset);
+			window.visualViewport.addEventListener("scroll", this.#syncKeyboardInset);
+			this.#syncKeyboardInset();
+		}
 	}
 
 	disconnectedCallback() {
 		super.disconnectedCallback();
 		window.removeEventListener("keydown", this.#handleKeydown);
 		clearTimeout(this.#dismissTimer);
+		if (window.visualViewport) {
+			window.visualViewport.removeEventListener("resize", this.#syncKeyboardInset);
+			window.visualViewport.removeEventListener("scroll", this.#syncKeyboardInset);
+		}
 	}
 
 	updated() {
@@ -67,7 +91,7 @@ export class PippinElement extends LitElement {
 		:host {
 			position: fixed;
 			left: 50%;
-			bottom: max(1rem, env(safe-area-inset-bottom));
+			bottom: calc(max(1rem, env(safe-area-inset-bottom)) + var(--pippin-keyboard-inset, 0px));
 			z-index: 900;
 			width: min(38vw, 190px);
 			transform: translate(-50%, 140%);
