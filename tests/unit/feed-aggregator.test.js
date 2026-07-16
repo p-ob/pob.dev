@@ -45,64 +45,7 @@ mock.module("rss-parser", {
 import { FeedAggregatorPlugin } from "../../11ty/feed-aggregator.js";
 
 describe("FeedAggregatorPlugin", () => {
-	it("should aggregate feeds and filter by duration", async () => {
-		mockShouldThrow = false;
-		const mockEleventy = new EleventyMock();
-
-		FeedAggregatorPlugin(mockEleventy, {
-			durationLimit: "P1Y", // 1 Year
-		});
-
-		// Get the global data function
-		const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
-		assert.ok(dataFn);
-
-		// Execute the function
-		const results = await dataFn();
-
-		assert.strictEqual(results.length, 1, "Should filter out old and future posts");
-		assert.strictEqual(results[0].title, "Post 1");
-	});
-
-	it("should filter out future-dated posts", async () => {
-		mockShouldThrow = false;
-		const mockEleventy = new EleventyMock();
-
-		FeedAggregatorPlugin(mockEleventy, {});
-
-		// Emit event to clear cache
-		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
-
-		// Get the global data function
-		const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
-		assert.ok(dataFn);
-
-		// Execute the function
-		const results = await dataFn();
-
-		// Should include today's post and old post, but exclude the future post
-		assert.strictEqual(results.length, 2, "Should filter out only future posts");
-		assert.ok(!results.some((item) => item.title === "Future Post"), "Should not include future posts");
-		assert.ok(results.some((item) => item.title === "Post 1"), "Should include current post");
-		assert.ok(results.some((item) => item.title === "Old Post"), "Should include old posts when no duration limit");
-	});
-
-	it("should handle fetch errors gracefully", async () => {
-		mockShouldThrow = true;
-		const mockEleventy = new EleventyMock();
-		FeedAggregatorPlugin(mockEleventy, {});
-
-		// Emit event to clear cache (since the plugin caches the result in module scope)
-		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
-
-		const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
-		const results = await dataFn();
-
-		// Should return empty array on failure
-		assert.deepStrictEqual(results, []);
-	});
-
-	it("should skip fetching when SKIP_FEED_AGGREGATION is set", async () => {
+	it("should skip fetching by default (FETCH_EXTERNAL_FEEDS unset)", async () => {
 		mockShouldThrow = false;
 		parseURLCallCount = 0;
 		const mockEleventy = new EleventyMock();
@@ -111,15 +54,89 @@ describe("FeedAggregatorPlugin", () => {
 		// Emit event to clear cache (since the plugin caches the result in module scope)
 		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
 
-		process.env.SKIP_FEED_AGGREGATION = "true";
+		delete process.env.FETCH_EXTERNAL_FEEDS;
+		const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
+		const results = await dataFn();
+
+		assert.deepStrictEqual(results, []);
+		assert.strictEqual(parseURLCallCount, 0, "Should not fetch any feeds");
+	});
+
+	it("should aggregate feeds and filter by duration when enabled", async () => {
+		mockShouldThrow = false;
+		const mockEleventy = new EleventyMock();
+
+		FeedAggregatorPlugin(mockEleventy, {
+			durationLimit: "P1Y", // 1 Year
+		});
+
+		// Emit event to clear cache (since the plugin caches the result in module scope)
+		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
+
+		process.env.FETCH_EXTERNAL_FEEDS = "true";
+		try {
+			// Get the global data function
+			const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
+			assert.ok(dataFn);
+
+			// Execute the function
+			const results = await dataFn();
+
+			assert.strictEqual(results.length, 1, "Should filter out old and future posts");
+			assert.strictEqual(results[0].title, "Post 1");
+		} finally {
+			delete process.env.FETCH_EXTERNAL_FEEDS;
+		}
+	});
+
+	it("should filter out future-dated posts when enabled", async () => {
+		mockShouldThrow = false;
+		const mockEleventy = new EleventyMock();
+
+		FeedAggregatorPlugin(mockEleventy, {});
+
+		// Emit event to clear cache
+		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
+
+		process.env.FETCH_EXTERNAL_FEEDS = "true";
+		try {
+			// Get the global data function
+			const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
+			assert.ok(dataFn);
+
+			// Execute the function
+			const results = await dataFn();
+
+			// Should include today's post and old post, but exclude the future post
+			assert.strictEqual(results.length, 2, "Should filter out only future posts");
+			assert.ok(!results.some((item) => item.title === "Future Post"), "Should not include future posts");
+			assert.ok(results.some((item) => item.title === "Post 1"), "Should include current post");
+			assert.ok(
+				results.some((item) => item.title === "Old Post"),
+				"Should include old posts when no duration limit"
+			);
+		} finally {
+			delete process.env.FETCH_EXTERNAL_FEEDS;
+		}
+	});
+
+	it("should handle fetch errors gracefully when enabled", async () => {
+		mockShouldThrow = true;
+		const mockEleventy = new EleventyMock();
+		FeedAggregatorPlugin(mockEleventy, {});
+
+		// Emit event to clear cache (since the plugin caches the result in module scope)
+		mockEleventy.emit("eleventy.beforeWatch", ["feeds.json"]);
+
+		process.env.FETCH_EXTERNAL_FEEDS = "true";
 		try {
 			const dataFn = mockEleventy.globalData.get("aggregatedFeeds");
 			const results = await dataFn();
 
+			// Should return empty array on failure
 			assert.deepStrictEqual(results, []);
-			assert.strictEqual(parseURLCallCount, 0, "Should not fetch any feeds");
 		} finally {
-			delete process.env.SKIP_FEED_AGGREGATION;
+			delete process.env.FETCH_EXTERNAL_FEEDS;
 		}
 	});
 });

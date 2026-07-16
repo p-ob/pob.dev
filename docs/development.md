@@ -537,6 +537,12 @@ Components are server-side rendered at build time via `@lit-labs/eleventy-plugin
 
 ## Adding External Feeds
 
+External feed fetching is off by default (the Reading page renders with no aggregated items) so that ordinary builds and dev servers don't depend on network access to third-party feeds. To actually fetch feeds — e.g. while working on the Reading page — set `FETCH_EXTERNAL_FEEDS=true`:
+
+```bash
+FETCH_EXTERNAL_FEEDS=true npm start
+```
+
 To add RSS feeds to the "Reading" page:
 
 1. **Edit `feeds.json`**

@@ -23,8 +23,5 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
         stdout: "ignore",
         stderr: "pipe",
-        // e2e specs already tolerate feeds being absent (see tests/e2e/reading.spec.js),
-        // so skip the external RSS fetches to avoid gating the whole suite behind them.
-        env: { ...process.env, SKIP_FEED_AGGREGATION: "true" },
     },
 });
