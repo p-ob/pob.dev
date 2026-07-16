@@ -116,7 +116,8 @@ pob.dev/
 - Configured via [feeds.json](../feeds.json)
 - Optional date filtering using Temporal duration strings (e.g., `P90D` for 90 days, `P1Y6M` for 1.5 years)
 - Automatically watches feed configuration file for changes in development mode
-- Refreshed daily via automated builds
+- Off by default: fetching only happens when `FETCH_EXTERNAL_FEEDS=true` is set (production deploys set this; set it locally when working on the Reading page)
+- Refreshed daily via automated production builds
 - See [11ty/feed-aggregator.js](../11ty/feed-aggregator.js)
 
 ### User Experience

@@ -169,6 +169,11 @@ jobs:
 
       - name: Rebuild Site
         run: npm run build
+        env:
+          # Production is the one build that should actually fetch the
+          # external RSS feeds for the Reading page; every other build in
+          # this workflow leaves external feed fetching off by default.
+          FETCH_EXTERNAL_FEEDS: true
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0

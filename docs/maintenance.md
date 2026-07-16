@@ -355,7 +355,7 @@ npm run build
 3. Review build logs for fetch errors
 4. Consider feed might be temporarily down
 5. Add error handling in [11ty/feed-aggregator.js](../11ty/feed-aggregator.js)
-6. In a network-restricted environment (CI sandbox, offline dev), set `SKIP_FEED_AGGREGATION=true` to skip the fetches entirely — the Reading page just renders with no aggregated items
+6. External feed fetching is off by default — set `FETCH_EXTERNAL_FEEDS=true` to actually fetch feeds (e.g. when working on the Reading page). Without it, the Reading page just renders with no aggregated items
 
 ### Deployment Failures
 
@@ -398,7 +398,7 @@ git push origin main
 
 1. `npm start` already runs a Watch server; add `npm run build:11ty` alone for one-off rebuilds instead of the full `npm run build` when you don't need a fresh search index.
 
-2. If the build hangs or is slow on the external RSS fetches in [11ty/feed-aggregator.js](../11ty/feed-aggregator.js) (e.g. no network access, feeds blocked by a proxy), set `SKIP_FEED_AGGREGATION=true` to bypass them.
+2. External RSS fetches in [11ty/feed-aggregator.js](../11ty/feed-aggregator.js) are off by default, so they won't hang or slow down a normal build. If you've set `FETCH_EXTERNAL_FEEDS=true` to work on the Reading page and hit slow/blocked feeds, unset it to bypass them.
 
 3. Clean build artifacts:
 
