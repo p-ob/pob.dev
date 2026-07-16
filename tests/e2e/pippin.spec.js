@@ -39,7 +39,7 @@ test.describe("Pippin easter egg", () => {
 	});
 
 	test("should not surface the hidden page in search results", async ({ page }) => {
-		await page.fill("pagefind-input input", "secret dog");
+		await page.fill("pagefind-input input", "Pippin in 2022");
 		await page.waitForTimeout(300);
 
 		const results = page.locator("pagefind-results");

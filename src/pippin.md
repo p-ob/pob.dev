@@ -9,8 +9,6 @@ styles:
   - /assets/css/pippin.css
 ---
 
-You found the secret dog.
-
 <figure class="pippin-photo">
 	<img src="/assets/img/pippin-2022.jpg" alt="A Bernese Mountain Dog puppy wearing a pinwheel beanie cap">
 	<figcaption>Pippin in 2022</figcaption>
