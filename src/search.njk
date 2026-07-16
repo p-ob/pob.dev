@@ -54,4 +54,15 @@ excludeFromSearch: true
 		}
 		history.replaceState(null, "", url);
 	});
+
+	// Easter egg: searching "Pippin" summons an animated Bernese Mountain Dog.
+	let pippinModule;
+	instance.on("search", async (term) => {
+		if (!term || !/pippin/i.test(term) || document.querySelector("pob-pippin")) {
+			return;
+		}
+		pippinModule ??= import("/assets/js/components/pippin.js");
+		await pippinModule;
+		document.body.appendChild(document.createElement("pob-pippin"));
+	});
 </script>

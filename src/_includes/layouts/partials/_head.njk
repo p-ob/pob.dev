@@ -15,7 +15,7 @@
 	</title>
 	<meta name="description" content="{{ description or metadata.description }}">
 	<meta name="generator" content="{{ eleventy.generator }}">
-	<meta name="robots" content="noai, noimageai">
+	<meta name="robots" content="{% if noindex %}noindex, nofollow, {% endif %}noai, noimageai">
 	<meta name="tdm-reservation" content="1">
 	<link rel="expect" href="#app" blocking="render">
 	<link rel="stylesheet" href="/assets/css/global.css">
