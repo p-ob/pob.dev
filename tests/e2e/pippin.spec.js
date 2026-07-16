@@ -60,9 +60,9 @@ test.describe("Pippin page", () => {
 	test("should show Pippin's photo with alt text and a caption", async ({ page }) => {
 		const photo = page.locator("figure.pippin-photo img");
 		await expect(photo).toBeVisible();
-		await expect(photo).toHaveAttribute("alt", /Pippin/);
+		await expect(photo).toHaveAttribute("alt", "A Bernese Mountain Dog puppy wearing a pinwheel beanie cap");
 
 		const caption = page.locator("figure.pippin-photo figcaption");
-		await expect(caption).toHaveText("Pippin in 2022, as a Bernese Mountain Dog puppy.");
+		await expect(caption).toHaveText("Pippin in 2022");
 	});
 });

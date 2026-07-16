@@ -12,6 +12,6 @@ styles:
 You found the secret dog.
 
 <figure class="pippin-photo">
-	<img src="/assets/img/pippin-2022.jpg" alt="Pippin, a Bernese Mountain Dog puppy, sitting on a wood floor and looking off to the side while wearing a colorful pinwheel beanie.">
-	<figcaption>Pippin in 2022, as a Bernese Mountain Dog puppy.</figcaption>
+	<img src="/assets/img/pippin-2022.jpg" alt="A Bernese Mountain Dog puppy wearing a pinwheel beanie cap">
+	<figcaption>Pippin in 2022</figcaption>
 </figure>
