@@ -37,12 +37,9 @@ excludeFromSearch: true
 	const { getInstanceManager } = window.PagefindComponents;
 	const instance = getInstanceManager().getInstance("default");
 
-	// Load initial query from URL
-	const params = new URLSearchParams(window.location.search);
-	const initialQuery = params.get("q");
-	if (initialQuery) {
-		instance.triggerSearch(initialQuery);
-	}
+	// Listeners must be registered before triggerSearch() below fires the
+	// initial deep-link query -- triggerSearch dispatches "search"
+	// synchronously, so anything registered after it would miss that event.
 
 	// Keep URL in sync with the search term
 	instance.on("search", (term) => {
@@ -56,6 +53,7 @@ excludeFromSearch: true
 	});
 
 	// Easter egg: searching "Pippin" summons an animated Bernese Mountain Dog.
+	// Also fires from a deep link (e.g. /search/?q=Pippin) via triggerSearch below.
 	let pippinModule;
 	instance.on("search", async (term) => {
 		if (!term || !/pippin/i.test(term) || document.querySelector("pob-pippin")) {
@@ -65,4 +63,11 @@ excludeFromSearch: true
 		await pippinModule;
 		document.body.appendChild(document.createElement("pob-pippin"));
 	});
+
+	// Load initial query from URL
+	const params = new URLSearchParams(window.location.search);
+	const initialQuery = params.get("q");
+	if (initialQuery) {
+		instance.triggerSearch(initialQuery);
+	}
 </script>

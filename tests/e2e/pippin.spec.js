@@ -45,6 +45,12 @@ test.describe("Pippin easter egg", () => {
 		const results = page.locator("pagefind-results");
 		await expect(results).not.toContainText("Pippin");
 	});
+
+	test("should appear from a deep link (?q=Pippin) without typing", async ({ page }) => {
+		await page.goto("/search/?q=Pippin");
+
+		await expect(page.locator("pob-pippin")).toHaveAttribute("data-state", "shown");
+	});
 });
 
 test.describe("Pippin page", () => {
