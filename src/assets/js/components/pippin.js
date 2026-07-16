@@ -4,10 +4,10 @@ const AUTO_DISMISS_MS = 7000;
 const EXIT_DURATION_MS = 650;
 const DESTINATION = "/pippin/";
 
-// Easter egg summoned by search.njk when someone searches "Pippin": an
-// animated cartoon of a Bernese Mountain Dog puppy in a pinwheel beanie
-// flies up from the bottom of the screen. It's a link to a hidden page
-// with his real photo.
+// Easter egg summoned by search.njk when someone searches "Pippin": a
+// blocky, Duck Hunt-inspired sprite of a laughing Bernese Mountain Dog
+// puppy in a rainbow pinwheel beanie flies up from the bottom of the
+// screen. It's a link to a hidden page with his real photo.
 export class PippinElement extends LitElement {
 	static properties = {
 		_state: { state: true },
@@ -58,75 +58,69 @@ export class PippinElement extends LitElement {
 
 	#renderSvg() {
 		return svg`
-			<svg viewBox="0 0 200 230" role="img" aria-hidden="true" focusable="false">
-				<!-- ears -->
-				<path d="M38,92 C16,110 8,152 30,178 C48,162 54,122 58,96 Z" fill="#15171b" />
-				<path d="M162,92 C184,110 192,152 170,178 C152,162 146,122 142,96 Z" fill="#15171b" />
-
-				<!-- body -->
-				<rect x="35" y="150" width="130" height="72" rx="32" fill="#15171b" />
-				<ellipse cx="100" cy="196" rx="40" ry="34" fill="#faf8f2" />
-				<rect x="35" y="188" width="20" height="34" rx="9" fill="#a4592b" />
-				<rect x="145" y="188" width="20" height="34" rx="9" fill="#a4592b" />
+			<svg viewBox="0 -40 200 290" role="img" aria-hidden="true" focusable="false" shape-rendering="crispEdges">
+				<!-- ears: big angular flaps splayed up and out, Duck Hunt-style -->
+				<polygon points="68,90 68,50 20,0 35,55" fill="#17181c" />
+				<polygon points="132,90 132,50 180,0 165,55" fill="#17181c" />
 
 				<!-- head -->
-				<circle cx="100" cy="118" r="55" fill="#15171b" />
-
-				<!-- cheeks -->
-				<ellipse cx="66" cy="138" rx="12" ry="16" fill="#a4592b" />
-				<ellipse cx="134" cy="138" rx="12" ry="16" fill="#a4592b" />
+				<rect x="50" y="40" width="100" height="110" fill="#17181c" />
 
 				<!-- blaze -->
-				<path
-					d="M100,68 C122,74 132,100 129,126 C126,152 114,170 100,172 C86,170 74,152 71,126 C68,100 78,74 100,68 Z"
-					fill="#faf8f2"
-				/>
+				<rect x="80" y="55" width="40" height="95" fill="#faf8f2" />
 
 				<!-- eyebrows -->
-				<ellipse cx="79" cy="96" rx="10" ry="6" fill="#a4592b" transform="rotate(-10 79 96)" />
-				<ellipse cx="121" cy="96" rx="10" ry="6" fill="#a4592b" transform="rotate(10 121 96)" />
+				<rect x="60" y="60" width="18" height="14" fill="#a4592b" />
+				<rect x="122" y="60" width="18" height="14" fill="#a4592b" />
+
+				<!-- cheeks -->
+				<rect x="52" y="100" width="20" height="30" fill="#a4592b" />
+				<rect x="128" y="100" width="20" height="30" fill="#a4592b" />
 
 				<!-- eyes, closed and happy -->
-				<path d="M70,116 Q80,104 90,116" stroke="#15171b" stroke-width="5" fill="none" stroke-linecap="round" />
-				<path d="M110,116 Q120,104 130,116" stroke="#15171b" stroke-width="5" fill="none" stroke-linecap="round" />
+				<rect x="88" y="93" width="10" height="4" fill="#17181c" />
+				<rect x="102" y="93" width="10" height="4" fill="#17181c" />
 
 				<!-- nose -->
-				<ellipse cx="100" cy="138" rx="10" ry="7" fill="#15171b" />
-				<ellipse cx="97" cy="136" rx="2.5" ry="1.5" fill="#585858" />
+				<rect x="90" y="118" width="20" height="14" fill="#17181c" />
 
 				<!-- open, giggling mouth -->
-				<path d="M87,149 Q100,169 113,149 Q100,159 87,149 Z" fill="#5b2f22" />
-				<ellipse cx="100" cy="157" rx="7" ry="5.5" fill="#ff8fa3" />
+				<rect x="85" y="134" width="30" height="16" fill="#4a2b22" />
+				<rect x="88" y="134" width="8" height="6" fill="#faf8f2" />
+				<rect x="104" y="134" width="8" height="6" fill="#faf8f2" />
+				<rect x="94" y="142" width="12" height="8" fill="#ff8fa3" />
 
-				<!-- paws raised in a giggle -->
-				<g transform="rotate(-24 52 152)">
-					<ellipse cx="52" cy="152" rx="15" ry="19" fill="#faf8f2" />
-					<line x1="45" y1="138" x2="45" y2="132" stroke="#15171b" stroke-width="2.5" stroke-linecap="round" />
-					<line x1="52" y1="136" x2="52" y2="129" stroke="#15171b" stroke-width="2.5" stroke-linecap="round" />
-					<line x1="59" y1="138" x2="60" y2="132" stroke="#15171b" stroke-width="2.5" stroke-linecap="round" />
-				</g>
-				<g transform="rotate(24 148 152)">
-					<ellipse cx="148" cy="152" rx="15" ry="19" fill="#faf8f2" />
-					<line x1="141" y1="138" x2="141" y2="132" stroke="#15171b" stroke-width="2.5" stroke-linecap="round" />
-					<line x1="148" y1="136" x2="148" y2="129" stroke="#15171b" stroke-width="2.5" stroke-linecap="round" />
-					<line x1="155" y1="138" x2="156" y2="132" stroke="#15171b" stroke-width="2.5" stroke-linecap="round" />
-				</g>
+				<!-- paws bunched together, laughing -->
+				<rect x="25" y="140" width="35" height="40" fill="#faf8f2" />
+				<rect x="30" y="134" width="6" height="6" fill="#17181c" />
+				<rect x="40" y="131" width="6" height="6" fill="#17181c" />
+				<rect x="50" y="134" width="6" height="6" fill="#17181c" />
+				<rect x="140" y="140" width="35" height="40" fill="#faf8f2" />
+				<rect x="144" y="134" width="6" height="6" fill="#17181c" />
+				<rect x="154" y="131" width="6" height="6" fill="#17181c" />
+				<rect x="164" y="134" width="6" height="6" fill="#17181c" />
 
-				<!-- pinwheel beanie -->
-				<g transform="rotate(-6 100 60)">
-					<polygon points="100,38 51,73 74,55" fill="#3457c9" />
-					<polygon points="100,38 74,55 100,50" fill="#e63946" />
-					<polygon points="100,38 100,50 126,55" fill="#f4c22c" />
-					<polygon points="100,38 126,55 149,73" fill="#2a9d55" />
-					<path d="M51,73 Q100,96 149,73 L149,83 Q100,106 51,83 Z" fill="#1d3557" />
-					<line x1="100" y1="38" x2="122" y2="10" stroke="#e63946" stroke-width="4" stroke-linecap="round" />
-					<g class="pinwheel">
-						<polygon points="122,10 132,1 132,10" fill="#e63946" />
-						<polygon points="122,10 131,19 122,19" fill="#f4c22c" />
-						<polygon points="122,10 112,19 112,10" fill="#e63946" />
-						<polygon points="122,10 113,1 122,1" fill="#f4c22c" />
-						<circle cx="122" cy="10" r="3" fill="#1d3557" />
-					</g>
+				<!-- body -->
+				<rect x="35" y="175" width="130" height="65" fill="#17181c" />
+				<rect x="70" y="185" width="60" height="55" fill="#faf8f2" />
+				<rect x="35" y="210" width="25" height="30" fill="#a4592b" />
+				<rect x="140" y="210" width="25" height="30" fill="#a4592b" />
+
+				<!-- rainbow pinwheel beanie -->
+				<rect x="45" y="40" width="110" height="7" fill="#1d3557" />
+				<rect x="50" y="33" width="100" height="7" fill="#e63946" />
+				<rect x="58" y="26" width="84" height="7" fill="#f3722c" />
+				<rect x="66" y="19" width="68" height="7" fill="#f4c22c" />
+				<rect x="74" y="12" width="52" height="7" fill="#43aa8b" />
+				<rect x="82" y="5" width="36" height="7" fill="#277da1" />
+				<rect x="90" y="-2" width="20" height="7" fill="#6a4c93" />
+				<line x1="100" y1="-2" x2="120" y2="-25" stroke="#e63946" stroke-width="4" stroke-linecap="round" />
+				<g class="pinwheel">
+					<polygon points="120,-25 130,-34 130,-25" fill="#e63946" />
+					<polygon points="120,-25 129,-16 120,-16" fill="#f4c22c" />
+					<polygon points="120,-25 110,-16 110,-25" fill="#e63946" />
+					<polygon points="120,-25 111,-34 120,-34" fill="#f4c22c" />
+					<circle cx="120" cy="-25" r="3" fill="#1d3557" />
 				</g>
 
 				<!-- giggle marks -->
@@ -156,7 +150,7 @@ export class PippinElement extends LitElement {
 			left: 50%;
 			bottom: max(1rem, env(safe-area-inset-bottom));
 			z-index: 900;
-			width: min(42vw, 210px);
+			width: min(38vw, 190px);
 			transform: translate(-50%, 140%);
 			opacity: 0;
 			pointer-events: none;
@@ -205,7 +199,7 @@ export class PippinElement extends LitElement {
 
 			.pinwheel {
 				animation: pippin-spin 1.3s linear infinite;
-				transform-origin: 122px 10px;
+				transform-origin: 120px -25px;
 			}
 		}
 
