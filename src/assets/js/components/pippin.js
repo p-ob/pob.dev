@@ -4,6 +4,7 @@ const AUTO_DISMISS_MS = 7000;
 const EXIT_DURATION_MS = 650;
 const DESTINATION = "/pippin/";
 const SPRITE_SRC = "/assets/img/pippin-sprite.png";
+const PINWHEEL_SRC = "/assets/img/pippin-pinwheel.png";
 
 // Easter egg summoned by search.njk when someone searches "Pippin": a
 // Duck Hunt-inspired illustration of a laughing Bernese Mountain Dog
@@ -54,7 +55,10 @@ export class PippinElement extends LitElement {
 	render() {
 		return html`
 			<a href="${DESTINATION}" aria-label="It's Pippin! Click to see his puppy photo.">
-				<img src="${SPRITE_SRC}" alt="" width="380" height="383" />
+				<span class="sprite">
+					<img src="${SPRITE_SRC}" alt="" width="380" height="383" />
+					<img class="pinwheel" src="${PINWHEEL_SRC}" alt="" width="89" height="64" />
+				</span>
 			</a>
 		`;
 	}
@@ -95,21 +99,39 @@ export class PippinElement extends LitElement {
 			border-radius: 999px;
 		}
 
-		img {
+		.sprite {
+			display: block;
+			position: relative;
+		}
+
+		.sprite > img:first-child {
 			display: block;
 			width: 100%;
 			height: auto;
+		}
+
+		.pinwheel {
+			position: absolute;
+			left: 38.158%;
+			top: 0;
+			width: 23.421%;
+			height: 16.71%;
+			transform-origin: 49% 52%;
 		}
 
 		@media (prefers-reduced-motion: no-preference) {
 			:host([data-state="shown"]) {
 				animation:
 					pippin-enter 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-					pippin-bob 3.1s ease-in-out 0.9s infinite;
+					pippin-bob 3.4s ease-in-out 0.9s infinite;
 			}
 
 			:host([data-state="leaving"]) {
 				animation: pippin-exit 0.6s ease-in forwards;
+			}
+
+			.pinwheel {
+				animation: pippin-spin 1.1s linear infinite;
 			}
 		}
 
@@ -134,10 +156,27 @@ export class PippinElement extends LitElement {
 			}
 		}
 
+		/* A quick shake (a "giggle") at the start of each loop, then a smooth
+		   rise-and-settle bob for the rest of the cycle. */
 		@keyframes pippin-bob {
 			0%,
 			100% {
 				transform: translate(-50%, 0) rotate(-1.5deg);
+			}
+			4% {
+				transform: translate(-50%, 0) rotate(5deg);
+			}
+			8% {
+				transform: translate(-50%, 0) rotate(-5deg);
+			}
+			12% {
+				transform: translate(-50%, 0) rotate(4deg);
+			}
+			16% {
+				transform: translate(-50%, 0) rotate(-2deg);
+			}
+			20% {
+				transform: translate(-50%, -2px) rotate(0deg);
 			}
 			50% {
 				transform: translate(-50%, -12px) rotate(1.5deg);
@@ -152,6 +191,12 @@ export class PippinElement extends LitElement {
 			to {
 				transform: translate(-50%, 140%) rotate(8deg);
 				opacity: 0;
+			}
+		}
+
+		@keyframes pippin-spin {
+			to {
+				transform: rotate(360deg);
 			}
 		}
 	`;
