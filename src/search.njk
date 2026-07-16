@@ -7,7 +7,7 @@ excludeFromSearch: true
 <h1>Search</h1>
 
 <pagefind-config excerpt-length="20"></pagefind-config>
-<pagefind-input autofocus></pagefind-input>
+<pagefind-input></pagefind-input>
 <pagefind-summary></pagefind-summary>
 <pagefind-results></pagefind-results>
 
@@ -70,4 +70,14 @@ excludeFromSearch: true
 	if (initialQuery) {
 		instance.triggerSearch(initialQuery);
 	}
+
+	// The `autofocus` attribute on <pagefind-input> above doesn't work: the
+	// browser consumes/strips it from that element during native autofocus
+	// processing before the component's own JS ever reads it, since the
+	// custom element itself isn't a focusable target -- only the real
+	// <input> it renders internally is. Focus that directly instead, and
+	// only after triggerSearch() above: the component skips writing a
+	// deep-link query into the input's value while it's already focused
+	// (so it doesn't clobber text the user is actively typing).
+	document.querySelector("pagefind-input input")?.focus();
 </script>
