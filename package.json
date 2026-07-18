@@ -14,7 +14,7 @@
 		"@11ty/eleventy-img": "^6.0.4",
 		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^3.0.0",
-		"@atproto/api": "^0.20.25",
+		"@atproto/api": "^0.20.28",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.6",
 		"@playwright/test": "^1.61.1",
 		"clean-css": "^5.3.3",
