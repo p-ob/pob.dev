@@ -19,7 +19,7 @@
 		"@playwright/test": "^1.61.1",
 		"clean-css": "^5.3.3",
 		"js-yaml": "^5.2.1",
-		"linkedom": "^0.18.12",
+		"linkedom": "^0.18.13",
 		"lit": "^3.3.3",
 		"markdown-it-container": "^4.0.0",
 		"markdown-it-footnote": "^4.0.0",
