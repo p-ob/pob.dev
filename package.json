@@ -52,5 +52,11 @@
 		"fsevents": true,
 		"sharp": true,
 		"workerd": true
+	},
+	"overrides": {
+		"@11ty/eleventy-img": {
+			"sharp": "^0.35.3"
+		},
+		"brace-expansion": "^5.0.8"
 	}
 }
