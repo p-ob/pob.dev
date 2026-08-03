@@ -8,13 +8,34 @@
 /*
  * A real @page margin applies to *every* printed page, so multi-page résumés
  * stay properly inset (a zero margin would jam page 2+ content against the paper
- * edge). The trade-off: browsers may draw their own headers/footers (URL, title,
- * date, page numbers) in this margin — that's the print dialog's "Headers and
- * footers" toggle, which is the user's to control; CSS can't force it off.
+ * edge). Browsers draw their own headers/footers (URL, title, date, page
+ * numbers) inside this margin unless the page claims it: declaring a page
+ * margin box — even an empty one — tells the browser to render that corner
+ * from CSS instead of its own default (CSS Paged Media Module Level 3).
+ * Supported in Chrome/Edge 131+ and Safari 18.2+; Firefox hasn't shipped
+ * margin boxes yet (Mozilla bug 1854974), so Firefox users still see the
+ * browser default there unless they toggle "Headers and footers" off
+ * themselves in the print dialog.
  */
 @page {
 	size: letter portrait;
 	margin: 0.6in;
+
+	@top-left {
+		content: "";
+	}
+
+	@top-right {
+		content: "";
+	}
+
+	@bottom-left {
+		content: "";
+	}
+
+	@bottom-right {
+		content: "";
+	}
 }
 
 html,
