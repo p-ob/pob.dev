@@ -30,7 +30,7 @@
 		"slugify": "^1.6.9",
 		"syntax-highlight-element": "^1.2.0",
 		"temporal-polyfill": "^1.0.3",
-		"wrangler": "^4.120.0"
+		"wrangler": "^4.123.0"
 	},
 	"scripts": {
 		"build": "npm run build:11ty && npm run build:index",
