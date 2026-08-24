@@ -1,8 +1,6 @@
 // Plugin to aggregate RSS feeds from external sources
 // Fetches feeds at build time and makes them available as global data
 
-import { Temporal } from "temporal-polyfill";
-
 // Module-level cache to avoid refetching on every watch rebuild
 let cachedFeeds = null;
 let cacheConfigFile = null;
