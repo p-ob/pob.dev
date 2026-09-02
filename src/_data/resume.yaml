@@ -80,7 +80,7 @@ skills:
   - name: AI / LLM
     items: [LLM Product Integration, Azure OpenAI, AWS Bedrock, Claude Code, GitHub Copilot, Google Antigravity]
   - name: Leadership
-    items: [Architecture, Team leadership, Mentorship, Cross-team enablement, Conference speaking (Cream City Code)]
+    items: [Architecture, Team leadership, Mentorship, Cross-team enablement, Conference speaking]
 
 education:
   - credential: Coursework toward B.S. in Computer Science
