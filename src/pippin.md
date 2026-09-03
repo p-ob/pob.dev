@@ -10,6 +10,6 @@ styles:
 ---
 
 <figure class="pippin-photo">
-	<img src="/assets/img/pippin-2022.jpg" alt="A Bernese Mountain Dog puppy wearing a pinwheel beanie cap">
+	<img src="/assets/img/pippin-2022.jpg" alt="A Bernese Mountain Dog puppy wearing a pinwheel beanie cap" loading="eager" fetchpriority="high">
 	<figcaption>Pippin in 2022</figcaption>
 </figure>
