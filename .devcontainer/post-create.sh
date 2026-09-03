@@ -19,6 +19,16 @@ npx @playwright/mcp install-browser chrome-for-testing
 echo "==> Installing Claude Code CLI"
 npm install -g @anthropic-ai/claude-code
 
+echo "==> Installing Cloudflare Skills and MCP servers for Claude Code"
+claude plugin marketplace add cloudflare/skills
+claude plugin install cloudflare@cloudflare
+
+echo "==> Registering chrome-devtools MCP server for Claude Code (points at the chromium installed above; no system Chrome exists in this image)"
+if ! claude mcp get chrome-devtools >/dev/null 2>&1; then
+	CHROMIUM_PATH="$(node -e "console.log(require('playwright-core').chromium.executablePath())")"
+	claude mcp add --scope user chrome-devtools -- npx -y chrome-devtools-mcp@latest --executablePath="$CHROMIUM_PATH" --headless=true --isolated --chromeArg=--no-sandbox
+fi
+
 if [ ! -f .env ] && [ -f .env.example ]; then
 	echo "==> Seeding .env from .env.example (fill in secrets before running npm run publish:standard)"
 	cp .env.example .env
