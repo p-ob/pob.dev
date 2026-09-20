@@ -48,6 +48,7 @@ npm start
 ```
 
 **After updating:**
+
 - Test locally thoroughly
 - Run `npm run lint`
 - Run `npm run test:unit` and `npm test`
@@ -67,6 +68,7 @@ npm start
 #### Check External RSS Feeds
 
 Review [feeds.json](../feeds.json):
+
 - Are feeds still active?
 - Any new feeds to add?
 - Remove broken feeds
@@ -129,7 +131,7 @@ npm audit fix --force
 Given the frequency of malicious npm package publishes, this project layers on a few additional protections beyond `npm audit`:
 
 - **Install cooldown** — [.npmrc](../.npmrc) sets `min-release-age=7`, so `npm install`/`npm update` refuses any package version published less than 7 days ago. Most compromised versions get pulled within hours of discovery, so this closes the window attackers rely on. `npm ci` ignores it (CI installs exactly what's pinned in `package-lock.json`), so it mostly matters when you're adding or bumping a dependency locally. If you genuinely need a brand-new release before it clears the cooldown, override once with `npm install pkg@version --min-release-age=0`.
-- **Registry signature verification** — CI runs `npm audit signatures` on every build, which verifies every package in the lock file against npm's registry-signing keys. Run it locally too after a big dependency bump. Note that this command *does* honor `min-release-age` (it re-resolves each locked package against the registry rather than just reading the lockfile), so the Build job in [ci.yml](../.github/workflows/ci.yml) sets `NPM_CONFIG_MIN_RELEASE_AGE=0` for the job — a pinned, already-reviewed lockfile has nothing left for the cooldown to protect against, and without the override the step fails (`ETARGET`) whenever a pinned dependency was published within the last week.
+- **Registry signature verification** — CI runs `npm audit signatures` on every build, which verifies every package in the lock file against npm's registry-signing keys. Run it locally too after a big dependency bump. Note that this command _does_ honor `min-release-age` (it re-resolves each locked package against the registry rather than just reading the lockfile), so the Build job in [ci.yml](../.github/workflows/ci.yml) sets `NPM_CONFIG_MIN_RELEASE_AGE=0` for the job — a pinned, already-reviewed lockfile has nothing left for the cooldown to protect against, and without the override the step fails (`ETARGET`) whenever a pinned dependency was published within the last week.
 - **Install script allowlist** — [package.json](../package.json) has a top-level `allowScripts` map naming the packages allowed to run install/postinstall scripts (currently `esbuild`, `fsevents`, `sharp`, `workerd` — all needed for native binaries used by Wrangler/Miniflare and Eleventy's image processing). This project requires [npm v12](https://github.blog/changelog/2026-07-08-npm-install-time-security-and-gat-bypass2fa-deprecation/), which turns `allowScripts` off by default: once a package's scripts aren't on the allowlist, npm silently skips them instead of running them. If a dependency bump legitimately needs a new package's install script, npm will warn `N packages have install scripts not yet covered by allowScripts` — review the script with `npm view <pkg> scripts`, then approve it with `npm approve-scripts <pkg>` (add `--no-allow-scripts-pin` to allow by name rather than pinning to the exact version, so routine bumps don't need re-approval every time).
 - **Pinned GitHub Actions** — every third-party Action in `.github/workflows/` is pinned to a commit SHA (not a mutable version tag) with a version comment, and Dependabot's `github-actions` ecosystem entry in [dependabot.yml](../.github/dependabot.yml) keeps those SHAs current. `step-security/harden-runner` runs first in every job in `egress-policy: audit` mode, logging any unexpected outbound network calls a compromised dependency's install script might make (check the job summary in the Actions run if you want to look for anomalies).
 - **Careful auto-merge** — [dependabot-auto-merge.yml](../.github/workflows/dependabot-auto-merge.yml) only auto-merges patch/minor Dependabot PRs; major version bumps (of npm packages or Action SHAs) require manual review before merging.
@@ -163,6 +165,7 @@ Current requirement: **Node.js 26.0.0+** (CI uses Node.js 26) and **npm 12.0.0+*
 #### Accessibility Audit
 
 Test with accessibility tools:
+
 - Browser DevTools accessibility checker
 - Screen reader testing
 - Keyboard navigation
@@ -333,6 +336,7 @@ ls public/feed.*
 ```
 
 Should show:
+
 - `feed.rss`
 - `feed.atom`
 - `feed.json`
@@ -418,11 +422,13 @@ npm run build
 ### Monitoring Performance
 
 **Web Vitals:**
+
 - Largest Contentful Paint (LCP)
 - First Input Delay (FID)
 - Cumulative Layout Shift (CLS)
 
 **Tools:**
+
 - [Lighthouse](https://developers.google.com/web/tools/lighthouse)
 - [PageSpeed Insights](https://pagespeed.web.dev/)
 - [WebPageTest](https://www.webpagetest.org/)
@@ -498,6 +504,7 @@ git clone https://github.com/p-ob/pob.dev.git backup-$(date +%Y%m%d)
 - `CLOUDFLARE_ACCOUNT_ID`
 
 **Store securely:**
+
 - Use password manager
 - Document in secure location
 - Keep separate from repository
@@ -562,6 +569,7 @@ npm run deploy
 - [StatusCake](https://www.statuscake.com/)
 
 **Configure:**
+
 - Monitor main URL (pob.dev)
 - Check interval: 5-15 minutes
 - Alert via email/SMS on downtime
@@ -578,6 +586,7 @@ git ls-files src/ | grep -v ".md$"
 ```
 
 Review and remove unused:
+
 - Images
 - CSS files
 - JavaScript files
@@ -621,6 +630,7 @@ git filter-branch --tree-filter 'rm -f path/to/large/file' HEAD
 ## Upgrading Node.js
 
 **When to upgrade:**
+
 - New LTS version released
 - Security patches
 - Required by dependencies
@@ -642,9 +652,9 @@ node --version
 
 ```json
 {
-  "engines": {
-    "node": ">=26.0.0"
-  }
+	"engines": {
+		"node": ">=26.0.0"
+	}
 }
 ```
 
@@ -658,7 +668,7 @@ Edit [.github/workflows/ci.yml](../.github/workflows/ci.yml) and update `node-ve
 - name: Setup Node
   uses: actions/setup-node@v4
   with:
-    node-version: '26'
+    node-version: "26"
 ```
 
 4. **Test thoroughly**
@@ -686,6 +696,7 @@ Open a pull request and merge it after CI passes.
 ### Keeping Docs Updated
 
 **When to update docs:**
+
 - After major code changes
 - New features added
 - Dependencies updated

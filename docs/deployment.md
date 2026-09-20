@@ -28,11 +28,11 @@ Pull requests run the same build and test jobs but do not deploy.
 
 ```jsonc
 {
-  "name": "pob-dev-site",
-  "assets": {
-    "directory": "public"
-  },
-  "compatibility_date": "2025-08-12"
+	"name": "pob-dev-site",
+	"assets": {
+		"directory": "public",
+	},
+	"compatibility_date": "2025-08-12",
 }
 ```
 
@@ -53,8 +53,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 * * *'  # Daily at midnight UTC
-  workflow_dispatch:     # Manual trigger
+    - cron: "0 0 * * *" # Daily at midnight UTC
+  workflow_dispatch: # Manual trigger
 ```
 
 **Jobs** (all use Node.js 26 and update to npm 12 before installing dependencies):
@@ -119,6 +119,7 @@ gh pr create
 ```
 
 Pull requests run the build and test jobs but do not deploy. Once the PR is reviewed and merged into `main`, GitHub Actions automatically:
+
 - Builds the site
 - Deploys to Cloudflare Workers
 - Makes it live at your domain
@@ -152,6 +153,7 @@ npm run deploy
 ```
 
 **Requirements:**
+
 - Wrangler CLI installed (via `npm ci`)
 - Cloudflare credentials configured locally
 
@@ -220,6 +222,7 @@ To use a custom domain with Cloudflare Workers:
 6. Click **Add domain**
 
 Cloudflare automatically:
+
 - Provisions SSL certificate
 - Routes traffic to your Worker
 - Enables HTTPS
@@ -230,9 +233,9 @@ Update [src/_data/metadata.js](../src/_data/metadata.js) with your domain:
 
 ```javascript
 export default {
-  // ...
-  host: "https://yourdomain.com",
-  // ...
+	// ...
+	host: "https://yourdomain.com",
+	// ...
 };
 ```
 
@@ -264,6 +267,7 @@ Add a status badge to show build status:
 4. Check analytics and metrics
 
 **Key metrics:**
+
 - Requests per day
 - Data transfer
 - Errors
@@ -378,6 +382,7 @@ ls public/pagefind/
 ```
 
 Should contain:
+
 - `pagefind.js`
 - `pagefind-ui.js`
 - `pagefind.css`
@@ -494,9 +499,9 @@ Add to [package.json](../package.json):
 
 ```json
 {
-  "scripts": {
-    "deploy:gh-pages": "gh-pages -d public"
-  }
+	"scripts": {
+		"deploy:gh-pages": "gh-pages -d public"
+	}
 }
 ```
 

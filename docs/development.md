@@ -40,6 +40,7 @@ The site will be available at `http://localhost:8080` with hot reload enabled.
 ```bash
 npm start
 ```
+
 - Starts Eleventy in watch mode with live reload
 - Incremental builds for faster development
 - Draft posts are visible
@@ -50,6 +51,7 @@ npm start
 ```bash
 npm run build
 ```
+
 - Full production build (Eleventy + PageFind search index)
 - Minifies CSS
 - Optimizes images
@@ -59,12 +61,14 @@ npm run build
 ```bash
 npm run build:11ty
 ```
+
 - Builds static site only (no search index)
 - Faster for testing build output
 
 ```bash
 npm run build:index
 ```
+
 - Generates PageFind search index only
 - Run after `build:11ty` to update search
 
@@ -73,12 +77,14 @@ npm run build:index
 ```bash
 npm run lint
 ```
+
 - Checks code formatting with Prettier
 - Validates JavaScript, Markdown, CSS, JSON, HTML
 
 ```bash
 npm run format
 ```
+
 - Auto-formats all source files
 - Applies Prettier configuration
 
@@ -87,6 +93,7 @@ npm run format
 ```bash
 npm run dev
 ```
+
 - Starts local Cloudflare Workers environment
 - Simulates production deployment locally
 - Requires prior `npm run build`
@@ -94,6 +101,7 @@ npm run dev
 ```bash
 npm run deploy
 ```
+
 - Deploys to Cloudflare Workers
 - Requires Cloudflare credentials
 - Typically done via CI/CD
@@ -103,6 +111,7 @@ npm run deploy
 ```bash
 npm run clean
 ```
+
 - Removes build artifacts (`public/` directory)
 - Preserves `.env` file if present
 - Uses `git clean` to ensure complete cleanup
@@ -174,7 +183,6 @@ tags:
   - tag1
   - tag2
 ---
-
 Your content here...
 ```
 
@@ -195,6 +203,7 @@ Your content here...
 Always give `date` (and `updatedDate`) an explicit time and UTC offset, e.g. `2024-11-30 10:00:00 -06:00`. A mid-morning local time keeps the calendar date stable regardless of which time zone the renderer uses. This applies to every content type with a `date` field (blog posts under `src/blog/`, talks under `src/talks/`), not just blog posts.
 
 This site is authored from Milwaukee, WI (America/Chicago). Pick the offset based on whether the date falls in Daylight Saving Time:
+
 - **`-05:00` (CDT)** — mid-March through early November
 - **`-06:00` (CST)** — early November through mid-March
 
@@ -212,6 +221,7 @@ updatedDate: 2025-01-15 10:00:00 -06:00
 ```
 
 This will:
+
 - Display as "November 30, 2024 (Updated January 15, 2025)" on the post
 - Add `dateModified` to Schema.org structured data for SEO
 - Keep the original `date` for sorting and feeds
@@ -230,6 +240,7 @@ draft: true
 ```
 
 Drafts are:
+
 - ✅ Visible in development (`npm start`)
 - ❌ Hidden in production builds (`npm run build`)
 - ❌ Excluded from feeds and collections
@@ -252,7 +263,7 @@ Code blocks automatically get syntax highlighting using the `<syntax-highlight>`
 ````markdown
 ```javascript
 function hello() {
-  console.log("Hello, world!");
+	console.log("Hello, world!");
 }
 ```
 ````
@@ -262,7 +273,7 @@ function hello() {
 The site supports all [Prism languages](https://prismjs.com/#supported-languages). Common ones include:
 
 - `javascript`, `js` - JavaScript
-- `typescript`, `ts` - TypeScript  
+- `typescript`, `ts` - TypeScript
 - `python`, `py` - Python
 - `csharp`, `cs` - C#
 - `bash`, `sh`, `shell` - Shell scripts
@@ -276,36 +287,42 @@ The site supports all [Prism languages](https://prismjs.com/#supported-languages
 Use GitLab-style alert syntax to create styled note boxes. Five types are supported:
 
 **Note** - General information or reminders:
+
 ```markdown
 > [!note]
 > This is important information readers should know.
 ```
 
 **Info** - Helpful tips or additional context:
+
 ```markdown
 > [!info]
 > This provides helpful context or tips.
 ```
 
 **Success** - Positive outcomes or achievements:
+
 ```markdown
 > [!success]
 > The operation completed successfully!
 ```
 
 **Warning** - Important cautions or considerations:
+
 ```markdown
 > [!warning]
 > Be careful when doing this operation.
 ```
 
 **Error** - Critical errors or failures:
+
 ```markdown
 > [!error]
 > An error occurred during processing.
 ```
 
 **Multi-line notes:**
+
 ```markdown
 > [!warning]
 > This warning spans multiple lines.
@@ -315,6 +332,7 @@ Use GitLab-style alert syntax to create styled note boxes. Five types are suppor
 
 **Custom labels:**
 You can override the default label with custom text:
+
 ```markdown
 > [!warning] Data deletion
 > The following instructions will make your data unrecoverable.
@@ -328,6 +346,7 @@ Notes are rendered as `<pob-note>` web components with appropriate styling for e
 **Language aliases:**
 
 Many languages have aliases that map to the same grammar:
+
 - `js` → `javascript`
 - `py` → `python`
 - `cs` → `csharp`
@@ -355,6 +374,7 @@ int x = 42;
 When you use multiple languages, only those specific languages are loaded from the CDN. Pages without code blocks don't load the syntax highlighting library at all, improving performance.
 
 **How it works:**
+
 1. The build process detects which languages are used in your post
 2. The page loads only those specific languages (plus base languages: markup, css, javascript)
 3. Syntax highlighting happens at runtime using the CSS Custom Highlight API
@@ -373,11 +393,13 @@ You can make HTML code blocks interactive by adding the `live` modifier. This re
 ````
 
 This will display:
+
 1. The syntax-highlighted code block
 2. A "Run" button in a toolbar below the code
 3. When clicked, an "Output" panel slides in showing the live rendered HTML
 
 **Features:**
+
 - **Sandboxed execution** - Code runs in an iframe with `sandbox="allow-scripts"` for security
 - **Dark mode support** - The output panel respects the user's color scheme preference
 - **Auto-sizing** - The iframe automatically resizes to fit its content
@@ -390,24 +412,25 @@ This will display:
 <button id="btn">Count: 0</button>
 
 <style>
-  #btn {
-    padding: 0.5em 1em;
-    font-size: 1.2em;
-    cursor: pointer;
-  }
+	#btn {
+		padding: 0.5em 1em;
+		font-size: 1.2em;
+		cursor: pointer;
+	}
 </style>
 
 <script>
-  let count = 0;
-  document.getElementById('btn').onclick = () => {
-    count++;
-    document.getElementById('btn').textContent = `Count: ${count}`;
-  };
+	let count = 0;
+	document.getElementById("btn").onclick = () => {
+		count++;
+		document.getElementById("btn").textContent = `Count: ${count}`;
+	};
 </script>
 ```
 ````
 
 **Limitations:**
+
 - Only works with `html` language blocks
 - Cannot access the parent page's DOM or styles
 - External resources may be blocked by the sandbox
@@ -421,17 +444,11 @@ Code blocks automatically match your site's theme (light/dark mode) using CSS cu
 #### Note Boxes
 
 ```html
-<pob-note type="note">
-This is an informational note.
-</pob-note>
+<pob-note type="note"> This is an informational note. </pob-note>
 
-<pob-note type="warning">
-This is a warning.
-</pob-note>
+<pob-note type="warning"> This is a warning. </pob-note>
 
-<pob-note type="error">
-This is an error or critical information.
-</pob-note>
+<pob-note type="error"> This is an error or critical information. </pob-note>
 ```
 
 ### Table of Contents
@@ -491,9 +508,12 @@ Dark mode variants use `prefers-color-scheme`:
 Use BEM-like naming:
 
 ```css
-.component-name { }
-.component-name__element { }
-.component-name--modifier { }
+.component-name {
+}
+.component-name__element {
+}
+.component-name--modifier {
+}
 ```
 
 ## Working with Web Components
@@ -577,6 +597,7 @@ eleventyConfig.addPlugin(FeedAggregatorPlugin, {
 ```
 
 **Common duration examples:**
+
 - `P90D` - 90 days
 - `P1Y` - 1 year
 - `P1Y6M` - 1 year and 6 months
@@ -602,24 +623,29 @@ Feeds are fetched at build time and cached in the static output.
 ### Common Issues
 
 **Hot reload not working**
+
 - Check that you're running `npm start` (not `npm run build`)
 - Ensure no other process is using port 8080
 
 **Draft posts not showing**
+
 - Drafts only show in development mode (`npm start`)
 - Check frontmatter has `draft: true`
 
 **Search not working**
+
 - Run full build: `npm run build`
 - Ensure `build:index` completed successfully
 - Check `public/pagefind/` directory exists
 
 **CSS not applying**
+
 - Check CSS layer order
 - Ensure import in `global.css`
 - Clear browser cache
 
 **Build failing**
+
 - Run `npm run clean` to clear build artifacts
 - Delete `node_modules/` and run `npm ci`
 - Check Node.js version: `node --version` (should be 26.0.0+) and npm version: `npm --version` (should be 12+)
@@ -682,6 +708,7 @@ git commit -m "docs: update development guide"
 ```
 
 Prefixes:
+
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `docs:` - Documentation
