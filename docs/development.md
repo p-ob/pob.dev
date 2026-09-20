@@ -443,12 +443,17 @@ Code blocks automatically match your site's theme (light/dark mode) using CSS cu
 
 #### Note Boxes
 
-```html
-<pob-note type="note"> This is an informational note. </pob-note>
+Author note boxes in Markdown; the build turns them into `<pob-note>` web components for you:
 
-<pob-note type="warning"> This is a warning. </pob-note>
+```markdown
+> [!note]
+> This is an informational note.
 
-<pob-note type="error"> This is an error or critical information. </pob-note>
+> [!warning]
+> This is a warning.
+
+> [!error]
+> This is an error or critical information.
 ```
 
 ### Table of Contents
