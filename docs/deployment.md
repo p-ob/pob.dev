@@ -28,11 +28,11 @@ Pull requests run the same build and test jobs but do not deploy.
 
 ```jsonc
 {
-  "name": "pob-dev-site",
-  "assets": {
-    "directory": "public"
-  },
-  "compatibility_date": "2025-08-12"
+	"name": "pob-dev-site",
+	"assets": {
+		"directory": "public",
+	},
+	"compatibility_date": "2025-08-12",
 }
 ```
 
@@ -53,11 +53,11 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 0 * * *'  # Daily at midnight UTC
-  workflow_dispatch:     # Manual trigger
+    - cron: "0 0 * * *" # Daily at midnight UTC
+  workflow_dispatch: # Manual trigger
 ```
 
-**Jobs** (all use Node.js 24 and update to npm 12 before installing dependencies):
+**Jobs** (all use Node.js 26 and update to npm 12 before installing dependencies):
 
 1. **Build** - `npm ci` + `npm run build`
 2. **Unit Tests** - `npm run test:unit`
@@ -119,6 +119,7 @@ gh pr create
 ```
 
 Pull requests run the build and test jobs but do not deploy. Once the PR is reviewed and merged into `main`, GitHub Actions automatically:
+
 - Builds the site
 - Deploys to Cloudflare Workers
 - Makes it live at your domain
@@ -134,7 +135,7 @@ Pull requests run the build and test jobs but do not deploy. Once the PR is revi
 Trigger a deployment without pushing:
 
 1. Go to **Actions** tab
-2. Select **Deploy to Cloudflare Workers**
+2. Select **CI/CD Pipeline**
 3. Click **Run workflow**
 4. Select `main` branch
 5. Click **Run workflow**
@@ -152,6 +153,7 @@ npm run deploy
 ```
 
 **Requirements:**
+
 - Wrangler CLI installed (via `npm ci`)
 - Cloudflare credentials configured locally
 
@@ -220,6 +222,7 @@ To use a custom domain with Cloudflare Workers:
 6. Click **Add domain**
 
 Cloudflare automatically:
+
 - Provisions SSL certificate
 - Routes traffic to your Worker
 - Enables HTTPS
@@ -230,9 +233,9 @@ Update [src/_data/metadata.js](../src/_data/metadata.js) with your domain:
 
 ```javascript
 export default {
-  // ...
-  host: "https://yourdomain.com",
-  // ...
+	// ...
+	host: "https://yourdomain.com",
+	// ...
 };
 ```
 
@@ -264,6 +267,7 @@ Add a status badge to show build status:
 4. Check analytics and metrics
 
 **Key metrics:**
+
 - Requests per day
 - Data transfer
 - Errors
@@ -276,11 +280,12 @@ If a deployment introduces issues:
 ### Option 1: Revert the commit
 
 ```bash
+git checkout -b revert/bad-deploy
 git revert HEAD
-git push origin main
+git push origin revert/bad-deploy
 ```
 
-This creates a new commit that undoes the changes and triggers a new deployment.
+Open a pull request and merge it into `main` to trigger the rollback deployment.
 
 ### Option 2: Roll back to previous deployment
 
@@ -316,7 +321,7 @@ git checkout main
 - **Build errors** - Fix syntax errors, missing dependencies
 - **Test failures** - The deploy job only runs after unit and e2e tests pass; check test job logs
 - **Missing secrets** - Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
-- **Node version mismatch** - Ensure Node 22+ in workflow
+- **Node version mismatch** - Ensure Node 26+ in workflow
 
 **Fix and retry:**
 
@@ -377,6 +382,7 @@ ls public/pagefind/
 ```
 
 Should contain:
+
 - `pagefind.js`
 - `pagefind-ui.js`
 - `pagefind.css`
@@ -493,9 +499,9 @@ Add to [package.json](../package.json):
 
 ```json
 {
-  "scripts": {
-    "deploy:gh-pages": "gh-pages -d public"
-  }
+	"scripts": {
+		"deploy:gh-pages": "gh-pages -d public"
+	}
 }
 ```
 

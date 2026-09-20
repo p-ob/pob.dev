@@ -20,10 +20,10 @@ Current versions live in [package.json](../package.json).
 
 ### Supporting Libraries
 
+- **markdown-it-container** - Custom GitLab-style note/admonition blocks
 - **markdown-it-footnote** - Enhanced markdown footnote support
 - **clean-css** - CSS minification and optimization
 - **rss-parser** - RSS feed aggregation from external sources
-- **temporal-polyfill** - Temporal API polyfill for date/duration handling
 - **@11ty/eleventy-img** - Image optimization pipeline
 - **@11ty/eleventy-plugin-rss** - RSS/Atom/JSON feed generation
 - **linkedom** - Lightweight DOM implementation for SSR
@@ -52,24 +52,33 @@ pob.dev/
 │   │   │   └── components/       # Component styles (post-list)
 │   │   └── js/components/        # Lit web components
 │   │       ├── app.js            # Main app shell
-│   │       ├── demo.js           # Live code demo component
 │   │       ├── note.js           # Note component
+│   │       ├── demo.js           # Live code demo component
+│   │       ├── pdf-viewer.js     # PDF slide viewer
+│   │       ├── pippin.js         # Search easter egg component
+│   │       ├── print-button.js   # Print action button
 │   │       └── tile.js           # Tile/card component
 │   ├── blog/                     # Blog posts
 │   │   ├── blog.11tydata.js      # Blog collection configuration
 │   │   └── YYYY/MM/              # Date-based organization
 │   │       └── post-name.md      # Individual posts
+│   ├── talks/                    # Conference talks
+│   │   └── YYYY/MM/              # Date-based organization
+│   │       └── talk-name.md      # Individual talks
 │   ├── index.njk                 # Homepage
 │   ├── blog.njk                  # Blog listing page
 │   ├── reading.njk               # RSS feed reader page
 │   ├── search.njk                # Search page
 │   ├── feed.njk                  # Feed listing page
 │   ├── about.md                  # About page
+│   ├── resume.njk                # Résumé page
+│   ├── pippin.md                 # Hidden easter egg page
 │   ├── sw.js                     # Service worker source
 │   ├── sw.11ty.js                # Service worker build template
 │   ├── _headers                  # Cloudflare headers configuration
 │   ├── favicon.ico
-│   └── robots.txt
+│   ├── robots.txt
+│   └── well-known/               # Generated site.standard verification endpoints
 ├── 11ty/                         # Custom Eleventy plugins
 │   ├── draft.js                  # Draft post handling
 │   ├── externals.js              # External dependency management with import maps
@@ -81,6 +90,8 @@ pob.dev/
 ├── tests/
 │   ├── unit/                     # Node test runner tests for 11ty/ plugins
 │   └── e2e/                      # Playwright browser tests
+├── scripts/
+│   └── publish-standard-site.mjs # Publishes site.standard records for posts
 ├── .github/workflows/
 │   └── ci.yml                    # CI/CD pipeline (build, test, deploy)
 ├── public/                       # Build output (git-ignored)
@@ -96,25 +107,29 @@ pob.dev/
 ### Content Management
 
 **Blog Posts**
+
 - Written in Markdown with YAML frontmatter
 - Organized by date (`YYYY/MM/post-name.md`)
 - Support for tags, descriptions, and custom metadata
 - Automatic permalink generation
 
 **Draft System**
+
 - Posts with `draft: true` in frontmatter are visible in development
 - Drafts are automatically excluded from production builds
 - See [11ty/draft.js](../11ty/draft.js)
 
 **Tags & Collections**
+
 - Automatic tag pages generated for all post tags
 - Posts grouped into collections (blog, all)
 - Tag-based navigation
 
 **RSS Feed Aggregation**
+
 - "Reading" page aggregates external RSS feeds
 - Configured via [feeds.json](../feeds.json)
-- Optional date filtering using Temporal duration strings (e.g., `P90D` for 90 days, `P1Y6M` for 1.5 years)
+- Optional date filtering using ISO 8601 duration strings parsed with the built-in Temporal API (e.g., `P90D` for 90 days, `P1Y6M` for 1 year and 6 months)
 - Automatically watches feed configuration file for changes in development mode
 - Off by default: fetching only happens when `FETCH_EXTERNAL_FEEDS=true` is set (production deploys set this; set it locally when working on the Reading page)
 - Refreshed daily via automated production builds
@@ -123,24 +138,28 @@ pob.dev/
 ### User Experience
 
 **Search**
+
 - Full-text search powered by PageFind
 - Static search index generated at build time
 - Client-side search with no backend required
 - Search UI at [/search/](https://pob.dev/search/)
 
 **Dark Mode**
+
 - Automatic dark mode based on system preference
 - Uses `prefers-color-scheme` media query
 - CSS custom properties for theme values
 - No JavaScript toggle required
 
 **Table of Contents**
+
 - Auto-generated from article headings
 - Sidebar navigation on wider screens
 - Shows article structure at a glance
 - See [11ty/table-of-contents.js](../11ty/table-of-contents.js)
 
 **Responsive Design**
+
 - Mobile-first approach
 - Adaptive layouts for all screen sizes
 - Typography scales for readability
@@ -149,29 +168,54 @@ pob.dev/
 ### Web Components
 
 **`<pob-app>`** - Main application shell
+
 - Handles header, footer, and navigation
 - Manages page layout structure
 - Server-side rendered with Lit
 - Source: [src/assets/js/components/app.js](../src/assets/js/components/app.js)
 
 **`<pob-note>`** - Styled note boxes
+
 - Multiple types: note, warning, error
 - Semantic HTML with custom styling
 - Slotted content support
 - Source: [src/assets/js/components/note.js](../src/assets/js/components/note.js)
 
 **`<pob-tile>`** - Card/tile component
+
 - Optionally linkable with `href` attribute
 - Supports `target` attribute for link behavior
 - Hover effects with reduced motion support
 - Dark mode aware styling
 - Source: [src/assets/js/components/tile.js](../src/assets/js/components/tile.js)
 
+**`<pob-demo>`** - Live HTML demo wrapper
+
+- Powers fenced code blocks marked with `html live`
+- Renders a sandboxed iframe preview on demand
+- Keeps runnable examples progressively enhanced
+- Source: [src/assets/js/components/demo.js](../src/assets/js/components/demo.js)
+
+**`<pob-print-button>`** - Print action button
+
+- Used by the résumé page as a floating print affordance
+- Calls `window.print()` while staying optional progressive enhancement
+- Hidden in print output
+- Source: [src/assets/js/components/print-button.js](../src/assets/js/components/print-button.js)
+
+**`<pob-pdf-viewer>`** - PDF slide viewer
+
+- Used on talk pages when a `slides` PDF is provided
+- Renders slides client-side with PDF.js
+- Keeps a plain download link as the no-JavaScript fallback
+- Source: [src/assets/js/components/pdf-viewer.js](../src/assets/js/components/pdf-viewer.js)
+
 ### Syntax Highlighting
 
 The site uses [`<syntax-highlight>`](https://github.com/andreruffert/syntax-highlight-element) for code block syntax highlighting, leveraging the CSS Custom Highlight API for better performance and cleaner markup.
 
 **Key Features:**
+
 - **Per-page optimization** - Only loads languages actually used on each page
 - **Zero overhead for non-code pages** - Pages without code blocks don't load the library
 - **Clean DOM** - No `<span>` elements wrapping every token
@@ -179,12 +223,14 @@ The site uses [`<syntax-highlight>`](https://github.com/andreruffert/syntax-high
 - **CDN-based** - Prism grammars loaded from CDN at runtime
 
 **How it works:**
+
 1. During markdown processing, the `syntax-highlight.js` plugin tracks which languages are used on each page
 2. At render time, the `getCodeLanguages` filter extracts the page-specific languages
 3. The base layout conditionally loads `<syntax-highlight>` element only if code blocks exist
 4. Configuration includes base languages (markup, css, javascript) plus page-specific ones
 
 **Example output:**
+
 ```html
 <!-- Before (old Prism with spans) -->
 <pre class="language-javascript"><code class="language-javascript">
@@ -192,27 +238,29 @@ The site uses [`<syntax-highlight>`](https://github.com/andreruffert/syntax-high
 </code></pre>
 
 <!-- After (syntax-highlight-element) -->
-<syntax-highlight language="javascript">
-function example() { ... }
-</syntax-highlight>
+<syntax-highlight language="javascript"> function example() { ... } </syntax-highlight>
 ```
 
 **Supported languages:**
+
 - Base: markup (HTML/XML), css, javascript
 - Additional (loaded on-demand): python, csharp, bash, and [many more](https://prismjs.com/#supported-languages)
 
 **Styling:**
+
 - CSS Custom Highlight API selectors (e.g., `::highlight(keyword)`)
 - Dark mode support via CSS custom properties
 - Consistent with site's color scheme
 - Source: [src/assets/css/partials/_code.css](../src/assets/css/partials/_code.css)
 
 **Implementation:**
+
 - Plugin: [11ty/syntax-highlight.js](../11ty/syntax-highlight.js)
 - Language detection and tracking during build
 - Per-page configuration in [src/_includes/layouts/base.njk](../src/_includes/layouts/base.njk)
 
 **Performance benefits:**
+
 - Pages without code: 0 KB overhead (library not loaded)
 - Pages with code: Only loads the specific languages used
 - Example: A post with only JavaScript loads 3 languages (markup, css, javascript)
@@ -223,12 +271,14 @@ function example() { ... }
 The site uses an import map system for managing external dependencies like Lit, eliminating the need for bundlers.
 
 **How it works:**
+
 - The `externals.js` plugin reads package versions from `node_modules`
 - Generates versioned paths for cache busting (e.g., `/assets/external/lit-{version}/`)
 - Creates an import map that the browser uses to resolve bare module specifiers
 - Dependencies are copied to the output directory with version-stamped paths
 
 **Benefits:**
+
 - No build step required for dependencies
 - Browser-native module resolution
 - Automatic cache invalidation on version updates
@@ -241,27 +291,32 @@ See [11ty/externals.js](../11ty/externals.js)
 The site includes a service worker for offline reading support and improved performance.
 
 **Files:**
+
 - [src/sw.js](../src/sw.js) - Service worker implementation
 - [src/sw.11ty.js](../src/sw.11ty.js) - Eleventy template that processes the service worker
 
 **Cache Versioning:**
+
 - Cache name is generated from the git commit SHA: `pob-dev-{commitSha}`
 - The first 8 characters of the commit SHA are used (e.g., `pob-dev-a1b2c3d4`)
 - This ensures cache invalidation on every deployment
 - Old caches are automatically cleaned up on activation
 
 **Caching Strategies:**
+
 - **Cache-first** - Fonts and external libraries (immutable assets)
 - **Stale-while-revalidate** - CSS, JS, and PageFind search index
 - **Network-first** - HTML pages (with cache fallback for offline)
 - **Network-only** - Default for other requests
 
 **Precached Assets:**
+
 - Homepage (`/`)
 - Blog listing (`/blog`)
 - Global stylesheet (`/assets/css/global.css`)
 
 **How it works:**
+
 1. `sw.11ty.js` reads `sw.js` at build time
 2. Replaces the `%%CACHE_NAME%%` placeholder with `pob-dev-{commitSha}`
 3. Outputs the processed service worker to `/sw.js`
@@ -271,11 +326,13 @@ The site includes a service worker for offline reading support and improved perf
 ### Feed System
 
 Multiple feed formats available:
+
 - RSS 2.0: `/feed.rss`
 - Atom: `/feed.atom`
 - JSON Feed: `/feed.json`
 
 Features:
+
 - Latest 10 posts included
 - Full content in feeds
 - Proper metadata and author information
@@ -324,6 +381,7 @@ CSS is organized using CSS layers for explicit cascade control:
 ```
 
 **Layers:**
+
 - `reset` - Normalize browser defaults
 - `config` - CSS custom properties and design tokens (defined in `_vars.css`)
 - `base` - Base element styles
@@ -332,6 +390,7 @@ CSS is organized using CSS layers for explicit cascade control:
 - `layout` - Component and layout styles
 
 **Features:**
+
 - CSS custom properties with `@property` for type-safe values
 - Dark mode via `prefers-color-scheme`
 - Mobile-first responsive design
@@ -340,17 +399,24 @@ CSS is organized using CSS layers for explicit cascade control:
 **Breakpoints:**
 The site uses a three-tier responsive system (defined in `_vars.css`):
 
-| Breakpoint | Width | Purpose |
-|------------|-------|---------|
-| Mobile | < 768px | Single column layouts, 16px base font |
-| Tablet | 768px - 1023px | Two column grids, 18px base font |
-| Desktop | ≥ 1024px | Three column grids, 18px base font |
+| Breakpoint | Width          | Purpose                               |
+| ---------- | -------------- | ------------------------------------- |
+| Mobile     | < 768px        | Single column layouts, 16px base font |
+| Tablet     | 768px - 1023px | Two column grids, 18px base font      |
+| Desktop    | ≥ 1024px       | Three column grids, 18px base font    |
 
 Use the modern range syntax for media queries:
+
 ```css
-@media (width >= 768px) { /* tablet and up */ }
-@media (width >= 1024px) { /* desktop */ }
-@media (width < 768px) { /* mobile only */ }
+@media (width >= 768px) {
+	/* tablet and up */
+}
+@media (width >= 1024px) {
+	/* desktop */
+}
+@media (width < 768px) {
+	/* mobile only */
+}
 ```
 
 See [src/assets/css/global.css](../src/assets/css/global.css)
@@ -382,6 +448,7 @@ This site demonstrates modern web platform capabilities:
 ## External Link Handling
 
 External links in markdown are automatically enhanced:
+
 - `target="_blank"` added
 - Opens in new tab/window
 - Configured in [eleventy.config.js](../eleventy.config.js)
