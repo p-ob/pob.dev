@@ -4,7 +4,7 @@ This guide will help you set up and develop on pob.dev locally.
 
 ## Prerequisites
 
-- **Node.js** - Version 24.15.0 or higher (CI uses 24)
+- **Node.js** - Version 26.0.0 or higher (CI uses 26)
 - **npm** - Version 12.0.0 or higher (Node's bundled npm may lag behind; run `npm install -g npm@12` to update)
 - **Git** - For version control
 
@@ -119,11 +119,14 @@ src/
 ├── _includes/          # Layouts and reusable components
 ├── assets/             # Static assets (CSS, JS)
 ├── blog/               # Blog posts (organized by year/month)
+├── talks/              # Conference talks (organized by year/month)
 ├── index.njk           # Homepage
 ├── blog.njk            # Blog listing
 ├── reading.njk         # RSS feed reader
 ├── search.njk          # Search page
 ├── feed.njk            # Feed listing page
+├── resume.njk          # Résumé page
+├── pippin.md           # Hidden easter egg page
 └── about.md            # About page
 ```
 
@@ -502,6 +505,9 @@ Web components live in `src/assets/js/components/`:
 - `app.js` - Main application shell
 - `demo.js` - Live code demo component (used by `html live` code blocks)
 - `note.js` - Note/alert component
+- `pdf-viewer.js` - PDF viewer for talk slide decks
+- `pippin.js` - Search easter egg component
+- `print-button.js` - Reusable print action button
 - `tile.js` - Card/tile component
 
 ### Creating a Component
@@ -616,7 +622,7 @@ Feeds are fetched at build time and cached in the static output.
 **Build failing**
 - Run `npm run clean` to clear build artifacts
 - Delete `node_modules/` and run `npm ci`
-- Check Node.js version: `node --version` (should be 24.15.0+) and npm version: `npm --version` (should be 12+)
+- Check Node.js version: `node --version` (should be 26.0.0+) and npm version: `npm --version` (should be 12+)
 
 ### Verbose Output
 

@@ -142,7 +142,7 @@ Check if Node.js has new LTS versions:
 node --version
 ```
 
-Current requirement: **Node.js 24.15.0+** (CI uses Node.js 24) and **npm 12.0.0+** (CI and the dev container upgrade npm explicitly, since the Node base image's bundled npm lags behind)
+Current requirement: **Node.js 26.0.0+** (CI uses Node.js 26) and **npm 12.0.0+** (CI and the dev container upgrade npm explicitly, since the Node base image's bundled npm lags behind)
 
 **Update if needed:**
 
@@ -374,9 +374,12 @@ npm run build
 
 ```bash
 # Fix issue
+git checkout -b fix/deployment-issue
 git commit -m "fix: resolve deployment issue"
-git push origin main
+git push origin fix/deployment-issue
 ```
+
+Open a pull request and merge it into `main` to trigger a new deployment.
 
 ### Dark Mode Not Working
 
@@ -627,9 +630,9 @@ git filter-branch --tree-filter 'rm -f path/to/large/file' HEAD
 1. **Update local Node.js**
 
 ```bash
-# Using nvm (recommended) - replace 24 with the target version
-nvm install 24
-nvm use 24
+# Using nvm (recommended) - replace 26 with the target version
+nvm install 26
+nvm use 26
 
 # Verify
 node --version
@@ -640,7 +643,7 @@ node --version
 ```json
 {
   "engines": {
-    "node": ">=24.15.0"
+    "node": ">=26.0.0"
   }
 }
 ```
@@ -655,7 +658,7 @@ Edit [.github/workflows/ci.yml](../.github/workflows/ci.yml) and update `node-ve
 - name: Setup Node
   uses: actions/setup-node@v4
   with:
-    node-version: '24'
+    node-version: '26'
 ```
 
 4. **Test thoroughly**
@@ -671,9 +674,12 @@ npm start
 5. **Deploy and monitor**
 
 ```bash
-git commit -m "chore: upgrade to Node.js 24"
-git push origin main
+git checkout -b chore/upgrade-node
+git commit -m "chore: upgrade to Node.js 26"
+git push origin chore/upgrade-node
 ```
+
+Open a pull request and merge it after CI passes.
 
 ## Documentation Maintenance
 

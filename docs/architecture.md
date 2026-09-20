@@ -20,10 +20,10 @@ Current versions live in [package.json](../package.json).
 
 ### Supporting Libraries
 
+- **markdown-it-container** - Custom GitLab-style note/admonition blocks
 - **markdown-it-footnote** - Enhanced markdown footnote support
 - **clean-css** - CSS minification and optimization
 - **rss-parser** - RSS feed aggregation from external sources
-- **temporal-polyfill** - Temporal API polyfill for date/duration handling
 - **@11ty/eleventy-img** - Image optimization pipeline
 - **@11ty/eleventy-plugin-rss** - RSS/Atom/JSON feed generation
 - **linkedom** - Lightweight DOM implementation for SSR
@@ -52,24 +52,33 @@ pob.dev/
 │   │   │   └── components/       # Component styles (post-list)
 │   │   └── js/components/        # Lit web components
 │   │       ├── app.js            # Main app shell
-│   │       ├── demo.js           # Live code demo component
 │   │       ├── note.js           # Note component
+│   │       ├── demo.js           # Live code demo component
+│   │       ├── pdf-viewer.js     # PDF slide viewer
+│   │       ├── pippin.js         # Search easter egg component
+│   │       ├── print-button.js   # Print action button
 │   │       └── tile.js           # Tile/card component
 │   ├── blog/                     # Blog posts
 │   │   ├── blog.11tydata.js      # Blog collection configuration
 │   │   └── YYYY/MM/              # Date-based organization
 │   │       └── post-name.md      # Individual posts
+│   ├── talks/                    # Conference talks
+│   │   └── YYYY/MM/              # Date-based organization
+│   │       └── talk-name.md      # Individual talks
 │   ├── index.njk                 # Homepage
 │   ├── blog.njk                  # Blog listing page
 │   ├── reading.njk               # RSS feed reader page
 │   ├── search.njk                # Search page
 │   ├── feed.njk                  # Feed listing page
 │   ├── about.md                  # About page
+│   ├── resume.njk                # Résumé page
+│   ├── pippin.md                 # Hidden easter egg page
 │   ├── sw.js                     # Service worker source
 │   ├── sw.11ty.js                # Service worker build template
 │   ├── _headers                  # Cloudflare headers configuration
 │   ├── favicon.ico
-│   └── robots.txt
+│   ├── robots.txt
+│   └── well-known/               # Generated site.standard verification endpoints
 ├── 11ty/                         # Custom Eleventy plugins
 │   ├── draft.js                  # Draft post handling
 │   ├── externals.js              # External dependency management with import maps
@@ -81,6 +90,8 @@ pob.dev/
 ├── tests/
 │   ├── unit/                     # Node test runner tests for 11ty/ plugins
 │   └── e2e/                      # Playwright browser tests
+├── scripts/
+│   └── publish-standard-site.mjs # Publishes site.standard records for posts
 ├── .github/workflows/
 │   └── ci.yml                    # CI/CD pipeline (build, test, deploy)
 ├── public/                       # Build output (git-ignored)
@@ -114,7 +125,7 @@ pob.dev/
 **RSS Feed Aggregation**
 - "Reading" page aggregates external RSS feeds
 - Configured via [feeds.json](../feeds.json)
-- Optional date filtering using Temporal duration strings (e.g., `P90D` for 90 days, `P1Y6M` for 1.5 years)
+- Optional date filtering using ISO 8601 duration strings parsed with the built-in Temporal API (e.g., `P90D` for 90 days, `P1Y6M` for 1.5 years)
 - Automatically watches feed configuration file for changes in development mode
 - Off by default: fetching only happens when `FETCH_EXTERNAL_FEEDS=true` is set (production deploys set this; set it locally when working on the Reading page)
 - Refreshed daily via automated production builds
@@ -166,6 +177,24 @@ pob.dev/
 - Hover effects with reduced motion support
 - Dark mode aware styling
 - Source: [src/assets/js/components/tile.js](../src/assets/js/components/tile.js)
+
+**`<pob-demo>`** - Live HTML demo wrapper
+- Powers fenced code blocks marked with `html live`
+- Renders a sandboxed iframe preview on demand
+- Keeps runnable examples progressively enhanced
+- Source: [src/assets/js/components/demo.js](../src/assets/js/components/demo.js)
+
+**`<pob-print-button>`** - Print action button
+- Used by the résumé page as a floating print affordance
+- Calls `window.print()` while staying optional progressive enhancement
+- Hidden in print output
+- Source: [src/assets/js/components/print-button.js](../src/assets/js/components/print-button.js)
+
+**`<pob-pdf-viewer>`** - PDF slide viewer
+- Used on talk pages when a `slides` PDF is provided
+- Renders slides client-side with PDF.js
+- Keeps a plain download link as the no-JavaScript fallback
+- Source: [src/assets/js/components/pdf-viewer.js](../src/assets/js/components/pdf-viewer.js)
 
 ### Syntax Highlighting
 

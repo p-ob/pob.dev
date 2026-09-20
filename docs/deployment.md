@@ -57,7 +57,7 @@ on:
   workflow_dispatch:     # Manual trigger
 ```
 
-**Jobs** (all use Node.js 24 and update to npm 12 before installing dependencies):
+**Jobs** (all use Node.js 26 and update to npm 12 before installing dependencies):
 
 1. **Build** - `npm ci` + `npm run build`
 2. **Unit Tests** - `npm run test:unit`
@@ -134,7 +134,7 @@ Pull requests run the build and test jobs but do not deploy. Once the PR is revi
 Trigger a deployment without pushing:
 
 1. Go to **Actions** tab
-2. Select **Deploy to Cloudflare Workers**
+2. Select **CI/CD Pipeline**
 3. Click **Run workflow**
 4. Select `main` branch
 5. Click **Run workflow**
@@ -276,11 +276,12 @@ If a deployment introduces issues:
 ### Option 1: Revert the commit
 
 ```bash
+git checkout -b revert/bad-deploy
 git revert HEAD
-git push origin main
+git push origin revert/bad-deploy
 ```
 
-This creates a new commit that undoes the changes and triggers a new deployment.
+Open a pull request and merge it into `main` to trigger the rollback deployment.
 
 ### Option 2: Roll back to previous deployment
 
@@ -316,7 +317,7 @@ git checkout main
 - **Build errors** - Fix syntax errors, missing dependencies
 - **Test failures** - The deploy job only runs after unit and e2e tests pass; check test job logs
 - **Missing secrets** - Verify `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`
-- **Node version mismatch** - Ensure Node 22+ in workflow
+- **Node version mismatch** - Ensure Node 26+ in workflow
 
 **Fix and retry:**
 
