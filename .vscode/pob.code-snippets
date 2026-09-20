@@ -1,0 +1,28 @@
+{
+	"Blog Post Template": {
+		"scope": "markdown",
+		"prefix": "blogpost",
+		"body": [
+			"---",
+			"date: ${1:2026-09-20 17:00:00 -05:00}",
+			"title: ${2:A Title}",
+			"tags: [${3:tag1, tag2}]",
+			"description: ${4:A description that shows up on tiles in search results}",
+			"---",
+			"",
+			"$0"
+		],
+		"description": "Insert a blog post template"
+	},
+	"Note Template": {
+		// a template to help create a note of well-defined types
+		"scope": "markdown",
+		"prefix": "note",
+		"body": [
+			"> [!${1:type|note,info,success,warning,error|}]",
+			"> ${2:The content of the note.}",
+			"$0"
+		],
+		"description": "Insert a note template"
+	}
+}
