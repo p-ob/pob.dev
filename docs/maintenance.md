@@ -640,9 +640,9 @@ git filter-branch --tree-filter 'rm -f path/to/large/file' HEAD
 1. **Update local Node.js**
 
 ```bash
-# Using nvm (recommended) - replace 26 with the target version
-nvm install 26
-nvm use 26
+# Using nvm (recommended) - replace NODE_MAJOR with the target major version
+nvm install NODE_MAJOR
+nvm use NODE_MAJOR
 
 # Verify
 node --version
@@ -653,7 +653,7 @@ node --version
 ```json
 {
 	"engines": {
-		"node": ">=26.0.0"
+		"node": ">=NODE_MAJOR.0.0"
 	}
 }
 ```
@@ -668,7 +668,7 @@ Edit [.github/workflows/ci.yml](../.github/workflows/ci.yml) and update `node-ve
 - name: Setup Node
   uses: actions/setup-node@v4
   with:
-    node-version: "26"
+    node-version: "NODE_MAJOR"
 ```
 
 4. **Test thoroughly**
@@ -685,7 +685,7 @@ npm start
 
 ```bash
 git checkout -b chore/upgrade-node
-git commit -m "chore: upgrade to Node.js 26"
+git commit -m "chore: upgrade to Node.js NODE_MAJOR"
 git push origin chore/upgrade-node
 ```
 
