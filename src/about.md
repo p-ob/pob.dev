@@ -3,6 +3,7 @@ title: About
 description: Patrick O'Brien is a software engineer and engineering manager based in the Milwaukee area, writing about the web ecosystem and engineering leadership.
 noSidebar: true
 pageType: article
+navSection: about
 ---
 
 My name is Patrick O'Brien. I'm a software engineer based in the Milwaukee area. This site represents my personal thoughts and opinions, and serves to document my learnings and growth in the field, as well as other personal interests.

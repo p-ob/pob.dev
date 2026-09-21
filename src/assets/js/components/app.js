@@ -53,10 +53,10 @@ const chevronIcon = svg`<svg
 
 // Navigation items configuration
 const NAV_ITEMS = [
-	{ text: "Home", href: "/" },
-	{ text: "Blog", href: "/blog" },
-	{ text: "Reading", href: "/reading" },
-	{ text: "About", href: "/about" },
+	{ text: "Home", href: "/", section: "home" },
+	{ text: "Blog", href: "/blog", section: "blog" },
+	{ text: "Reading", href: "/reading", section: "reading" },
+	{ text: "About", href: "/about", section: "about" },
 ];
 
 export class AppElement extends LitElement {
@@ -64,8 +64,8 @@ export class AppElement extends LitElement {
 		return {
 			currentYear: { type: Number, attribute: "current-year" },
 			author: { type: Object },
+			navSection: { type: String, attribute: "nav-section" },
 			pageType: { type: String, attribute: "page-type" },
-			pageUrl: { type: String, attribute: "page-url" },
 			repository: { type: String },
 			source: { type: String },
 			branch: { type: String },
@@ -80,34 +80,7 @@ export class AppElement extends LitElement {
 		super();
 		this.currentYear = new Date().getFullYear();
 		this.author = {};
-		this.pageUrl = "";
-	}
-
-	#normalizePath(path) {
-		if (!path || path === "/") {
-			return "/";
-		}
-
-		return path.replace(/\/+$/, "");
-	}
-
-	#pathSegments(path) {
-		return this.#normalizePath(path).split("/").filter(Boolean);
-	}
-
-	#matchesNavPath(pageSegments, hrefSegments) {
-		if (hrefSegments.length === 0 || pageSegments.length < hrefSegments.length) {
-			return false;
-		}
-
-		for (let i = 0; i <= pageSegments.length - hrefSegments.length; i += 1) {
-			const matches = hrefSegments.every((segment, offset) => pageSegments[i + offset] === segment);
-			if (matches) {
-				return true;
-			}
-		}
-
-		return false;
+		this.navSection = "";
 	}
 
 	#openMobileNav() {
@@ -208,20 +181,13 @@ export class AppElement extends LitElement {
 		});
 	}
 
-	#isCurrentNavItem(href) {
-		const hrefSegments = this.#pathSegments(href);
-		const pageSegments = this.#pathSegments(this.pageUrl);
-
-		if (hrefSegments.length === 0) {
-			return this.source.endsWith("/src/index.njk");
-		}
-
-		return this.#matchesNavPath(pageSegments, hrefSegments);
+	#isCurrentNavItem(item) {
+		return item.section === this.navSection;
 	}
 
 	#renderNavItems() {
 		return NAV_ITEMS.map((item) => {
-			const isCurrent = this.#isCurrentNavItem(item.href);
+			const isCurrent = this.#isCurrentNavItem(item);
 			return html`<a
 				class="nav-item ${isCurrent ? "active" : ""}"
 				href="${item.href}"

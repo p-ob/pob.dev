@@ -8,7 +8,7 @@
 			author="{{ author | json_html }}"
 			repository="{{ pkg.repository.url }}"
 			source="{{ page.inputPath }}"
-			page-url="{{ page.url }}"
+			{% if navSection %} nav-section="{{ navSection }}" {% endif %}
 			branch="main"
 			commit-sha="{{ metadata.commitSha }}"
 			{% if pageType %} page-type="{{ pageType }}" {% endif %}
