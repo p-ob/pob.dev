@@ -15,4 +15,12 @@ test.describe("Search Page", () => {
 		await expect(input).toHaveValue("blog");
 		await expect(input).toBeFocused();
 	});
+
+	test("should not surface the resume page in search results", async ({ page }) => {
+		await page.goto("/search/");
+		await page.fill("pagefind-input input", "Zywave");
+		await page.waitForTimeout(300);
+
+		await expect(page.locator("pagefind-results")).not.toContainText("Zywave");
+	});
 });
