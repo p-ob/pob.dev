@@ -1,7 +1,7 @@
 @layer layout {
 	.reading-description {
 		margin-bottom: 1rem;
-		color: var(--text-secondary, #666);
+		color: color-mix(in srgb, var(--font-color) 75%, var(--page-background-color));
 	}
 
 	.reading-acknowledgements {
@@ -70,17 +70,20 @@
 
 	.reading-date {
 		font-size: 0.875rem;
-		color: var(--text-secondary, #666);
+		color: var(--accent-color);
+		font-weight: 500;
 	}
 
 	.reading-title {
 		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--accent-color) 45%, transparent);
+		text-underline-offset: 0.18em;
 		font-size: 1rem;
 	}
 
 	.reading-source {
 		font-size: 0.875rem;
-		color: var(--text-secondary, #666);
+		color: color-mix(in srgb, var(--font-color) 75%, var(--page-background-color));
 	}
 
 	.reading-details {

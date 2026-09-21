@@ -2,25 +2,29 @@
 noSidebar: true
 excludeFromSearch: true
 description: Software engineer and engineering manager writing about the web ecosystem, team collaboration, and the industry.
+navSection: home
 ---
 
 <link rel="stylesheet" href="/assets/css/index.css">
 
 <div class="home-container">
-  <header style="display: none;" class="home-header">
-    <h2>Patrick O'Brien</h2>
-  </header>
+	<header class="home-header">
+		<h1>Patrick O'Brien</h1>
+		<p>Software engineer and engineering manager writing about the web ecosystem, team collaboration, and the industry.</p>
+	</header>
 
-  {% set latestPost = collections.post | last %}
-  <pob-tile href="{{ latestPost.url }}" style="--tile-padding: 2rem;">
-    <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
-    <div class="details">
-      <strong>{{ latestPost.data.title }}</strong>
-      <div>{{ latestPost.data.description }}</div>
-    </div>
-  </pob-tile>
+	<p class="home-section-label">Latest writing</p>
 
-  <div class="home-links">
-    <a href="/resume/" class="home-link">View my résumé</a>
-  </div>
+	{% set latestPost = collections.post | last %}
+	<pob-tile href="{{ latestPost.url }}" class="home-featured-post" style="--tile-padding: 2rem;">
+		<time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
+		<div class="details">
+			<strong>{{ latestPost.data.title }}</strong>
+			<div>{{ latestPost.data.description }}</div>
+		</div>
+	</pob-tile>
+
+	<div class="home-links">
+		<a href="/resume/" class="home-link">View my résumé</a>
+	</div>
 </div>
