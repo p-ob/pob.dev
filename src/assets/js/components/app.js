@@ -91,6 +91,25 @@ export class AppElement extends LitElement {
 		return path.replace(/\/+$/, "");
 	}
 
+	#pathSegments(path) {
+		return this.#normalizePath(path).split("/").filter(Boolean);
+	}
+
+	#matchesNavPath(pageSegments, hrefSegments) {
+		if (hrefSegments.length === 0 || pageSegments.length < hrefSegments.length) {
+			return false;
+		}
+
+		for (let i = 0; i <= pageSegments.length - hrefSegments.length; i += 1) {
+			const matches = hrefSegments.every((segment, offset) => pageSegments[i + offset] === segment);
+			if (matches) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	#openMobileNav() {
 		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
 		document.body.style.overflow = "hidden";
@@ -190,14 +209,14 @@ export class AppElement extends LitElement {
 	}
 
 	#isCurrentNavItem(href) {
-		const normalizedHref = this.#normalizePath(href);
-		const normalizedPageUrl = this.#normalizePath(this.pageUrl);
+		const hrefSegments = this.#pathSegments(href);
+		const pageSegments = this.#pathSegments(this.pageUrl);
 
-		if (normalizedHref === "/") {
-			return normalizedPageUrl === "/";
+		if (hrefSegments.length === 0) {
+			return this.source.endsWith("/src/index.njk");
 		}
 
-		return normalizedPageUrl === normalizedHref || normalizedPageUrl.startsWith(`${normalizedHref}/`);
+		return this.#matchesNavPath(pageSegments, hrefSegments);
 	}
 
 	#renderNavItems() {
