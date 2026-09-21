@@ -195,7 +195,7 @@ export class AppElement extends LitElement {
 			return html`<a
 				class="nav-item ${isCurrent ? "active" : ""}"
 				href="${item.href}"
-				aria-current="${isCurrent ? "page" : nothing}"
+				aria-current=${isCurrent ? "page" : nothing}
 				>${item.text}</a
 			>`;
 		});
