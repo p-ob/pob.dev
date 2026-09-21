@@ -15,4 +15,5 @@ test.describe("Search Page", () => {
 		await expect(input).toHaveValue("blog");
 		await expect(input).toBeFocused();
 	});
+
 });
