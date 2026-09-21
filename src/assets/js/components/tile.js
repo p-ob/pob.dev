@@ -80,7 +80,8 @@ export class TileElement extends LitElement {
 		}
 
 		a:focus-visible {
-			outline: none;
+			outline: 2px solid color-mix(in srgb, var(--accent-color) 72%, white 10%);
+			outline-offset: 3px;
 			border-color: color-mix(in srgb, var(--accent-color) 42%, transparent);
 			box-shadow:
 				0 0 0 4px color-mix(in srgb, var(--accent-color) 16%, transparent),

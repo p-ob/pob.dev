@@ -83,6 +83,14 @@ export class AppElement extends LitElement {
 		this.pageUrl = "";
 	}
 
+	#normalizePath(path) {
+		if (!path || path === "/") {
+			return "/";
+		}
+
+		return path.replace(/\/+$/, "");
+	}
+
 	#openMobileNav() {
 		const dialog = this.shadowRoot.querySelector("#mobile-nav-dialog");
 		document.body.style.overflow = "hidden";
@@ -182,11 +190,14 @@ export class AppElement extends LitElement {
 	}
 
 	#isCurrentNavItem(href) {
-		if (href === "/") {
-			return this.pageUrl === "/";
+		const normalizedHref = this.#normalizePath(href);
+		const normalizedPageUrl = this.#normalizePath(this.pageUrl);
+
+		if (normalizedHref === "/") {
+			return normalizedPageUrl === "/";
 		}
 
-		return this.pageUrl === href || this.pageUrl.startsWith(`${href}/`);
+		return normalizedPageUrl === normalizedHref || normalizedPageUrl.startsWith(`${normalizedHref}/`);
 	}
 
 	#renderNavItems() {
