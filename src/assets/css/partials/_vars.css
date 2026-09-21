@@ -38,8 +38,13 @@
 }
 
 :root {
+	color-scheme: light dark;
+	accent-color: var(--accent-color);
 	--blockquote-background-color: color-mix(in srgb, var(--page-background-color), gray 20%);
 	--code-background-color: color-mix(in srgb, var(--page-background-color), gray 30%);
+	--accent-color: hsl(214, 58%, 40%);
+	--accent-muted-color: color-mix(in srgb, var(--accent-color) 14%, var(--page-background-color));
+	--accent-border-color: color-mix(in srgb, var(--accent-color) 24%, transparent);
 
 	/* Syntax highlighting colors */
 	--code-comment: hsl(0, 0%, 45%);
@@ -59,6 +64,9 @@
 		--blockquote-accent-color: hsl(0, 0%, 80%);
 		--blockquote-background-color: color-mix(in srgb, var(--page-background-color), black 20%);
 		--code-background-color: color-mix(in srgb, var(--page-background-color), black 30%);
+		--accent-color: hsl(207, 72%, 70%);
+		--accent-muted-color: color-mix(in srgb, var(--accent-color) 16%, var(--page-background-color));
+		--accent-border-color: color-mix(in srgb, var(--accent-color) 30%, transparent);
 
 		/* Syntax highlighting colors */
 		--code-comment: hsl(0, 0%, 55%);

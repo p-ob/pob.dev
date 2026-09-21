@@ -65,6 +65,7 @@ export class AppElement extends LitElement {
 			currentYear: { type: Number, attribute: "current-year" },
 			author: { type: Object },
 			pageType: { type: String, attribute: "page-type" },
+			pageUrl: { type: String, attribute: "page-url" },
 			repository: { type: String },
 			source: { type: String },
 			branch: { type: String },
@@ -79,6 +80,7 @@ export class AppElement extends LitElement {
 		super();
 		this.currentYear = new Date().getFullYear();
 		this.author = {};
+		this.pageUrl = "";
 	}
 
 	#openMobileNav() {
@@ -179,8 +181,24 @@ export class AppElement extends LitElement {
 		});
 	}
 
+	#isCurrentNavItem(href) {
+		if (href === "/") {
+			return this.pageUrl === "/";
+		}
+
+		return this.pageUrl === href || this.pageUrl.startsWith(`${href}/`);
+	}
+
 	#renderNavItems() {
-		return NAV_ITEMS.map((item) => html`<a class="nav-item" href="${item.href}">${item.text}</a>`);
+		return NAV_ITEMS.map((item) => {
+			const isCurrent = this.#isCurrentNavItem(item.href);
+			return html`<a
+				class="nav-item ${isCurrent ? "active" : ""}"
+				href="${item.href}"
+				aria-current="${isCurrent ? "page" : nothing}"
+				>${item.text}</a
+			>`;
+		});
 	}
 
 	#renderContactRow(icon, label, href, external) {
@@ -392,8 +410,11 @@ export class AppElement extends LitElement {
 			position: sticky;
 			top: 0;
 			z-index: 999;
-			background: var(--page-background-color);
-			border-bottom: 1px solid var(--font-color);
+			background-color: color-mix(in srgb, var(--page-background-color) 82%, transparent);
+			border-bottom: 1px solid color-mix(in srgb, var(--font-color) 18%, transparent);
+			backdrop-filter: blur(14px) saturate(140%);
+			-webkit-backdrop-filter: blur(14px) saturate(140%);
+			box-shadow: 0 18px 40px -40px rgba(0, 0, 0, 0.55);
 			anchor-name: --site-header;
 		}
 
@@ -525,6 +546,13 @@ export class AppElement extends LitElement {
 		.nav-item {
 			font-weight: bold;
 			font-size: 1.25rem;
+		}
+
+		.nav-item.active {
+			color: var(--accent-color);
+			text-decoration: underline;
+			text-decoration-color: color-mix(in srgb, var(--accent-color) 42%, transparent);
+			text-underline-offset: 0.22em;
 		}
 
 		/* Flush with the header's bottom border rather than floating below it;

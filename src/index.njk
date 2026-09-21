@@ -7,20 +7,27 @@ description: Software engineer and engineering manager writing about the web eco
 <link rel="stylesheet" href="/assets/css/index.css">
 
 <div class="home-container">
-  <header style="display: none;" class="home-header">
-    <h2>Patrick O'Brien</h2>
-  </header>
+	<header class="home-header">
+		<p class="home-eyebrow">Personal site of Patrick O'Brien</p>
+		<h1>Thoughtful notes on the web, engineering, and leadership.</h1>
+		<p>
+			I write about modern web development, team collaboration, and the craft of building
+			calm, durable software.
+		</p>
+	</header>
 
-  {% set latestPost = collections.post | last %}
-  <pob-tile href="{{ latestPost.url }}" style="--tile-padding: 2rem;">
-    <time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
-    <div class="details">
-      <strong>{{ latestPost.data.title }}</strong>
-      <div>{{ latestPost.data.description }}</div>
-    </div>
-  </pob-tile>
+	<p class="home-section-label">Latest writing</p>
 
-  <div class="home-links">
-    <a href="/resume/" class="home-link">View my résumé</a>
-  </div>
+	{% set latestPost = collections.post | last %}
+	<pob-tile href="{{ latestPost.url }}" class="home-featured-post" style="--tile-padding: 2rem;">
+		<time class="post-date" datetime="{{ latestPost.date | machineDate }}">{{ latestPost.date | readableDate }}</time>
+		<div class="details">
+			<strong>{{ latestPost.data.title }}</strong>
+			<div>{{ latestPost.data.description }}</div>
+		</div>
+	</pob-tile>
+
+	<div class="home-links">
+		<a href="/resume/" class="home-link">View my résumé</a>
+	</div>
 </div>

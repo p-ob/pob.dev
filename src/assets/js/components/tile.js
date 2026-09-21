@@ -62,15 +62,29 @@ export class TileElement extends LitElement {
 			color: inherit;
 			padding: var(--tile-padding, 1rem);
 			border-radius: 12px;
-			transition: all 0.2s ease;
-			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+			border: 1px solid color-mix(in srgb, var(--font-color) 10%, transparent);
+			transition:
+				transform 0.2s ease,
+				box-shadow 0.2s ease,
+				border-color 0.2s ease,
+				background-color 0.2s ease;
+			box-shadow: 0 18px 40px -36px rgba(0, 0, 0, 0.35);
 			background: color-mix(in srgb, var(--page-background-color), white 50%);
 		}
 
 		a:hover,
 		:host([hoverable]) div:hover {
 			transform: translateY(-2px);
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+			border-color: color-mix(in srgb, var(--accent-color) 30%, transparent);
+			box-shadow: 0 24px 48px -36px rgba(0, 0, 0, 0.45);
+		}
+
+		a:focus-visible {
+			outline: none;
+			border-color: color-mix(in srgb, var(--accent-color) 42%, transparent);
+			box-shadow:
+				0 0 0 4px color-mix(in srgb, var(--accent-color) 16%, transparent),
+				0 24px 48px -36px rgba(0, 0, 0, 0.45);
 		}
 
 		/* Dark mode support */
@@ -78,13 +92,14 @@ export class TileElement extends LitElement {
 			a,
 			div {
 				background: color-mix(in srgb, var(--page-background-color), white 8%);
-				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+				border-color: color-mix(in srgb, white 10%, transparent);
+				box-shadow: 0 18px 40px -34px rgba(0, 0, 0, 0.75);
 			}
 
 			a:hover,
 			:host([hoverable]) div:hover {
 				background: color-mix(in srgb, var(--page-background-color), white 10%);
-				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+				box-shadow: 0 24px 52px -34px rgba(0, 0, 0, 0.85);
 			}
 		}
 

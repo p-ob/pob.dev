@@ -9,7 +9,8 @@
 
 	.tag-filters-label {
 		font-size: 0.875rem;
-		color: var(--color-text-secondary, #666);
+		color: var(--accent-color);
+		font-weight: 600;
 	}
 
 	.tags-list {
@@ -27,28 +28,29 @@
 
 	@scope (.tags-list) {
 		.tag {
-			color: #333;
-			background-color: #f0f0f0;
+			color: var(--font-color);
+			background-color: var(--accent-muted-color);
+			border: 1px solid var(--accent-border-color);
 			display: inline-block;
-			border-radius: 3px;
+			border-radius: 999px;
 			padding: 5px 10px;
 			font-size: 14px;
 			text-decoration: none;
-			transition: background-color 0.2s ease;
+			transition:
+				background-color 0.2s ease,
+				border-color 0.2s ease,
+				transform 0.2s ease;
 		}
 
 		.tag:hover {
-			background-color: #e0e0e0;
+			background-color: color-mix(in srgb, var(--accent-color) 20%, var(--page-background-color));
+			border-color: color-mix(in srgb, var(--accent-color) 38%, transparent);
+			transform: translateY(-1px);
 		}
 
 		@media (prefers-color-scheme: dark) {
 			.tag {
-				color: #ccc;
-				background-color: #444;
-			}
-
-			.tag:hover {
-				background-color: #555;
+				background-color: color-mix(in srgb, var(--accent-color) 12%, var(--page-background-color));
 			}
 		}
 
