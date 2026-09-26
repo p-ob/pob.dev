@@ -19,7 +19,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
         with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Enable auto-merge for patch/minor updates
         # Major version bumps (of npm packages or pinned Action SHAs) get
@@ -27,7 +27,32 @@ jobs:
         # supply-chain compromises land more often in surprise majors than
         # routine patch/minor bumps.
         if: steps.metadata.outputs.update-type != 'version-update:semver-major'
-        run: gh pr merge --auto --squash "$PR_URL"
+        run: |
+          set -o pipefail
+
+          set +e
+          merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
+          merge_status=$?
+          set -e
+
+          if [ "$merge_status" -eq 0 ]; then
+            printf '%s\n' "$merge_output"
+            exit 0
+          fi
+
+          printf '%s\n' "$merge_output" >&2
+
+          if printf '%s\n' "$merge_output" | grep -Fq 'Base branch was modified'; then
+            gh api \
+              --method PUT \
+              "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/update-branch" \
+              -f expected_head_sha="$PR_HEAD_SHA"
+            exit 0
+          fi
+
+          exit "$merge_status"
         env:
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
