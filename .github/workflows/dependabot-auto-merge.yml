@@ -28,29 +28,48 @@ jobs:
         # routine patch/minor bumps.
         if: steps.metadata.outputs.update-type != 'version-update:semver-major'
         run: |
-          set -o pipefail
+          owner="${GITHUB_REPOSITORY%/*}"
+          repo="${GITHUB_REPOSITORY#*/}"
 
-          set +e
-          merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
-          merge_status=$?
-          set -e
+          get_merge_state() {
+            gh api graphql \
+              -f query='
+                query($owner: String!, $repo: String!, $number: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    pullRequest(number: $number) {
+                      mergeStateStatus
+                    }
+                  }
+                }
+              ' \
+              -F owner="$owner" \
+              -F repo="$repo" \
+              -F number="$PR_NUMBER" \
+              --jq '.data.repository.pullRequest.mergeStateStatus'
+          }
 
-          if [ "$merge_status" -eq 0 ]; then
-            printf '%s\n' "$merge_output"
-            exit 0
-          fi
-
-          printf '%s\n' "$merge_output" >&2
-
-          if printf '%s\n' "$merge_output" | grep -Fq 'Base branch was modified'; then
+          update_branch() {
             gh api \
               --method PUT \
               "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/update-branch" \
               -f expected_head_sha="$PR_HEAD_SHA"
+          }
+
+          if [ "$(get_merge_state)" = "BEHIND" ]; then
+            update_branch
             exit 0
           fi
 
-          exit "$merge_status"
+          if gh pr merge --auto --squash "$PR_URL"; then
+            exit 0
+          fi
+
+          if [ "$(get_merge_state)" = "BEHIND" ]; then
+            update_branch
+            exit 0
+          fi
+
+          exit 1
         env:
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
