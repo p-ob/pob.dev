@@ -19,7 +19,7 @@ jobs:
         id: metadata
         uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: Enable auto-merge for patch/minor updates
         # Major version bumps (of npm packages or pinned Action SHAs) get
@@ -27,103 +27,7 @@ jobs:
         # supply-chain compromises land more often in surprise majors than
         # routine patch/minor bumps.
         if: steps.metadata.outputs.update-type != 'version-update:semver-major'
-        run: |
-          owner="${GITHUB_REPOSITORY%/*}"
-          repo="${GITHUB_REPOSITORY#*/}"
-
-          get_merge_state() {
-            gh api graphql \
-              -f query='
-                query($owner: String!, $repo: String!, $number: Int!) {
-                  repository(owner: $owner, name: $repo) {
-                    pullRequest(number: $number) {
-                      mergeStateStatus
-                    }
-                  }
-                }
-              ' \
-              -F owner="$owner" \
-              -F repo="$repo" \
-              -F number="$PR_NUMBER" \
-              --jq '.data.repository.pullRequest.mergeStateStatus'
-          }
-
-          get_head_sha() {
-            gh api graphql \
-              -f query='
-                query($owner: String!, $repo: String!, $number: Int!) {
-                  repository(owner: $owner, name: $repo) {
-                    pullRequest(number: $number) {
-                      headRefOid
-                    }
-                  }
-                }
-              ' \
-              -F owner="$owner" \
-              -F repo="$repo" \
-              -F number="$PR_NUMBER" \
-              --jq '.data.repository.pullRequest.headRefOid'
-          }
-
-          update_branch() {
-            gh api \
-              --method PUT \
-              "/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/update-branch" \
-              -f expected_head_sha="$PR_HEAD_SHA"
-          }
-
-          branch_refresh_requested=false
-
-          refresh_branch_if_behind() {
-            if [ "$(get_merge_state)" != "BEHIND" ]; then
-              return 1
-            fi
-
-            if [ "$branch_refresh_requested" != "true" ]; then
-              update_branch
-              branch_refresh_requested=true
-            fi
-
-            for attempt in 1 2 3 4 5 6; do
-              if [ "$(get_head_sha)" != "$PR_HEAD_SHA" ] && [ "$(get_merge_state)" != "BEHIND" ]; then
-                return 0
-              fi
-
-              sleep 5
-            done
-
-            echo "GitHub still reports the PR branch as behind after a refresh request; retrying auto-merge anyway" >&2
-            return 0
-          }
-
-          refresh_branch_if_behind || true
-
-          set +e
-          merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
-          merge_status=$?
-          set -e
-
-          if [ "$merge_status" -eq 0 ]; then
-            printf '%s\n' "$merge_output"
-            exit 0
-          fi
-
-          if refresh_branch_if_behind; then
-            set +e
-            merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
-            merge_status=$?
-            set -e
-
-            if [ "$merge_status" -eq 0 ]; then
-              printf '%s\n' "$merge_output"
-              exit 0
-            fi
-          fi
-
-          printf '%s\n' "$merge_output" >&2
-          exit "$merge_status"
+        run: gh pr merge --auto --squash "$PR_URL"
         env:
-          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
