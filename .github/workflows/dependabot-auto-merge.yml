@@ -60,7 +60,13 @@ jobs:
             exit 0
           fi
 
-          if gh pr merge --auto --squash "$PR_URL"; then
+          set +e
+          merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
+          merge_status=$?
+          set -e
+
+          if [ "$merge_status" -eq 0 ]; then
+            printf '%s\n' "$merge_output"
             exit 0
           fi
 
@@ -69,7 +75,8 @@ jobs:
             exit 0
           fi
 
-          exit 1
+          printf '%s\n' "$merge_output" >&2
+          exit "$merge_status"
         env:
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
