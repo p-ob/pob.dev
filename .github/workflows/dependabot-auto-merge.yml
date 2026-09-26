@@ -48,6 +48,23 @@ jobs:
               --jq '.data.repository.pullRequest.mergeStateStatus'
           }
 
+          get_head_sha() {
+            gh api graphql \
+              -f query='
+                query($owner: String!, $repo: String!, $number: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    pullRequest(number: $number) {
+                      headRefOid
+                    }
+                  }
+                }
+              ' \
+              -F owner="$owner" \
+              -F repo="$repo" \
+              -F number="$PR_NUMBER" \
+              --jq '.data.repository.pullRequest.headRefOid'
+          }
+
           update_branch() {
             gh api \
               --method PUT \
@@ -55,10 +72,26 @@ jobs:
               -f expected_head_sha="$PR_HEAD_SHA"
           }
 
-          if [ "$(get_merge_state)" = "BEHIND" ]; then
+          refresh_branch_if_behind() {
+            if [ "$(get_merge_state)" != "BEHIND" ]; then
+              return 1
+            fi
+
             update_branch
-            exit 0
-          fi
+
+            for attempt in 1 2 3 4 5 6; do
+              if [ "$(get_head_sha)" != "$PR_HEAD_SHA" ] && [ "$(get_merge_state)" != "BEHIND" ]; then
+                return 0
+              fi
+
+              sleep 5
+            done
+
+            echo "Timed out waiting for GitHub to refresh the PR branch" >&2
+            exit 1
+          }
+
+          refresh_branch_if_behind || true
 
           set +e
           merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
@@ -70,9 +103,16 @@ jobs:
             exit 0
           fi
 
-          if [ "$(get_merge_state)" = "BEHIND" ]; then
-            update_branch
-            exit 0
+          if refresh_branch_if_behind; then
+            set +e
+            merge_output="$(gh pr merge --auto --squash "$PR_URL" 2>&1)"
+            merge_status=$?
+            set -e
+
+            if [ "$merge_status" -eq 0 ]; then
+              printf '%s\n' "$merge_output"
+              exit 0
+            fi
           fi
 
           printf '%s\n' "$merge_output" >&2
