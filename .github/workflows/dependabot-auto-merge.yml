@@ -72,12 +72,17 @@ jobs:
               -f expected_head_sha="$PR_HEAD_SHA"
           }
 
+          branch_refresh_requested=false
+
           refresh_branch_if_behind() {
             if [ "$(get_merge_state)" != "BEHIND" ]; then
               return 1
             fi
 
-            update_branch
+            if [ "$branch_refresh_requested" != "true" ]; then
+              update_branch
+              branch_refresh_requested=true
+            fi
 
             for attempt in 1 2 3 4 5 6; do
               if [ "$(get_head_sha)" != "$PR_HEAD_SHA" ] && [ "$(get_merge_state)" != "BEHIND" ]; then
@@ -87,8 +92,8 @@ jobs:
               sleep 5
             done
 
-            echo "Timed out waiting for GitHub to refresh the PR branch" >&2
-            exit 1
+            echo "GitHub still reports the PR branch as behind after a refresh request; retrying auto-merge anyway" >&2
+            return 0
           }
 
           refresh_branch_if_behind || true
