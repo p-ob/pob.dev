@@ -16,7 +16,7 @@ The below are my ordered selections.
 
 > Selects a shadow host based on its light DOM descendants.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1395>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1395>
 
 ---
 
@@ -24,7 +24,7 @@ The below are my ordered selections.
 
 > Matches `<slot>` elements that have slotted content, rather than showing fallback content.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1356>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1356>
 
 ---
 
@@ -32,7 +32,7 @@ The below are my ordered selections.
 
 > Allows elements in shadow trees to reference anchor names defined in "higher" trees.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1351>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1351>
 
 ---
 
@@ -40,7 +40,7 @@ The below are my ordered selections.
 
 > A modern and extensive date/time API to replace `Date`.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1381>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1381>
 
 ---
 
@@ -48,7 +48,7 @@ The below are my ordered selections.
 
 > `import … with { type: "css" }` to load CSS resources as constructable stylesheets.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1466>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1466>
 
 ---
 
@@ -56,7 +56,7 @@ The below are my ordered selections.
 
 > Forwards IDrefs (such as `for` and `aria-labelledby`) to an element inside a shadow root.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1333>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1333>
 
 ---
 
@@ -64,7 +64,7 @@ The below are my ordered selections.
 
 > Customize the button, selected option, picker, and options with CSS.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1393>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1393>
 
 ---
 
@@ -72,7 +72,7 @@ The below are my ordered selections.
 
 > `@container anchored(fallback: …)` applies styles based on which position fallback an anchor-positioned element is using.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1363>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1363>
 
 ---
 
@@ -80,7 +80,7 @@ The below are my ordered selections.
 
 > An inline conditional value that returns a value based on a set of conditions.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1343>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1343>
 
 ---
 
@@ -88,7 +88,7 @@ The below are my ordered selections.
 
 > Defines custom functions that take arguments and return a CSS value.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1357>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1357>
 
 ---
 
@@ -96,7 +96,7 @@ The below are my ordered selections.
 
 > Anchor-positioned elements track transforms on their anchors, and changes to the calculated `anchor()` triggers transitions.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1457>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1457>
 
 ---
 
@@ -104,7 +104,7 @@ The below are my ordered selections.
 
 > `scroll()`, `scrollTo()`, `scrollBy()`, and `scrollIntoView()` return promises that resolve when scrolling completes.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1435>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1435>
 
 ---
 
@@ -112,13 +112,13 @@ The below are my ordered selections.
 
 > The `interestfor` attribute triggers actions on a target element when the user shows interest, such as via hover, focus, or long-press.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1358>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1358>
 
 ---
 
 ## 14. HTML `<input type="week">`
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1405>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1405>
 
 ---
 
@@ -126,6 +126,6 @@ The below are my ordered selections.
 
 > Customizes the sanitization of HTML inserted into the DOM, to prevent cross-site scripting attacks.
 
-* **Proposal:** <https://github.com/web-platform-tests/interop/issues/1336>
+- **Proposal:** <https://github.com/web-platform-tests/interop/issues/1336>
 
 [^1]: <https://web.dev/blog/interop-2022>
