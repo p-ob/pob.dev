@@ -7,6 +7,8 @@ description: Firefox has a survey for developers to rank interop issues. Here is
 
 Since 2022 [^1], the main browser vendors have been actively engaged in the "Interop" program, where they work to improve the ecosystem and align browser on stable standards and reduce interoperability issues between browsers. Starting last year, Mozilla began surveying the community to help rank interop items to help in prioritization conversations. For this years, see [Firefox Interop 2027 Survey](https://interop-rank.fxdx.dev/).
 
+You can view my submitted ranking here: <https://interop-rank.fxdx.dev/share/p-ob-zfcmr57m9xvk/>.
+
 The below are my ordered selections.
 
 > [!info] Disclaimer
