@@ -16,7 +16,7 @@
 		"@11ty/eleventy-plugin-rss": "^3.1.0",
 		"@atproto/api": "^0.23.0",
 		"@lit-labs/eleventy-plugin-lit": "^1.0.6",
-		"@playwright/test": "^1.63.0",
+		"@playwright/test": "^1.64.0",
 		"clean-css": "^5.3.3",
 		"js-yaml": "^5.4.2",
 		"linkedom": "^0.18.13",
