@@ -10,7 +10,7 @@
 		"npm": ">=12.0.0"
 	},
 	"devDependencies": {
-		"@11ty/eleventy": "^3.1.6",
+		"@11ty/eleventy": "^3.1.7",
 		"@11ty/eleventy-img": "^7.0.0",
 		"@11ty/eleventy-navigation": "^1.0.5",
 		"@11ty/eleventy-plugin-rss": "^3.1.0",
